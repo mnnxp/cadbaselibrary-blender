@@ -10,7 +10,9 @@ from CdbsModules.Translate import translate
 
 g_selected_component_uuid: str = ''
 g_selected_modification_uuid: str = ''
-g_last_clicked_object: Path = Path('')
+# g_last_clicked_object: Path = Path('')
+g_last_clicked_object: Path = Path(CdbsEvn.g_library_path)
+g_current_position = 'components (parts)'
 
 def update_components_list():
     """Create folders for all bookmark components of the current user"""
@@ -87,7 +89,7 @@ def update_component_modificaion():
         DataHandler.logger('warning', translate('CadbaseMacro', 'Received data about fileset is not suitable for processing'))
         return
     if not data.componentModificationFilesets:
-        DataHandler.logger('warning', translate('CadbaseMacro', 'Fileset not found for FreeCAD'))
+        DataHandler.logger('warning', translate('CadbaseMacro', 'Fileset not found for Blender'))
         return
     CdbsApi(QueriesApi.fileset_files(data.componentModificationFilesets[0].uuid))
     data = DataHandler.parsing_gpl()
@@ -134,3 +136,23 @@ def update_selected_object_uuid():
         modification_data = DataHandler.read_object_info(modification_file, 'modification')
         # save the uuid of the selected modification for uploading files
         g_selected_modification_uuid = modification_data.uuid
+
+def detect_current_position():
+    global g_current_position
+
+    # if not g_last_clicked_object.is_dir():
+    #     return 'not direction'
+    if g_last_clicked_object == Path(CdbsEvn.g_library_path):
+        g_current_position = 'components (parts)'
+        return 'TREE'  # show components
+    component_file = g_last_clicked_object / 'component'
+    if component_file.exists():
+        # g_current_position = 'modifications'
+        g_current_position = f"component: {g_last_clicked_object.name}"
+        return 'COMPONENT'  # show modifications of component
+    modification_file = g_last_clicked_object / 'modification'
+    if modification_file.exists():
+        # g_current_position = 'fileset (Blender)'
+        g_current_position = f"modifications: {g_last_clicked_object.name}"
+        return 'MODIFICATION'  # show fileset for Blender of modification
+    return 'UNKNOWN'

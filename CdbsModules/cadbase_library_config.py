@@ -17,7 +17,7 @@ class Ui_Config(object):
     def setupUi(self, Config):
         if not Config.objectName():
             Config.setObjectName(u"Config")
-        Config.resize(445, 545)
+        Config.resize(0, 0)
         self.verticalLayout = QVBoxLayout(Config)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.groupBox_3 = QGroupBox(Config)
@@ -149,14 +149,14 @@ class Ui_Config(object):
         Config.setWindowTitle(QCoreApplication.translate("Config", u"CADBase Library Configuration", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("Config", u"Library path", None))
         self.label.setText(QCoreApplication.translate("Config", u"The macro will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.\n"
-"Changing the library path will require restarting FreeCAD.", None))
+"Changing the library path will require restarting Blender.", None))
         self.lineEdit_3.setPlaceholderText(QCoreApplication.translate("Config", u"Enter the path to the local CADBase library.", None))
 #if QT_CONFIG(accessibility)
         self.pushButton_3.setAccessibleDescription("")
 #endif // QT_CONFIG(accessibility)
         self.pushButton_3.setText(QCoreApplication.translate("Config", u"...", None))
         self.groupBox.setTitle(QCoreApplication.translate("Config", u"Server URL", None))
-        self.label_4.setText(QCoreApplication.translate("Config", u"Here you can specify the server on which the CADBase platform. Specify the server (URL or IP) if you need to connect to the unofficial CADBase platform server", None))
+        self.label_4.setText(QCoreApplication.translate("Config", u"Here you can specify the server on which the CADBase platform. Specify the server (URL or IP) if you need to connect to the unofficial CADBase platform server.", None))
         self.lineEdit.setPlaceholderText(QCoreApplication.translate("Config", u"Enter data server URL here", None))
         self.pushButton.setText(QCoreApplication.translate("Config", u"Set official", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("Config", u"Authorization", None))

@@ -58,8 +58,8 @@
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="294"/>
-        <source>Please restart FreeCAD</source>
-        <translation>Пожалуйста, перезапустите FreeCAD</translation>
+        <source>Please restart Blender</source>
+        <translation>Пожалуйста, перезапустите Blender</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="299"/>
@@ -123,8 +123,8 @@
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="364"/>
-        <source>Fileset not found for FreeCAD</source>
-        <translation>Набор файлов для FreeCAD не найден</translation>
+        <source>Fileset not found for Blender</source>
+        <translation>Набор файлов для Blender не найден</translation>
     </message>
     <message>
         <location filename="../CadbaseMacro.py" line="369"/>
@@ -232,8 +232,8 @@
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="50"/>
-        <source>Creating a new set of files for FreeCAD</source>
-        <translation>Создание нового набора файлов для FreeCAD</translation>
+        <source>Creating a new set of files for Blender</source>
+        <translation>Создание нового набора файлов для Blender</translation>
     </message>
     <message>
         <location filename="../CdbsModules/CdbsStorage.py" line="55"/>
@@ -531,12 +531,12 @@
     </message>
     <message>
         <location filename="../InitGui.py" line="7"/>
-        <source>The workbench is designed to use components (parts) from CADBase in the FreeCAD interface. \
+        <source>The workbench is designed to use components (parts) from CADBase in the Blender interface. \
 Component modifications contain sets of files for various CAD systems. \
-This workbench will work with data from the FreeCAD set, without downloading documentation and data from other file sets.</source>
-        <translation>Верстак предназначен для использования компонентов (деталей) из CADBase в интерфейсе FreeCAD.
+This workbench will work with data from the Blender set, without downloading documentation and data from other file sets.</source>
+        <translation>Верстак предназначен для использования компонентов (деталей) из CADBase в интерфейсе Blender.
 Модификации компонента содержат наборы файлов для различных САПР. \
-Этот верстак будет работать данными из набора для FreeCAD, без скачивания документации и данных из других наборов файлов.</translation>
+Этот верстак будет работать данными из набора для Blender, без скачивания документации и данных из других наборов файлов.</translation>
     </message>
 </context>
 </TS>

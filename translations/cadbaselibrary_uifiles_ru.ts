@@ -48,10 +48,10 @@
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library_config.ui" line="35"/>
-        <source>The macro will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.
-Changing the library path will require restarting FreeCAD.</source>
-        <translation>Макрос будет использовать этот каталог для сохранения загруженных файлов. Будьте осторожны, данные в этом каталоге могут быть перезаписаны.
-Изменение пути к библиотеке потребует перезапуска FreeCAD.</translation>
+        <source>The addon will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.
+Changing the library path will require restarting Blender.</source>
+        <translation>Расширение будет использовать этот каталог для сохранения загруженных файлов. Будьте осторожны, данные в этом каталоге могут быть перезаписаны.
+Изменение пути к библиотеке потребует перезапуска Blender.</translation>
     </message>
     <message>
         <location filename="../CdbsModules/cadbase_library_config.ui" line="48"/>

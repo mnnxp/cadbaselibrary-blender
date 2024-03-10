@@ -68,7 +68,7 @@ class CdbsStorage:
         calls the functions for processing, loading and confirm successful uploading files
         """
         DataHandler.logger('log', translate('CdbsStorage', 'Getting fileset UUID...'))
-        # getting the uuid of a set of files for FreeCAD
+        # getting the uuid of a set of files for target program
         CdbsApi(QueriesApi.target_fileset(self.modification_uuid))
         self.fileset_uuid = DataHandler.get_uuid(
             DataHandler.deep_parsing_gpl('componentModificationFilesets', True)
@@ -81,7 +81,7 @@ class CdbsStorage:
         if not self.fileset_uuid:
             DataHandler.logger(
                 'log',
-                translate('CdbsStorage', 'Creating a new set of files for FreeCAD'),
+                translate('CdbsStorage', 'Creating a new set of files for Blender'),
             )
             CdbsApi(QueriesApi.register_modification_fileset(self.modification_uuid))
             self.fileset_uuid = DataHandler.deep_parsing_gpl('registerModificationFileset')

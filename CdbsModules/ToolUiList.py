@@ -1,3 +1,4 @@
+from pathlib import Path
 import bpy
 from bpy.types import Panel, Operator, UIList, PropertyGroup
 from bpy.props import IntProperty, StringProperty, CollectionProperty
@@ -14,12 +15,12 @@ class ListItem(PropertyGroup):
 
     name: StringProperty(
            name="Name",
-           description="A name for this item",
+           description="Name of folder or file in the local storage",
            default="Untitled")
 
-    prop2: StringProperty(
-           name="Any other property you want",
-           description="",
+    path: StringProperty(
+           name="Path",
+           description="Path to the selected object in local storage",
            default="")
 
 #-----------------------------------------------------------------------------
@@ -122,12 +123,13 @@ class TOOL_UL_List(UIList):
         row.prop(self, "filter_invert", text="", icon="ARROW_LEFTRIGHT")
 
 
-        row = layout.row(align=True)
-        row.label(text="Order by:")
-        row.prop(self, "use_order_name", toggle=True)
+        # row = layout.row(align=True)
+        # row.label(text="Order by:")
+        # row.prop(self, "use_order_name", toggle=True)
 
-        icon = 'TRIA_UP' if self.use_name_reverse else 'TRIA_DOWN'
-        row.prop(self, "use_name_reverse", text="", icon=icon)
+        # icon = 'TRIA_UP' if self.use_name_reverse else 'TRIA_DOWN'
+        # row.prop(self, "use_name_reverse", text="", icon=icon)
+        row.prop(self, "use_order_name", text="", icon='SORTSIZE')
 
     def draw_item(self, context,
                     layout, # Layout to draw the item
@@ -142,63 +144,23 @@ class TOOL_UL_List(UIList):
 
         # Make sure your code supports all 3 layout types
         if self.layout_type in {'DEFAULT', 'COMPACT'}:
-            layout.label(text=item.name)
+            set_icon = 'QUESTION'
+            path = Path(item.path)
+            if path.is_dir():
+                set_icon = 'FILE_FOLDER'
+            if path.is_file():
+                if path.suffix == '.blend':
+                    set_icon = 'FILE_BLEND'
+                elif path.suffix == '.blend1':
+                    set_icon = 'FILE_BACKUP'
+                else:
+                    set_icon = 'FILE_BLANK'
+            layout.label(text=item.name, icon=set_icon)
+            # layout.label(text=item.name)
 
         elif self.layout_type in {'GRID'}:
             layout.alignment = 'CENTER'
             layout.label(text="")
-
-#-----------------------------------------------------------------------------
-#
-# An extremely simple list add operator
-# Replace context.scene.demo_list with the actual list
-class TOOL_OT_List_Add(Operator):
-    """ Add an Item to the UIList"""
-    bl_idname = "tool.list_add"
-    bl_label = "Add"
-    bl_description = "add a new item to the list."
-
-    @classmethod
-    def poll(cls, context):
-        """ We can only add items to the list of an active object
-            but the list may be empty or doesn't yet exist so
-            just this function can only check if there is an active object
-        """
-        return context.scene
-
-    def execute(self, context):
-        context.scene.demo_list.add()
-        return {'FINISHED'}
-
-#-----------------------------------------------------------------------------
-#
-# An extremely simple list remove operator
-# Replace context.scene.demo_list with the actual list
-# It's only possible to remove the item that is indexed
-# The reorder routine keeps track of the index.
-class TOOL_OT_List_Remove(Operator):
-    """ Add an Item to the UIList"""
-    bl_idname = "tool.list_remove"
-    bl_label = "Add"
-    bl_description = "Remove an new item from the list."
-
-    @classmethod
-    def poll(cls, context):
-        """ We can only remove items from the list of an active object
-            that has items in it, but the list may be empty or doesn't
-            yet exist and there's no reason to remove an item from an empty
-            list.
-        """
-        return (context.scene
-                and context.scene.demo_list
-                and len(context.scene.demo_list))
-
-    def execute(self, context):
-        alist = context.scene.demo_list
-        index = context.scene.list_index
-        context.scene.demo_list.remove(index)
-        context.scene.list_index = min(max(0, index - 1), len(alist) - 1)
-        return {'FINISHED'}
 
 #-----------------------------------------------------------------------------
 #

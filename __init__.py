@@ -6,50 +6,54 @@ bl_info = {
     "blender": (3, 4, 1),
     "location": "3D View > Sidebar",
     "description": "Tool for save data to cloud CADBase",
-    "doc_url": "{BLENDER_MANUAL_URL}/addons/mesh/cadbase_library.html",
+    "doc_url": "{BLENDER_MANUAL_URL}/addons/import_export/cadbase_library.html",
     "support": 'COMMUNITY',
     "category": "Import-Export",
 }
 
 
-if "bpy" in locals():
-    import importlib
-    importlib.reload(ui)
-    if "export" in locals():
-        importlib.reload(export)
-else:
-    import math
+import os, sys
+from pathlib import Path
 
-    import bpy
-    from bpy.types import PropertyGroup
-    from bpy.props import (
-        StringProperty,
-        BoolProperty,
-        FloatProperty,
-        EnumProperty,
-        PointerProperty,
-    )
+SCRIPT_DIR = os.path.abspath(str(Path(__file__).parent / 'CdbsModules'))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-    from . import (
-        ui,
-        logger,
-    )
+import bpy
+from bpy.props import IntProperty, CollectionProperty
+from CdbsModules.CadbaseMacro import (
+    ViewCadbaseLibraryPanel,
+    CdbsSettings,
+    CdbsPushChanges,
+    UpTreeLevel,
+    LinkFile,
+    PullData,
+    OpenListItem,
+)
+import CdbsModules.BtnUtil as BtnUtil
+from CdbsModules.ToolUiList import ListItem, TOOL_UL_List, TOOL_OT_List_Reorder
 
 classes = (
-    ui.VIEWCL_tree,
-    ui.VIEWCL_export,
+    ViewCadbaseLibraryPanel,
+    CdbsSettings,
+    CdbsPushChanges,
+    UpTreeLevel,
+    LinkFile,
+    PullData,
+    OpenListItem,
+    ListItem,
+    TOOL_UL_List,
+    TOOL_OT_List_Reorder,
 )
 
-
 def register():
-    for cls in classes:
-        bpy.utils.register_class(cls)
-
-    # bpy.types.Scene.cadbase_library = PointerProperty(type=SceneProperties)
-
+    for c in classes:
+        bpy.utils.register_class(c)
+    bpy.types.Scene.demo_list = CollectionProperty(type = ListItem)
+    bpy.types.Scene.list_index = IntProperty(name = "Index for demo_list",
+                                             default = 0)
 
 def unregister():
-    for cls in classes:
-        bpy.utils.unregister_class(cls)
-
-    del bpy.types.Scene.cadbase_library
+    del bpy.types.Scene.demo_list
+    del bpy.types.Scene.list_index
+    for c in classes:
+        bpy.utils.unregister_class(c)

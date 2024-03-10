@@ -1,24 +1,14 @@
-# this file is used for the addon testing and will be deleted soon
-# the main code from this file can be found in ./CdbsModules/CadbaseMacro.py
-
-import os
 import sys
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath('./cadbase_library/CdbsModules/DataHandler.py'))
-sys.path.append(os.path.dirname(SCRIPT_DIR))
-
 from pathlib import Path
 from PySide2 import QtWidgets
 import bpy
-from bpy.types import Panel, Operator, UIList, PropertyGroup
-from bpy.props import IntProperty, StringProperty, CollectionProperty
-import CdbsModules.DataHandler as DataHandler
+from bpy.types import Panel, Operator
 import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
-from CdbsModules.Translate import translate
+# from CdbsModules.Translate import translate
 from CdbsModules.CdbsSetting import CdbsSetting
-from CdbsModules.ToolUiList import ListItem, TOOL_UL_List, TOOL_OT_List_Reorder
+from CdbsModules.ToolUiList import TOOL_UL_List
 
 
 class UpTreeLevel(Operator):
@@ -54,17 +44,6 @@ class OpenListItem(Operator):
 
     def execute(self, context):
         BtnUtil.open_tree_item()
-        return {'FINISHED'}
-
-class EventMessage(Operator):
-    bl_idname = "cdbs.cdbseventlog"
-    bl_label = "Event Log"
-
-    def execute(self, context):
-        # self.report({'INFO'}, "part: {}, mod: {}".format(
-        #     g_tree_elements[0].component_uuid,
-        #     g_tree_elements[0].modification_uuid))
-        # DataHandler.logger('warning', f"PartsList.g_last_clicked_object")
         return {'FINISHED'}
 
 class CdbsPushChanges(Operator):
@@ -130,36 +109,8 @@ class ViewCadbaseLibraryPanel(Panel):
         # row_options.label(text="Options")
         layout.operator("cdbs.cdbssettings", icon="OPTIONS")
 
-classes = [
-    ViewCadbaseLibraryPanel,
-    EventMessage,
-    CdbsSettings,
-    CdbsPushChanges,
-    ListItem,
-    UpTreeLevel,
-    LinkFile,
-    PullData,
-    OpenListItem,
-    TOOL_UL_List,
-    TOOL_OT_List_Reorder,
-]
 
-def register():
-    for c in classes:
-        bpy.utils.register_class(c)
-    bpy.types.Scene.demo_list = CollectionProperty(type = ListItem)
-    bpy.types.Scene.list_index = IntProperty(name = "Index for demo_list",
-                                             default = 0)
-
-def unregister():
-    del bpy.types.Scene.demo_list
-    del bpy.types.Scene.list_index
-    for c in classes:
-        bpy.utils.unregister_class(c)
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication.instance()
-    if not app:
-        app = QtWidgets.QApplication(sys.argv)
-    register()
-    BtnUtil.update_tree_list()
+app = QtWidgets.QApplication.instance()
+if not app:
+    app = QtWidgets.QApplication(sys.argv)
+# BtnUtil.update_tree_list()

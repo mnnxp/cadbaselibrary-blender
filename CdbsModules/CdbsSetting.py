@@ -4,12 +4,11 @@ import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.DataHandler as DataHandler
 from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.Translate import translate
-# from CdbsModules.ChooseFolder import ChooseFolder
 
-class CADBaseSetting(Ui_Config, QtWidgets.QDialog):
+class CdbsSetting(Ui_Config, QtWidgets.QDialog):
 
     def __init__(self):
-        super(CADBaseSetting, self).__init__()
+        super(CdbsSetting, self).__init__()
         self.setupUi(self)
         self.setObjectName('CADBaseLibraryConfig')
         self._connect_widgets()

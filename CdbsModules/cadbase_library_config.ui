@@ -6,8 +6,6 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>445</width>
-    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,9 +32,8 @@
            <number>1</number>
           </property>
           <property name="text">
-           <string>The macro will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.
-Changing the library path will require restarting FreeCAD.</string>
-          </property>
+           <string>The addon will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.
+Changing the library path will require restarting Blender.</string>          </property>
           <property name="wordWrap">
            <bool>true</bool>
           </property>
@@ -88,7 +85,7 @@ Changing the library path will require restarting FreeCAD.</string>
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Here you can specify the server on which the CADBase platform. Specify the server (URL or IP) if you need to connect to the unofficial CADBase platform server</string>
+           <string>Here you can specify the server on which the CADBase platform. Specify the server (URL or IP) if you need to connect to the unofficial CADBase platform server.</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
