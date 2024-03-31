@@ -5,7 +5,7 @@ bl_info = {
     "author": "mnnxp",
     "blender": (3, 4, 1),
     "location": "3D View > Sidebar",
-    "description": "Tool for save data to cloud CADBase",
+    "description": "This tool (addon) for synchronizing data local library with CADBase cloud storage.",
     "doc_url": "{BLENDER_MANUAL_URL}/addons/import_export/cadbase_library.html",
     "support": 'COMMUNITY',
     "category": "Import-Export",
@@ -21,39 +21,41 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 import bpy
 from bpy.props import IntProperty, CollectionProperty
 from CdbsModules.CadbaseMacro import (
-    ViewCadbaseLibraryPanel,
-    CdbsSettings,
-    CdbsPushChanges,
-    UpTreeLevel,
-    LinkFile,
-    PullData,
-    OpenListItem,
+    CDBS_PT_CadbaseLibrary,
+    CDBS_OT_OpenListItem,
+    CDBS_OT_UpTreeLevel,
+    CDBS_OT_PullData,
+    CDBS_OT_LinkFile,
+    CDBS_OT_PushChanges,
+    CDBS_OT_Settings,
+    CDBS_OT_Authorization,
 )
 import CdbsModules.BtnUtil as BtnUtil
-from CdbsModules.ToolUiList import ListItem, TOOL_UL_List, TOOL_OT_List_Reorder
+from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List, CDBS_OT_List_Reorder
 
 classes = (
-    ViewCadbaseLibraryPanel,
-    CdbsSettings,
-    CdbsPushChanges,
-    UpTreeLevel,
-    LinkFile,
-    PullData,
-    OpenListItem,
-    ListItem,
-    TOOL_UL_List,
-    TOOL_OT_List_Reorder,
+    CDBS_PT_CadbaseLibrary,
+    CDBS_OT_OpenListItem,
+    CDBS_OT_UpTreeLevel,
+    CDBS_OT_PullData,
+    CDBS_OT_LinkFile,
+    CDBS_OT_PushChanges,
+    CDBS_OT_Settings,
+    CDBS_OT_Authorization,
+    CdbsListItem,
+    CDBS_UL_List,
+    CDBS_OT_List_Reorder,
 )
 
 def register():
     for c in classes:
         bpy.utils.register_class(c)
-    bpy.types.Scene.demo_list = CollectionProperty(type = ListItem)
-    bpy.types.Scene.list_index = IntProperty(name = "Index for demo_list",
+    bpy.types.Scene.cdbs_list = CollectionProperty(type = CdbsListItem)
+    bpy.types.Scene.cdbs_list_idx = IntProperty(name = "Index for cdbs_list",
                                              default = 0)
 
 def unregister():
-    del bpy.types.Scene.demo_list
-    del bpy.types.Scene.list_index
+    del bpy.types.Scene.cdbs_list
+    del bpy.types.Scene.cdbs_list_idx
     for c in classes:
         bpy.utils.unregister_class(c)

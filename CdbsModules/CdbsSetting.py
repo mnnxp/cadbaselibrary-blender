@@ -1,9 +1,11 @@
+from pathlib import Path
 from PySide2 import QtWidgets
 from CdbsModules.cadbase_library_config import Ui_Config
 import CdbsModules.CdbsEvn as CdbsEvn
-import CdbsModules.DataHandler as DataHandler
+import CdbsModules.PartsList as PartsList
 from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.Translate import translate
+from CdbsModules.Logger import logger
 
 class CdbsSetting(Ui_Config, QtWidgets.QDialog):
 
@@ -37,8 +39,7 @@ class CdbsSetting(Ui_Config, QtWidgets.QDialog):
             self.lineEdit_3.setText(np)
 
     def reject(self, *args, **kwargs):
-        DataHandler.logger('info', translate('CadbaseMacro', 'Changes not accepted'))
-        # self.closeEvent()
+        logger('info', translate('CadbaseMacro', 'Changes not accepted'))
         self.close()
 
     def accept(self, *args, **kwargs):
@@ -48,19 +49,15 @@ class CdbsSetting(Ui_Config, QtWidgets.QDialog):
             update_settings = True
         if self.lineEdit_3.text() != CdbsEvn.g_library_path:
             CdbsEvn.g_library_path = self.lineEdit_3.text()
+            PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)
             update_settings = True
         if update_settings:
-            DataHandler.logger('error', f'update_settings')
+            logger('info', translate('CadbaseMacro', 'Updating settings'))
             CdbsEvn.save()
-            DataHandler.logger('error', f'BEFORE g_api_login: {CdbsEvn.g_api_login}')
             CdbsEvn.update_settings()
-            DataHandler.logger('error', f'AFTER g_api_login: {CdbsEvn.g_api_login}')
-        if self.lineEdit_2.text() and self.lineEdit_4.text():
-            username = self.lineEdit_2.text()
-            password = self.lineEdit_4.text()
-            CdbsAuth(username, password)
-        DataHandler.logger('info', translate('CadbaseMacro', 'Configuration updated'))
-        # self.closeEvent()
+            logger('info', translate('CadbaseMacro', 'Configuration updated'))
+        else:
+            logger('info', translate('CadbaseMacro', 'No changes found'))
         self.close()
 
     def closeEvent(self, *args, **kwargs):

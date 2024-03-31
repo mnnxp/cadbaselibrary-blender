@@ -17,7 +17,7 @@ class Ui_Config(object):
     def setupUi(self, Config):
         if not Config.objectName():
             Config.setObjectName(u"Config")
-        Config.resize(0, 0)
+        Config.resize(1300, 700)
         self.verticalLayout = QVBoxLayout(Config)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.groupBox_3 = QGroupBox(Config)
@@ -99,39 +99,6 @@ class Ui_Config(object):
 
         self.verticalLayout.addWidget(self.groupBox)
 
-        self.groupBox_2 = QGroupBox(Config)
-        self.groupBox_2.setObjectName(u"groupBox_2")
-        self.verticalLayout_2 = QVBoxLayout(self.groupBox_2)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_5 = QVBoxLayout()
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.label_2 = QLabel(self.groupBox_2)
-        self.label_2.setObjectName(u"label_2")
-
-        self.verticalLayout_5.addWidget(self.label_2)
-
-        self.lineEdit_2 = QLineEdit(self.groupBox_2)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
-
-        self.verticalLayout_5.addWidget(self.lineEdit_2)
-
-        self.label_3 = QLabel(self.groupBox_2)
-        self.label_3.setObjectName(u"label_3")
-
-        self.verticalLayout_5.addWidget(self.label_3)
-
-        self.lineEdit_4 = QLineEdit(self.groupBox_2)
-        self.lineEdit_4.setObjectName(u"lineEdit_4")
-        self.lineEdit_4.setEchoMode(QLineEdit.Password)
-
-        self.verticalLayout_5.addWidget(self.lineEdit_4)
-
-
-        self.verticalLayout_2.addLayout(self.verticalLayout_5)
-
-
-        self.verticalLayout.addWidget(self.groupBox_2)
-
         self.buttonBox = QDialogButtonBox(Config)
         self.buttonBox.setObjectName(u"buttonBox")
         self.buttonBox.setCursor(QCursor(Qt.PointingHandCursor))
@@ -148,7 +115,7 @@ class Ui_Config(object):
     def retranslateUi(self, Config):
         Config.setWindowTitle(QCoreApplication.translate("Config", u"CADBase Library Configuration", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("Config", u"Library path", None))
-        self.label.setText(QCoreApplication.translate("Config", u"The macro will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.\n"
+        self.label.setText(QCoreApplication.translate("Config", u"The addon will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.\n"
 "Changing the library path will require restarting Blender.", None))
         self.lineEdit_3.setPlaceholderText(QCoreApplication.translate("Config", u"Enter the path to the local CADBase library.", None))
 #if QT_CONFIG(accessibility)
@@ -159,10 +126,5 @@ class Ui_Config(object):
         self.label_4.setText(QCoreApplication.translate("Config", u"Here you can specify the server on which the CADBase platform. Specify the server (URL or IP) if you need to connect to the unofficial CADBase platform server.", None))
         self.lineEdit.setPlaceholderText(QCoreApplication.translate("Config", u"Enter data server URL here", None))
         self.pushButton.setText(QCoreApplication.translate("Config", u"Set official", None))
-        self.groupBox_2.setTitle(QCoreApplication.translate("Config", u"Authorization", None))
-        self.label_2.setText(QCoreApplication.translate("Config", u"Username", None))
-        self.lineEdit_2.setPlaceholderText(QCoreApplication.translate("Config", u"Enter your username from the CADBase", None))
-        self.label_3.setText(QCoreApplication.translate("Config", u"Password", None))
-        self.lineEdit_4.setPlaceholderText(QCoreApplication.translate("Config", u"Enter your password from the CADBase", None))
     # retranslateUi
 

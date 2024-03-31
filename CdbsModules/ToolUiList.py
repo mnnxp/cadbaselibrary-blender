@@ -10,7 +10,7 @@ from bpy.props import IntProperty, StringProperty, CollectionProperty
 # The content is fairly arbitrary, execpt that the member should be
 # bpy.props (ToDo: Verify this.)
 # Since it contains bpy.props, it must be registered.
-class ListItem(PropertyGroup):
+class CdbsListItem(PropertyGroup):
     """Group of properties representing an item in the list."""
 
     name: StringProperty(
@@ -29,9 +29,9 @@ class ListItem(PropertyGroup):
 # The actual UIList class
 # This class has a filter function that can be used to sort the properties
 # into ascending or descending order using their name property.
-class TOOL_UL_List(UIList):
+class CDBS_UL_List(UIList):
     """Demo UIList."""
-    bl_idname = "TOOL_UL_List"
+    bl_idname = "CDBS_UL_List"
     layout_type = "DEFAULT" # could be "COMPACT" or "GRID"
     # list_id ToDo
 
@@ -123,12 +123,6 @@ class TOOL_UL_List(UIList):
         row.prop(self, "filter_invert", text="", icon="ARROW_LEFTRIGHT")
 
 
-        # row = layout.row(align=True)
-        # row.label(text="Order by:")
-        # row.prop(self, "use_order_name", toggle=True)
-
-        # icon = 'TRIA_UP' if self.use_name_reverse else 'TRIA_DOWN'
-        # row.prop(self, "use_name_reverse", text="", icon=icon)
         row.prop(self, "use_order_name", text="", icon='SORTSIZE')
 
     def draw_item(self, context,
@@ -165,10 +159,10 @@ class TOOL_UL_List(UIList):
 #-----------------------------------------------------------------------------
 #
 # An extremely simple list reordering operator
-# Replace context.scene.demo_list with the actual list
-class TOOL_OT_List_Reorder(Operator):
+# Replace context.scene.cdbs_list with the actual list
+class CDBS_OT_List_Reorder(Operator):
     """ Add an Item to the UIList"""
-    bl_idname = "tool.list_reorder"
+    bl_idname = "cdbs.list_reorder"
     bl_label = "Add"
     bl_description = "add a new item to the list."
 
@@ -181,20 +175,20 @@ class TOOL_OT_List_Reorder(Operator):
             two items in it.
         """
         return (context.scene
-                and context.scene.demo_list
-                and len(context.scene.demo_list) > 1)
+                and context.scene.cdbs_list
+                and len(context.scene.cdbs_list) > 1)
 
     def move_index(self):
         """ Move index of an item while clamping it. """
-        index = bpy.context.scene.list_index
-        list_length = len(bpy.context.scene.demo_list) - 1
+        index = bpy.context.scene.cdbs_list_idx
+        list_length = len(bpy.context.scene.cdbs_list) - 1
         new_index = index + (-1 if self.direction == 'UP' else 1)
 
-        bpy.context.scene.list_index = max(0, min(new_index, list_length))
+        bpy.context.scene.cdbs_list_idx = max(0, min(new_index, list_length))
 
     def execute(self, context):
-        alist = context.scene.demo_list
-        index = context.scene.list_index
+        alist = context.scene.cdbs_list
+        index = context.scene.cdbs_list_idx
 
         neighbor = index + (-1 if self.direction == 'UP' else 1)
         alist.move(neighbor, index)

@@ -10,31 +10,7 @@ from multiprocessing.pool import ThreadPool
 from PySide2 import QtCore, QtNetwork
 import CdbsModules.CdbsEvn as CdbsEvn
 from CdbsModules.Translate import translate
-
-
-log = logging.getLogger(__name__ + '.cdbs')
-log.setLevel(logging.DEBUG)
-log.addHandler(logging.StreamHandler())
-
-def logger(type_msg, msg):
-    """Processing the output of messages for the user and saving them to the log file, if it exists"""
-
-    if type_msg == 'info':
-        log.info(f'{msg}\n')
-    elif type_msg == 'debug':
-        log.debug(f'{msg}\n')
-    elif type_msg == 'warning':
-        log.warning(f'{msg}\n')
-    elif type_msg == 'error':
-        log.error(f'{msg}\n')
-    elif type_msg == 'critical':
-        log.critical(f'{msg}\n')
-    else:
-        log.debug(f'{msg}\n')
-    # Save the message to the log file if there is a log file in the folder
-    if CdbsEvn.g_log_file_path.is_file():
-        with open(CdbsEvn.g_log_file_path, 'a') as log_file:
-            log_file.write(f'\nConsole {type_msg} {time.time()}: {msg}')
+from CdbsModules.Logger import logger
 
 
 def validation_uuid(target_uuid):
@@ -48,7 +24,7 @@ def handle_response(reply):
     er = reply.error()
     if er == QtNetwork.QNetworkReply.NoError:
         if reply.attribute(QtNetwork.QNetworkRequest.HttpStatusCodeAttribute) == 200:
-            logger('info', translate('DataHandler', 'Success'))
+            logger('debug', translate('DataHandler', 'Success'))
             return reply.readAll()
         else:
             logger(
@@ -57,7 +33,8 @@ def handle_response(reply):
                 + f' {reply.attribute(QtNetwork.QNetworkRequest.HttpStatusCodeAttribute)}',
             )
     else:
-        logger('error', translate('DataHandler', 'Error occurred:') + f' {er}')
+        logger('error', translate('DataHandler', 'There was an error with response processing.'))
+        logger('error', f' {er}')
         logger('error', f'{reply.errorString()}')
 
 
@@ -124,7 +101,7 @@ def download_parallel(args):
 
 def parsing_gpl():
     """Parsing data from file with a response into a namespace"""
-    logger('info', translate('DataHandler', 'Data processing, please wait.'))
+    logger('debug', translate('DataHandler', 'Data processing, please wait.'))
     if not CdbsEvn.g_response_path.exists():
         logger('error', translate('DataHandler', 'Not found file with response'))
     try:
@@ -133,7 +110,7 @@ def parsing_gpl():
             if res.data:
                 return res.data
             # if there is no data, tries to get an error message
-            logger('error', translate('DataHandler', 'Error occurred:'))
+            logger('error', translate('DataHandler', 'There was an error with response processing.'))
             for error in res.errors:
                 logger('error', error.message)
     except Exception as e:
@@ -195,6 +172,10 @@ def create_object_path(new_dir: Path, object_info: str, object_type: str):
         return
     if not new_dir.is_dir():
         Path.mkdir(new_dir)
+    if object_type == 'modification':
+        new_dir = Path(new_dir / CdbsEvn.g_program_name)
+        if not new_dir.is_dir():
+            Path.mkdir(new_dir)
     new_info_file = new_dir / object_type
     try:
         with new_info_file.open('w') as f:

@@ -4,78 +4,126 @@ from PySide2 import QtWidgets
 import bpy
 from bpy.types import Panel, Operator
 import CdbsModules.CdbsEvn as CdbsEvn
+from CdbsModules.CdbsEvn import EventMessage
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
 # from CdbsModules.Translate import translate
+from CdbsModules.CdbsToken import CdbsToken
 from CdbsModules.CdbsSetting import CdbsSetting
-from CdbsModules.ToolUiList import TOOL_UL_List
+from CdbsModules.ToolUiList import CDBS_UL_List
 
 
-class UpTreeLevel(Operator):
+class CDBS_OT_OpenListItem(Operator):
+    bl_idname = "cdbs.openlistitem"
+    bl_label = "Open List Item"
+    bl_description = "Sets the selected folder as the current position and updates the list"
+
+    def execute(self, context):
+        BtnUtil.open_tree_item()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
+class CDBS_OT_UpTreeLevel(Operator):
     bl_idname = "cdbs.uptreelevel"
     bl_label = "Return to parent object"
+    bl_description = "Sets the parent folder to active and updates the list"
 
     def execute(self, context):
         if PartsList.g_last_clicked_object == Path(CdbsEvn.g_library_path):
             return {'FINISHED'}
-        PartsList.g_last_clicked_object = PartsList.g_last_clicked_object.parent
+        if Path(PartsList.g_last_clicked_object / 'modification').is_file():
+            # go up two levels if a folder with a set of files is open
+            PartsList.g_last_clicked_object = PartsList.g_last_clicked_object.parent.parent
+        else:
+            PartsList.g_last_clicked_object = PartsList.g_last_clicked_object.parent
         BtnUtil.update_tree_list()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class LinkFile(Operator):
-    bl_idname = "cdbs.linkfile"
-    bl_label = "Link file"
-
-    def execute(self, context):
-        BtnUtil.link_file_objects()
-        return {'FINISHED'}
-
-class PullData(Operator):
+class CDBS_OT_PullData(Operator):
     bl_idname = "cdbs.pulldata"
     bl_label = "Pull data"
+    bl_description = "Fills the data from the cloud and updates the list regardless of the result"
 
     def execute(self, context):
         BtnUtil.pull_objects()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class OpenListItem(Operator):
-    bl_idname = "cdbs.openlistitem"
-    bl_label = "Open List Item"
+class CDBS_OT_LinkFile(Operator):
+    bl_idname = "cdbs.linkfile"
+    bl_label = "Link file"
+    bl_description = "Links all objects in the selected file to the scene"
 
     def execute(self, context):
-        BtnUtil.open_tree_item()
+        BtnUtil.link_file_objects()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class CdbsPushChanges(Operator):
-    bl_idname = "cdbs.cdbspushchanges"
+class CDBS_OT_PushChanges(Operator):
+    bl_idname = "cdbs.pushchanges"
     bl_label = "Push changes"
+    bl_description = """Starts the process of sending changes from local storage to the cloud.
+ It is required to open a component modification."""
 
     def execute(self, context):
         BtnUtil.push_files_of_fileset()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class CdbsSettings(Operator):
-    bl_idname = "cdbs.cdbssettings"
+class CDBS_OT_Settings(Operator):
+    bl_idname = "cdbs.settings"
     bl_label = "Settings"
+    bl_description = "Opens the tool (addon) settings in a separate window"
 
     def execute(self, context):
         client = CdbsSetting()
         client.show()
         app.exec_()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class ViewCadbaseLibraryPanel(Panel):
+class CDBS_OT_Authorization(Operator):
+    bl_idname = "cdbs.authorization"
+    bl_label = "Authorization"
+    bl_description = "Opens the window of authorization and updating the access token to CADBase platform"
+
+    def execute(self, context):
+        client = CdbsToken()
+        client.show()
+        app.exec_()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
+class CDBS_PT_CadbaseLibrary(Panel):
     bl_label = "CADBase Library"
-    bl_idname = "OBJECT_PT_CdbsLibrary"
+    bl_idname = "CDBS_PT_CadbaseLibrary"
     bl_category = "Import-Export"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
 
     def draw(self, context):
-        # global PartsList.g_selected_component_uuid
-        # global PartsList.g_selected_modification_uuid
-        # global PartsList.g_last_clicked_object
-        # global g_tree_elements
         layout = self.layout
 
         # The list is attached to an object.  Each object can have its own
@@ -90,27 +138,21 @@ class ViewCadbaseLibraryPanel(Panel):
         row.label(text=f"Tree {PartsList.g_current_position}")
 
         if scene:
-            # The left column, containing the list.
-            # col = row.column(align=True)
-            layout.template_list("TOOL_UL_List", "The_List", scene,
-                              "demo_list", scene, "list_index")
+            layout.template_list("CDBS_UL_List", "Cdbs_List", scene,
+                              "cdbs_list", scene, "cdbs_list_idx")
 
-            layout.operator("cdbs.uptreelevel", icon="BACK", text="Back")
             layout.operator("cdbs.openlistitem", icon="FORWARD", text="Open")
+            layout.operator("cdbs.uptreelevel", icon="BACK", text="Back")
             layout.operator("cdbs.pulldata", icon="FILE_REFRESH")
-            # layout.operator("cdbs.pulldata", icon="IMPORT")
             layout.operator("cdbs.linkfile", icon="LINKED")
-            layout.operator("cdbs.cdbspushchanges", icon="EXPORT")
+            layout.operator("cdbs.pushchanges", icon="EXPORT")
 
-        # row_preview = layout.row()
-        # row_preview.label(text="Preview")
-
-        # row_options = layout.row()
-        # row_options.label(text="Options")
-        layout.operator("cdbs.cdbssettings", icon="OPTIONS")
+        row_options = layout.row()
+        row_options.label(text="Options")
+        layout.operator("cdbs.settings", icon="OPTIONS")
+        layout.operator("cdbs.authorization", icon="KEYINGSET")
 
 
 app = QtWidgets.QApplication.instance()
 if not app:
     app = QtWidgets.QApplication(sys.argv)
-# BtnUtil.update_tree_list()

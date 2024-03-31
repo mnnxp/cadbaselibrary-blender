@@ -6,6 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
+    <width>1300</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +35,8 @@
           </property>
           <property name="text">
            <string>The addon will use this directory to save downloaded files. Be careful, data in this directory may be overwritten.
-Changing the library path will require restarting Blender.</string>          </property>
+Changing the library path will require restarting Blender.</string>
+          </property>
           <property name="wordWrap">
            <bool>true</bool>
           </property>
@@ -112,50 +115,6 @@ Changing the library path will require restarting Blender.</string>          </p
            </widget>
           </item>
          </layout>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Authorization</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Username</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_2">
-          <property name="placeholderText">
-           <string>Enter your username from the CADBase</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Password</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_4">
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
-          </property>
-          <property name="placeholderText">
-           <string>Enter your password from the CADBase</string>
-          </property>
-         </widget>
         </item>
        </layout>
       </item>

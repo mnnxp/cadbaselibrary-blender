@@ -4,13 +4,14 @@ from PySide2 import QtCore, QtNetwork
 from PySide2.QtCore import QFile
 import CdbsModules.DataHandler as DataHandler
 from CdbsModules.Translate import translate
+from CdbsModules.Logger import logger
 
 
 class CdbsStorageApi:
     """Sending a file to CADBase storage and handling response (empty response - good case)"""
 
     def __init__(self, presigned_url, file_path):
-        DataHandler.logger(
+        logger(
             'message', translate('CdbsStorageApi', 'Preparing for upload file...')
         )
         self.presigned_url = presigned_url
@@ -21,7 +22,7 @@ class CdbsStorageApi:
     def do_request(self):
         file = QFile(self.file_path.absolute().as_posix())
         if not file.open(QtCore.QIODevice.OpenModeFlag.ReadOnly):
-            DataHandler.logger(
+            logger(
                 'message', translate('CdbsStorageApi', 'Can not read file...')
             )
             return
@@ -30,18 +31,18 @@ class CdbsStorageApi:
             request.setUrl(QtCore.QUrl(self.presigned_url))
             reply = self.nam.put(request, file)
             loop = QtCore.QEventLoop()
-            DataHandler.logger('info', translate('CdbsStorageApi', 'Upload file...'))
+            logger('debug', translate('CdbsStorageApi', 'Upload file...'))
             reply.finished.connect(loop.quit)
             loop.exec_()
         except Exception as e:
-            DataHandler.logger(
+            logger(
                 'error',
                 translate('CdbsStorageApi', 'Exception in upload file:')
                 + f' {e}',
             )
         else:
             response_bytes = DataHandler.handle_response(reply)
-            DataHandler.logger(
+            logger(
                 'log',
                 translate('CdbsStorageApi', 'File uploaded. Response bytes:')
                 + f' {response_bytes}',

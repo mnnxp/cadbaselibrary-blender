@@ -5,6 +5,7 @@ from PySide2 import QtCore, QtNetwork
 import CdbsModules.DataHandler as DataHandler
 import CdbsModules.CdbsEvn as CdbsEvn
 from CdbsModules.Translate import translate
+from CdbsModules.Logger import logger
 
 
 def parsing_response(reply):
@@ -13,16 +14,16 @@ def parsing_response(reply):
         token = json.loads(str(response_bytes, 'utf-8'))
         CdbsEvn.g_auth_token = token['bearer']
         CdbsEvn.save()
-        DataHandler.logger('info', translate('CdbsAuth', 'Successful authorization'))
+        logger('info', translate('CdbsAuth', 'Successful authorization'))
     else:
-        DataHandler.logger('error', translate('CdbsAuth', 'Failed authorization'))
+        logger('error', translate('CdbsAuth', 'Failed authorization'))
 
 
 class CdbsAuth:
     """Getting a token to access the CADBase platform"""
 
     def __init__(self, username, password):
-        DataHandler.logger(
+        logger(
             'message',
             translate('CdbsAuth', 'Getting a new token, please wait.'),
         )
@@ -44,7 +45,7 @@ class CdbsAuth:
             del body
             del self.query
         except Exception as e:
-            DataHandler.logger(
+            logger(
                 'error',
                 translate('CdbsAuth', 'Exception when trying to login:')
                 + f' {e}',
