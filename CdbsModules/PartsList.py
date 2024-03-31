@@ -48,7 +48,7 @@ def update_components_list():
         )
         new_dir: Path = (
             library_path
-            / f'{component.name} (from  {component.ownerUser.username})'
+            / f'{component.name} (@{component.ownerUser.username})'
         )
         DataHandler.create_object_path(new_dir, component, 'component')
     logger('info', translate('CadbaseMacro', 'Component list update finished'))
