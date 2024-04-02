@@ -16,6 +16,8 @@ translations_dict = {
         ('Operator', 'Link file'): 'Прилинковать файл',
         ('Operator', 'Push changes'): 'Отправить изменения',
         ('Operator', 'Settings'): 'Настройки',
-        ('Operator', 'Settings'): 'Настройки'
+        ('*', 'Components (parts)'): 'Компоненты (детали)'
+        # ('*', 'Component'): 'Компонент',
+        # ('*', 'Modification'): 'Модификация'
     }
 }

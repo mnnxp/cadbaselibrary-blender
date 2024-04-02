@@ -7,7 +7,6 @@ import CdbsModules.CdbsEvn as CdbsEvn
 from CdbsModules.CdbsEvn import EventMessage
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
-# from CdbsModules.Translate import translate
 from CdbsModules.CdbsToken import CdbsToken
 from CdbsModules.CdbsSetting import CdbsSetting
 from CdbsModules.ToolUiList import CDBS_UL_List
@@ -136,7 +135,7 @@ class CDBS_PT_CadbaseLibrary(Panel):
         # what object (component, modification, etc.) they're currently interacting with.
         row = layout.row()
         row.alignment = "CENTER"
-        row.label(text=f"Tree {PartsList.g_current_position}")
+        row.label(text=f"{PartsList.g_current_position}")
 
         if scene:
             layout.template_list("CDBS_UL_List", "Cdbs_List", scene,

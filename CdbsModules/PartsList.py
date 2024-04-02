@@ -144,16 +144,15 @@ def detect_current_position():
         logger('info', translate('CadbaseMacro', 'Need set correct settings:') + f' {CdbsEvn.g_library_path}')
         return 'UNKNOWN'
     if g_last_clicked_object == Path(CdbsEvn.g_library_path):
-        g_current_position = 'components (parts)'
+        g_current_position = 'Components (parts)'
         return 'TREE'  # show components
     component_file = g_last_clicked_object / 'component'
     if component_file.exists():
-        # g_current_position = 'modifications'
-        g_current_position = f'component: {g_last_clicked_object.name}'
+        g_current_position = f'Component: {g_last_clicked_object.name}'
         return 'COMPONENT'  # show modifications of component
     modification_file = g_last_clicked_object / 'modification'
     if modification_file.exists():
         # g_current_position = 'fileset (Blender)'
-        g_current_position = f'modifications: {g_last_clicked_object.parent.name}'
+        g_current_position = f'Modification: {g_last_clicked_object.parent.name}'
         return 'MODIFICATION'  # show fileset for Blender of modification
     return 'UNKNOWN'
