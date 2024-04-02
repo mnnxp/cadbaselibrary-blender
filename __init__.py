@@ -3,10 +3,12 @@
 bl_info = {
     "name": "CADBase Library",
     "author": "mnnxp",
+    "version": (0, 0, 1),
     "blender": (3, 4, 1),
     "location": "3D View > Sidebar",
     "description": "This tool (addon) for synchronizing data local library with CADBase cloud storage.",
     "doc_url": "{BLENDER_MANUAL_URL}/addons/import_export/cadbase_library.html",
+    "warning": "To update files in CADBase, Blake3 must be installed.",
     "support": 'COMMUNITY',
     "category": "Import-Export",
 }
