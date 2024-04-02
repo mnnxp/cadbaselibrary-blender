@@ -34,6 +34,7 @@ from CdbsModules.CadbaseMacro import (
 )
 import CdbsModules.BtnUtil as BtnUtil
 from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List, CDBS_OT_List_Reorder
+from CdbsModules.Translate import translations_dict
 
 classes = (
     CDBS_PT_CadbaseLibrary,
@@ -50,6 +51,7 @@ classes = (
 )
 
 def register():
+    bpy.app.translations.register(__name__, translations_dict)
     for c in classes:
         bpy.utils.register_class(c)
     bpy.types.Scene.cdbs_list = CollectionProperty(type = CdbsListItem)
@@ -61,3 +63,4 @@ def unregister():
     del bpy.types.Scene.cdbs_list_idx
     for c in classes:
         bpy.utils.unregister_class(c)
+    bpy.app.translations.unregister(__name__)

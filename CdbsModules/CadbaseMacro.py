@@ -15,7 +15,7 @@ from CdbsModules.ToolUiList import CDBS_UL_List
 
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
-    bl_label = "Open List Item"
+    bl_label = "Open"
     bl_description = "Sets the selected folder as the current position and updates the list"
 
     def execute(self, context):
@@ -28,7 +28,7 @@ class CDBS_OT_OpenListItem(Operator):
 
 class CDBS_OT_UpTreeLevel(Operator):
     bl_idname = "cdbs.uptreelevel"
-    bl_label = "Return to parent object"
+    bl_label = "Go back"
     bl_description = "Sets the parent folder to active and updates the list"
 
     def execute(self, context):
@@ -62,7 +62,8 @@ class CDBS_OT_PullData(Operator):
 class CDBS_OT_LinkFile(Operator):
     bl_idname = "cdbs.linkfile"
     bl_label = "Link file"
-    bl_description = "Links all objects in the selected file to the scene"
+    bl_description = "Creates a reference to the data in the source file such that changes made there will \
+be reflected in the referencing file the next time it is reloaded"
 
     def execute(self, context):
         BtnUtil.link_file_objects()
@@ -141,8 +142,8 @@ class CDBS_PT_CadbaseLibrary(Panel):
             layout.template_list("CDBS_UL_List", "Cdbs_List", scene,
                               "cdbs_list", scene, "cdbs_list_idx")
 
-            layout.operator("cdbs.openlistitem", icon="FORWARD", text="Open")
-            layout.operator("cdbs.uptreelevel", icon="BACK", text="Back")
+            layout.operator("cdbs.openlistitem", icon="FORWARD")
+            layout.operator("cdbs.uptreelevel", icon="BACK")
             layout.operator("cdbs.pulldata", icon="FILE_REFRESH")
             layout.operator("cdbs.linkfile", icon="LINKED")
             layout.operator("cdbs.pushchanges", icon="EXPORT")
