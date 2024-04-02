@@ -1,12 +1,12 @@
 """Global variables of the addon are collected here"""
 
-import pathlib
+from pathlib import Path
 import bpy
 from CdbsModules.Logger import logger
 
 
 g_cadbase_api = 'https://api.cadbase.rs'  # default CADBase platform point
-cdbs_settings_file = pathlib.Path() / 'cadbase_library' / 'cdbs_preferences.dat'
+cdbs_settings_file = Path(bpy.utils.resource_path('USER')) / 'cadbase_library.dat'
 g_library_path = '' # for save the path to the local CADBase library
 g_base_api = g_cadbase_api
 g_api_login = f'{g_base_api}/login'
@@ -20,8 +20,8 @@ g_len_uuid = 36  # for a little uuid validation
 g_program_name = 'Blender'
 # Please don't use this name as the name of files or folders in the CADBase Library folder.
 g_resp_file = 'cadbase_file_2018'
-g_response_path = pathlib.Path() / g_resp_file
-g_log_file_path = pathlib.Path() / g_resp_file / '.log'
+g_response_path = Path() / g_resp_file
+g_log_file_path = Path() / g_resp_file / '.log'
 g_stack_event = []  # contains messages to be displayed to the user
 
 class EventMessage():
@@ -55,8 +55,8 @@ def update_settings():
             g_base_api = settings_data.readline().strip()       # 2th line
             g_auth_token = settings_data.readline().strip()     # 3th line
         update_api_points()
-        if pathlib.Path(g_library_path).is_dir():
-            g_response_path = pathlib.Path(g_library_path) / g_resp_file
+        if Path(g_library_path).is_dir():
+            g_response_path = Path(g_library_path) / g_resp_file
             g_log_file_path = g_response_path.with_suffix('.log')
 
 update_settings()
