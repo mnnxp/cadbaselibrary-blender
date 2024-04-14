@@ -42,7 +42,6 @@ def save():
     with open(cdbs_settings_file, "w", encoding='utf-8') as f:
         f.write(f'{g_library_path.strip()}\n{g_base_api.strip()}\n{g_auth_token.strip()}')
     logger('debug', f'3 {g_library_path}\n{g_base_api}\n{g_auth_token}')
-    logger('debug', 'Configuration updated OK')
 
 def update_settings():
     global g_library_path

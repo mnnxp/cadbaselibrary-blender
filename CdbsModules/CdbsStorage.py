@@ -21,7 +21,7 @@ class CdbsStorage:
         """Validation the modification uuid and creating variables for next parsing data"""
         logger(
             'message',
-            translate('CdbsStorage', 'Preparing for uploading files...'),
+            translate('cdbs', 'Preparing for uploading files...'),
         )
         self.modification_uuid = arg[0]
         # set directory from which files will be pushed
@@ -29,25 +29,18 @@ class CdbsStorage:
         if not Path.is_dir(self.last_clicked_dir):
             logger(
                 'warning',
-                translate(
-                    'CdbsStorage',
-                    'To upload files, you must select the modification folder',
-                ),
+                translate('cdbs', 'To upload files, you must select the modification folder.'),
             )
             return
         logger(
             'log',
-            translate('CdbsStorage', 'Modification UUID:')
+            translate('cdbs', 'Modification UUID:')
             + f' {self.modification_uuid}',
         )
         if not DataHandler.validation_uuid(self.modification_uuid):
             logger(
                 'warning',
-                translate(
-                    'CdbsStorage',
-                    'To upload files, you must select a modification \
-(so that the macro can determine the target set of files)',
-                ),
+                translate('cdbs', 'To send files to CADBase, you must open the modification or file set folder.'),
             )
             return
         self.upload_filenames = []  # filenames for upload to the CADBase storage
@@ -58,17 +51,14 @@ class CdbsStorage:
         self.processing_manager()
         logger(
             'message',
-            translate(
-                'CdbsStorage',
-                'Files in the CADBase storage have been updated successfully',
-            ),
+            translate('cdbs', 'Files in the CADBase storage have been updated successfully.')
         )
 
     def processing_manager(self):
         """Manager sending files to the storage: defines the uuid for fileset,
         calls the functions for processing, loading and confirm successful uploading files
         """
-        logger('log', translate('CdbsStorage', 'Getting fileset UUID...'))
+        logger('log', translate('cdbs', 'Getting fileset UUID...'))
         # getting the uuid of a set of files for target program
         CdbsApi(QueriesApi.target_fileset(self.modification_uuid))
         self.fileset_uuid = DataHandler.get_uuid(
@@ -76,13 +66,13 @@ class CdbsStorage:
         )
         logger(
             'log',
-            translate('CdbsStorage', 'Fileset UUID:')
+            translate('cdbs', 'Fileset UUID:')
             + f' {self.fileset_uuid}',
         )
         if not self.fileset_uuid:
             logger(
                 'log',
-                translate('CdbsStorage', 'Creating a new set of files for Blender'),
+                translate('cdbs', 'Creating a new set of files for Blender.'),
             )
             CdbsApi(QueriesApi.register_modification_fileset(self.modification_uuid))
             self.fileset_uuid = DataHandler.deep_parsing_gpl('registerModificationFileset')
@@ -90,10 +80,7 @@ class CdbsStorage:
         if not DataHandler.validation_uuid(self.fileset_uuid):
             logger(
                 'error',
-                translate(
-                    'CdbsStorage',
-                    'Error occurred while getting the UUID of the file set',
-                ),
+                translate('cdbs', 'Error occurred while getting the UUID of the file set.'),
             )
             return
         if self.fileset_uuid:
@@ -104,23 +91,17 @@ class CdbsStorage:
             if not count_up_files:
                 logger(
                     'error',
-                    translate(
-                        'CdbsStorage',
-                        'Error occurred while confirming the upload of files, \
-the files were not uploaded to correctly',
-                    ),
+                    translate('cdbs', 'Error occurred while confirming the upload of files, \
+the files were not uploaded to correctly.'),
                 )
                 return
         else:
-            logger('warning', translate('CdbsStorage', 'No files found for upload'))
+            logger('warning', translate('cdbs', 'No files found for upload.'))
             return
         if count_up_files > 0:
             logger(
                 'info',
-                translate(
-                    'CdbsStorage',
-                    'Success upload files to CADBase storage:',
-                )
+                translate('cdbs', 'Success upload files to CADBase storage:')
                 + f' {count_up_files}',
             )
         # clear data that will no longer be used
@@ -135,7 +116,7 @@ the files were not uploaded to correctly',
         # files from the local storage that are not in the CADBase storage
         logger(
             'log',
-            translate('CdbsStorage', 'Last clicked dir:')
+            translate('cdbs', 'Last clicked dir:')
             + f' {self.last_clicked_dir}',
         )
         for path in Path.iterdir(self.last_clicked_dir):
@@ -144,7 +125,7 @@ the files were not uploaded to correctly',
                 local_files.append(path.name)
         logger(
             'log',
-            translate('CdbsStorage', 'Local files:')
+            translate('cdbs', 'Local files:')
             + f' {local_files}',
         )
         if not local_files:
@@ -159,7 +140,7 @@ the files were not uploaded to correctly',
             cloud_filenames.append(cf.get('filename'))  # selecting cloud filenames for validation with locale files
         logger(
             'log',
-            translate('CdbsStorage', 'Cloud filenames:')
+            translate('cdbs', 'Cloud filenames:')
             + f' {cloud_filenames}',
         )
         dup_files = []  # files which are in the local and CADBase storage
@@ -167,7 +148,7 @@ the files were not uploaded to correctly',
             if not self.new_fileset and l_filename in cloud_filenames:
                 logger(
                     'log',
-                    translate('CdbsStorage', 'The local file has a cloud version:')
+                    translate('cdbs', 'The local file has a cloud version:')
                     + f' "{l_filename}"',
                 )
                 # save the name of the (old) file for hash check
@@ -175,14 +156,14 @@ the files were not uploaded to correctly',
             else:
                 logger(
                     'log',
-                    translate('CdbsStorage', 'Local file does not have a cloud version:')
+                    translate('cdbs', 'Local file does not have a cloud version:')
                     + f' "{l_filename}"',
                 )
                 # save the name of the new file to upload
                 self.upload_filenames.append(l_filename)  # add new files to upload
         logger(
             'message',
-            translate('CdbsStorage', 'New files to upload:')
+            translate('cdbs', 'New files to upload:')
             + f' {self.upload_filenames}',
         )
         self.parsing_duplicate(dup_files, cloud_files)
@@ -194,16 +175,13 @@ the files were not uploaded to correctly',
         except Exception as e:
             logger(
                 'error',
-                translate('CdbsStorage', 'Blake3 import error:')
+                translate('cdbs', 'Blake3 import error:')
                 + f' {e}',
             )
             logger(
                 'warning',
-                translate(
-                    'CdbsStorage',
-                    'Warning: for compare hashes need install `blake3`. \
-Please try to install it with: `pip install blake3` or some other way.',
-                ),
+                translate('cdbs', 'For compare hashes need install `blake3`. \
+Please try to install it with: `pip install blake3` or some other way.'),
             )
             return
         for df in dup_files:
@@ -211,10 +189,7 @@ Please try to install it with: `pip install blake3` or some other way.',
             if not cloud_file['hash']:
                 logger(
                     'info',
-                    translate(
-                        'CdbsStorage',
-                        'File hash from CADBase not found, this file is skipped:',
-                    )
+                    translate('cdbs', 'File hash from CADBase not found, this file is skipped:')
                     + f' "{df}"',
                 )
                 continue
@@ -222,10 +197,7 @@ Please try to install it with: `pip install blake3` or some other way.',
             if not local_file_path.is_file():
                 logger(
                     'info',
-                    translate(
-                        'CdbsStorage',
-                        'Found not file and it skipped',
-                    )
+                    translate('cdbs', 'Found not file and it skipped')
                     + f' ("{df}")',
                 )
                 break
@@ -236,17 +208,17 @@ Please try to install it with: `pip install blake3` or some other way.',
             except Exception as e:
                 logger(
                     'error',
-                    translate('CdbsStorage', 'Error calculating hash for local file')
+                    translate('cdbs', 'Error calculating hash for local file')
                     + f' {local_file_hash}: {e}',
                 )
                 break
             logger(
                 'log',
-                translate('CdbsStorage', 'Hash file')
+                translate('cdbs', 'File hash')
                 + f' {df}:\n{local_file_hash} ('
-                + translate('CdbsStorage', 'local')
+                + translate('cdbs', 'local')
                 + f')\n{cloud_file["hash"]} ('
-                + translate('CdbsStorage', 'cloud')
+                + translate('cdbs', 'cloud')
                 + ')',
             )
             # check the hash if it exists for both files
@@ -263,7 +235,7 @@ Please try to install it with: `pip install blake3` or some other way.',
         """
         logger(
             'message',
-            translate('CdbsStorage', 'Selected files to upload:')
+            translate('cdbs', 'Selected files to upload:')
             + f' {self.upload_filenames}',
         )
         CdbsApi(QueriesApi.upload_files_to_fileset(self.fileset_uuid, self.upload_filenames))
@@ -274,24 +246,18 @@ Please try to install it with: `pip install blake3` or some other way.',
         # data for uploading files to storage received
         logger(
             'message',
-            translate(
-                'CdbsStorage',
-                'Uploading files to cloud storage (this can take a long time)',
-            ),
+            translate('cdbs', 'Uploading files to cloud storage (this can take a long time).'),
         )
         self.upload_parallel(args)
         if not self.completed_files:
-            logger(
-                'log',
-                translate('CdbsStorage', 'Failed to upload files'),
-            )
+            logger('log', translate('cdbs', 'Failed to upload files.'))
             return 0
         # at least some files were uploaded successfully
         CdbsApi(QueriesApi.upload_completed(self.completed_files))
         res = DataHandler.deep_parsing_gpl('uploadCompleted')
         logger(
             'log',
-            translate('CdbsStorage', 'Confirmation of successful files upload:')
+            translate('cdbs', 'Confirmation of successful files upload:')
             + f' {res}',
         )
         return res
@@ -304,7 +270,7 @@ Please try to install it with: `pip install blake3` or some other way.',
         if CdbsStorageApi(arg.get('uploadUrl'), file_path):
             logger(
                 'log',
-                translate('CdbsStorage', 'Completed upload:')
+                translate('cdbs', 'Completed upload:')
                 + f' "{filename}"',
             )
             self.completed_files.append(arg.get('fileUuid'))
@@ -319,15 +285,15 @@ Please try to install it with: `pip install blake3` or some other way.',
         for result in results:
             logger(
                 'log',
-                translate('CdbsStorage', 'Filename:')
+                translate('cdbs', 'Filename:')
                 + f' "{result[0]}"'
-                + translate('CdbsStorage', 'time:')
+                + translate('cdbs', 'time:')
                 + f' {result[1]} '
-                + translate('CdbsStorage', 'sec'),
+                + translate('cdbs', 'sec'),
             )
         logger(
             'message',
-            translate('CdbsStorage', 'Total time:')
+            translate('cdbs', 'Total time:')
             + f'{time.time() - t0}'
-            + translate('CdbsStorage', 'sec'),
+            + translate('cdbs', 'sec'),
         )

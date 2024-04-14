@@ -3,6 +3,7 @@ import bpy
 from CdbsModules.CdbsStorage import CdbsStorage
 import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.PartsList as PartsList
+from CdbsModules.Translate import translate
 from CdbsModules.Logger import logger
 
 g_tree_elements = []
@@ -11,10 +12,10 @@ def check_list_idx():
     """Checks whether the leaf exists and whether the index is outside the array boundary."""
 
     if not bpy.context.scene.cdbs_list:
-        logger('warning', f'Target list not found.')
+        logger('warning', translate('cdbs', 'Target list not found.'))
         return False
     if bpy.context.scene.cdbs_list_idx >= len(bpy.context.scene.cdbs_list):
-        logger('warning', f'Target index not found: {bpy.context.scene.cdbs_list_idx}')
+        logger('warning', translate('cdbs', 'Target index not found:') + f' {bpy.context.scene.cdbs_list_idx}')
         return False
     return True
 
@@ -23,7 +24,7 @@ def push_files_of_fileset():
 
     current_position = PartsList.detect_current_position()
     if not current_position == 'MODIFICATION':
-        logger('warning', f"Need open modification, now: {current_position}")
+        logger('warning', translate('cdbs', 'Need open modification, now:') + f' {current_position}')
         return
     PartsList.update_selected_object_uuid()
     arg = (
@@ -43,13 +44,13 @@ def link_file_objects():
         return
     filepath = Path(bpy.context.scene.cdbs_list[bpy.context.scene.cdbs_list_idx].path)
     if Path(bpy.data.filepath) == filepath:
-        logger('warning', "You can't create a link to a file because it's already open.")
+        logger('warning', translate('cdbs', "You can't create a link to a file because it's already open."))
         return
     if not filepath.exists():
-        logger('warning', f"Skip not file: {filepath.name}")
+        logger('warning', translate('cdbs', 'Skip (file path does not exist):' + f' {filepath.name}'))
         return
     if not filepath.suffix == '.blend':
-        logger('warning', f"Skip file: {filepath.name}")
+        logger('warning', translate('cdbs', 'Skip:') + f' {filepath.name}')
         return
     # link all objects
     with bpy.data.libraries.load(str(filepath), link=False) as (data_from, data_to):
@@ -66,7 +67,7 @@ def update_tree_list():
     bpy.context.scene.cdbs_list.clear()
     g_tree_elements.clear()
     check_folder = Path(CdbsEvn.g_library_path)
-    logger('debug', f"g_last_clicked_object: {PartsList.g_last_clicked_object}")
+    logger('debug', translate('cdbs', 'g_last_clicked_object:' + f' {PartsList.g_last_clicked_object}'))
     if PartsList.g_last_clicked_object.is_dir():
         check_folder = PartsList.g_last_clicked_object
     current_position = PartsList.detect_current_position()
@@ -77,7 +78,7 @@ def update_tree_list():
     elif current_position in {'COMPONENT', 'MODIFICATION'}:
         for object_path in check_folder.iterdir():
             if object_path.match('*/component') or object_path.match('*/modification'):
-                logger('debug', f"Skip object: {object_path.name}")
+                logger('debug', translate('cdbs', 'Skip object:') + f' {object_path.name}')
                 continue
             g_tree_elements.append(object_path)
     for idx, item in enumerate(g_tree_elements):
@@ -99,10 +100,10 @@ def open_tree_item():
         # switch to a set of files if the modification folder is selected for opening
         path_item = path_item / CdbsEvn.g_program_name
     if not path_item:
-        logger('warning', f"Failed with get path: {bpy.context.scene.cdbs_list_idx}")
+        logger('warning', translate('cdbs', 'Failed with get path:') + f' {bpy.context.scene.cdbs_list_idx}')
         return
     if not path_item.is_dir():
-        logger('warning', 'Target path is not dir')
+        logger('warning', translate('cdbs', 'The target path is not a directory.'))
         return
     PartsList.g_last_clicked_object = path_item
     update_tree_list()
@@ -121,6 +122,6 @@ def pull_objects():
     elif current_position == 'MODIFICATION':
         PartsList.update_component_modificaion()
     else:
-        logger('warning', f"Failed get tree position: {current_position}")
+        logger('warning', translate('cdbs', 'Failed to determine the type of the open object:)' + f' {current_position}'))
         return
     update_tree_list()

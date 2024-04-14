@@ -16,7 +16,7 @@ class CDBS_OT_ResetPoint(Operator):
 
     def execute(self, context):
         CdbsEvn.g_resetpoint_flag = True
-        logger('debug', translate('CadbaseMacro', 'Need reset point'))
+        logger('debug', translate('cdbs', 'Need reset a point.'))
         return {'FINISHED'}
 
 class CDBS_OT_SettingUI(Operator):
@@ -48,7 +48,7 @@ class CDBS_OT_SettingUI(Operator):
         if CdbsEvn.g_resetpoint_flag:
             self.base_api = CdbsEvn.g_cadbase_api
             CdbsEvn.g_resetpoint_flag = False
-            logger('debug', translate('CadbaseMacro', 'Reset point finish'))
+            logger('debug', translate('cdbs', 'Resetting the end point.'))
 
         lp_box = layout.box()
         lp_box.label(text="Library path")
@@ -84,12 +84,12 @@ class CDBS_OT_SettingUI(Operator):
             PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)
             update_settings = True
         if update_settings:
-            logger('info', translate('CadbaseMacro', 'Updating settings'))
+            logger('info', translate('cdbs', 'Updating settings.'))
             CdbsEvn.save()
             CdbsEvn.update_settings()
-            logger('info', translate('CadbaseMacro', 'Configuration updated'))
+            logger('info', translate('cdbs', 'Configuration updated.'))
         else:
-            logger('info', translate('CadbaseMacro', 'No changes found'))
+            logger('info', translate('cdbs', 'No changes found.'))
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)

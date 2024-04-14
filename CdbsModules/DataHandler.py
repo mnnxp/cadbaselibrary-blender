@@ -22,12 +22,12 @@ def validation_uuid(target_uuid):
 
 def handle_response(reply):
     if reply.status_code == requests.codes.ok:
-        logger('debug', translate('DataHandler', 'Success'))
+        logger('debug', translate('cdbs', 'Success.'))
         return True
     else:
         logger(
             'error',
-            translate('DataHandler', 'Failed, status code:')
+            translate('cdbs', 'Failed, status code:')
             + f' {reply.status_code}',
         )
         return False
@@ -42,7 +42,7 @@ def get_file(args):
     if filepath.exists():
         logger(
             'warning',
-            translate('DataHandler', 'File already exists and skipped:')
+            translate('cdbs', 'File already exists and skipped:')
             + f' "{filepath}".',
         )
         return filepath, time.time() - t0
@@ -52,7 +52,7 @@ def get_file(args):
     except Exception as e:
         logger(
             'error',
-            translate('DataHandler', 'Exception in download file:')
+            translate('cdbs', 'Exception in download file:')
             + f' {e}',
         )
     else:
@@ -61,7 +61,7 @@ def get_file(args):
                 for chunk in reply.iter_content(chunk_size=128):
                     fd.write(chunk)
         else:
-            logger('error', translate('DataHandler', 'Error:') + f' {reply.error()}')
+            logger('error', translate('cdbs', 'Error:') + f' {reply.error()}')
     return filepath, time.time() - t0
 
 
@@ -72,26 +72,26 @@ def download_parallel(args):
     for result in results:
         logger(
             'log',
-            translate('DataHandler', 'path:')
+            translate('cdbs', 'path:')
             + f' "{result[0]}"'
-            + translate('CdbsStorage', 'time:')
+            + translate('cdbs', 'time:')
             + f' {result[1]} '
-            + translate('CdbsStorage', 'sec')
+            + translate('cdbs', 'sec')
             + ')',
         )
     logger(
         'message',
-        translate('CdbsStorage', 'Total time:')
+        translate('cdbs', 'Total time:')
         + f'{time.time() - t0}'
-        + translate('CdbsStorage', 'sec'),
+        + translate('cdbs', 'sec'),
     )
 
 
 def parsing_gpl():
     """Parsing data from file with a response into a namespace"""
-    logger('debug', translate('DataHandler', 'Data processing, please wait.'))
+    logger('debug', translate('cdbs', 'Data processing, please wait.'))
     if not CdbsEvn.g_response_path.exists():
-        logger('error', translate('DataHandler', 'Not found file with response'))
+        logger('error', translate('cdbs', 'Not found file with response.'))
         return
     try:
         with CdbsEvn.g_response_path.open('rb', buffering=0) as f:
@@ -99,16 +99,13 @@ def parsing_gpl():
             if res.data:
                 return res.data
             # if there is no data, tries to get an error message
-            logger('error', translate('DataHandler', 'There was an error with response processing.'))
+            logger('error', translate('cdbs', 'There was an error with response processing.'))
             for error in res.errors:
                 logger('error', error.message)
     except Exception as e:
         logger(
             'error',
-            translate(
-                'DataHandler',
-                'Exception occurred while parsing the server response:',
-            )
+            translate('cdbs', 'Exception occurred while parsing the server response:')
             + f' {str(e)}',
         )
 
@@ -116,7 +113,7 @@ def parsing_gpl():
 def remove_object(rm_object: Path):
     """Removing directory or file from local storage"""
     if not rm_object.exists():
-        logger('log', translate('DataHandler', 'No data found to delete'))
+        logger('log', translate('cdbs', 'No data found to delete.'))
         return
     # saving the previous server response to a log file, if it exists
     if (
@@ -134,17 +131,14 @@ def remove_object(rm_object: Path):
         except Exception as e:
             logger(
                 'error',
-                translate(
-                    'DataHandler',
-                    'Exception occurred while trying to save old response:',
-                )
+                translate('cdbs', 'Exception occurred while trying to save old response:')
                 + f' {str(e)}',
             )
     if rm_object.is_dir():
         Path.rmdir(rm_object)
     else:
         Path.unlink(rm_object)
-    logger('log', f'"{rm_object}" ' + translate('DataHandler', 'removed'))
+    logger('log', f'"{rm_object}" ' + translate('cdbs', 'removed'))
 
 
 def create_object_path(new_dir: Path, object_info: str, object_type: str):
@@ -152,10 +146,7 @@ def create_object_path(new_dir: Path, object_info: str, object_type: str):
     if new_dir.is_file():
         logger(
             'error',
-            translate(
-                'DataHandler',
-                'Please delete this file for correct operation:',
-            )
+            translate('cdbs', 'Please delete this file for correct operation:')
             + f'\n"{new_dir}"\n',
         )
         return
@@ -173,10 +164,7 @@ def create_object_path(new_dir: Path, object_info: str, object_type: str):
     except Exception as e:
         logger(
             'error',
-            translate(
-                'DataHandler',
-                'Exception occurred while trying to write the file:',
-            )
+            translate('cdbs', 'Exception occurred while trying to write the file:')
             + f' {str(e)}',
         )
 
@@ -186,15 +174,12 @@ def read_object_info(info_file: Path, select_object: str):
     try:
         with info_file.open('r') as data_file:
             object_info = json.loads(data_file.read(), object_hook=lambda d: SimpleNamespace(**d))
-            logger('log', translate('DataHandler', 'Selected') + f' {select_object}: {object_info.uuid}')
+            logger('log', translate('cdbs', 'Selected') + f' {select_object}: {object_info.uuid}')
             data_file.close()
     except Exception as e:
         logger(
             'error',
-            translate(
-                'DataHandler',
-                'Exception when trying to read information from the file:',
-            )
+            translate('cdbs',  'Exception when trying to read information from the file:')
             + f' {str(e)}',
         )
     else:
@@ -207,7 +192,7 @@ def deep_parsing_gpl(target, try_dict=False):
     if not data:
         logger(
             'log',
-            translate('DataHandler', 'Failed to parse GraphQL before deep parsing:')
+            translate('cdbs', 'Failed to parse GraphQL before deep parsing:')
             + f' {data}',
         )
         return
@@ -216,9 +201,7 @@ def deep_parsing_gpl(target, try_dict=False):
     except Exception as e:
         logger(
             'warning',
-            translate(
-                'DataHandler',
-                'Received data is not suitable for processing about')
+            translate('cdbs', 'Received data is not suitable for processing about')
                 + f' "{target}": {e}',
             )
         return
@@ -234,16 +217,16 @@ def deep_parsing_gpl(target, try_dict=False):
 def get_uuid(structure_data):
     """Getting an uuid if it exists in the data. Returning None if not found uuid."""
     target_uuid = None
-    logger('log', translate('DataHandler', 'Structure data:') + f' {structure_data}')
+    logger('log', translate('cdbs', 'Structure data:') + f' {structure_data}')
     if not structure_data:
         logger(
             'log',
-            translate('DataHandler', 'Not found data for UUID selection:')
+            translate('cdbs', 'Not found data for UUID selection:')
             + f' {structure_data}',
         )
         return
     vars_data = structure_data[0]
-    logger('log', translate('DataHandler', 'Structure vars:') + f' {vars_data}')
+    logger('log', translate('cdbs', 'Structure vars:') + f' {vars_data}')
     # are the known fields that store the uuid of the object
     if vars_data.get('uuid'):
         target_uuid = vars_data.get('uuid')
@@ -251,7 +234,7 @@ def get_uuid(structure_data):
         target_uuid = vars_data.get('fileUuid')
     logger(
         'log',
-        translate('DataHandler', 'UUID of structure data:')
+        translate('cdbs', 'UUID of structure data:')
         + f' {target_uuid}',
     )
     return validation_uuid(target_uuid)

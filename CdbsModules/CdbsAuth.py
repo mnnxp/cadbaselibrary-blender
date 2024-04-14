@@ -13,17 +13,17 @@ def parsing_response(reply):
         token = json.loads(str(reply.content, 'utf-8'))
         CdbsEvn.g_auth_token = token['bearer']
         CdbsEvn.save()
-        logger('info', translate('CdbsAuth', 'Successful authorization'))
+        logger('info', translate('cdbs', 'Successful authorization.'))
     else:
-        logger('error', translate('CdbsAuth', 'Failed authorization'))
+        logger('error', translate('cdbs', 'Failed authorization.'))
 
 
 class CdbsAuth:
     """Getting a token to access the CADBase platform"""
 
     def __init__(self, username, password):
-        logger('debug', translate('CdbsAuth', 'API Point:') + f' {CdbsEvn.g_api_login}')
-        logger('message', translate('CdbsAuth', 'Getting a new token, please wait.'))
+        logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_api_login}')
+        logger('message', translate('cdbs', 'Getting a new token, please wait.'))
         self.query = {'user': {'username': username, 'password': password}}
         try:
             headers = {'Content-Type': CdbsEvn.g_content_type}
@@ -34,7 +34,7 @@ class CdbsAuth:
         except Exception as e:
             logger(
                 'error',
-                translate('CdbsAuth', 'Exception when trying to login:')
+                translate('cdbs', 'Exception when trying to login:')
                 + f' {e}',
             )
         else:

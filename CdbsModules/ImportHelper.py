@@ -30,7 +30,7 @@ class CDBS_OT_SelectDirectory(Operator, ImportHelper):
             CdbsEvn.save()
             CdbsEvn.update_settings()
             BtnUtil.update_tree_list()
-            logger('info', translate('CadbaseMacro', 'Directory updated'))
+            logger('info', translate('cdbs', 'The path to the library in the local repository has been updated.'))
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)

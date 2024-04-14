@@ -45,7 +45,7 @@ class CDBS_OT_UpTreeLevel(Operator):
 class CDBS_OT_PullData(Operator):
     bl_idname = "cdbs.pulldata"
     bl_label = "Pull data"
-    bl_description = "Fills the data from the cloud and updates the list regardless of the result"
+    bl_description = "Retrieves data from cloud storage and updates the list"
 
     def execute(self, context):
         BtnUtil.pull_objects()
@@ -58,8 +58,7 @@ class CDBS_OT_PullData(Operator):
 class CDBS_OT_LinkFile(Operator):
     bl_idname = "cdbs.linkfile"
     bl_label = "Link file"
-    bl_description = "Creates a reference to the data in the source file such that changes made there will \
-be reflected in the referencing file the next time it is reloaded"
+    bl_description = "Creates a reference to objects in the target file"
 
     def execute(self, context):
         BtnUtil.link_file_objects()
@@ -72,8 +71,7 @@ be reflected in the referencing file the next time it is reloaded"
 class CDBS_OT_PushChanges(Operator):
     bl_idname = "cdbs.pushchanges"
     bl_label = "Push changes"
-    bl_description = """Starts the process of sending changes from local storage to the cloud.
- It is required to open a component modification."""
+    bl_description = "Starts the process of sending changes from local storage to the cloud."
 
     def execute(self, context):
         BtnUtil.push_files_of_fileset()

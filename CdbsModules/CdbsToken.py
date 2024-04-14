@@ -45,9 +45,9 @@ class CDBS_OT_TokenUI(Operator):
     def execute(self, context): # Runs by default
         if self.cdbs_username and self.cdbs_password:
             CdbsAuth(self.cdbs_username, self.cdbs_password)
-            logger('info', translate('CadbaseMacro', 'Configuration updated'))
+            logger('info', translate('cdbs', 'Configuration updated.'))
         else:
-            logger('info', translate('CadbaseMacro', 'No changes'))
+            logger('info', translate('cdbs', 'No changes.'))
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
