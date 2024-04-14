@@ -3,140 +3,78 @@
 bl_info = {
     "name": "CADBase Library",
     "author": "mnnxp",
+    "version": (0, 0, 1),
     "blender": (3, 4, 1),
-    "location": "3D View > Sidebar", # FIXME: ???
-    "description": "Tool for save data to cloud CADBase",
-    "doc_url": "{BLENDER_MANUAL_URL}/addons/mesh/cadbase_library.html",
-    "support": 'OFFICIAL', # FIXME: ???
-    "category": "Import-Export", # FIXME: ???
+    "location": "3D View > Sidebar",
+    "description": "This addon for synchronizing data with CADBase cloud storage.",
+    "doc_url": "{BLENDER_MANUAL_URL}/addons/import_export/cadbase_library.html",
+    "support": 'COMMUNITY',
+    "category": "Import-Export",
 }
 
 
-if "bpy" in locals():
-    import importlib
-    importlib.reload(ui)
-    if "export" in locals():
-        importlib.reload(export)
-else:
-    import math
-
-    import bpy
-    from bpy.types import PropertyGroup
-    from bpy.props import (
-        StringProperty,
-        BoolProperty,
-        FloatProperty,
-        EnumProperty,
-        PointerProperty,
-    )
-
-    from . import (
-        ui,
-        logger,
-    )
+import subprocess
+import os, sys
+from pathlib import Path
 
 
-class SceneProperties(PropertyGroup):
-    use_alignxy_face_area: BoolProperty(
-        name="Face Areas",
-        description="Normalize normals proportional to face areas",
-        default=False,
-    )
+SCRIPT_DIR = os.path.abspath(str(Path(__file__).parent / 'CdbsModules'))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-    export_format: EnumProperty(
-        name="Format",
-        description="Format type to export to",
-        items=(
-            ('OBJ', "OBJ", ""),
-            ('PLY', "PLY", ""),
-            ('STL', "STL", ""),
-            ('X3D', "X3D", ""),
-        ),
-        default='STL',
-    )
-    use_export_texture: BoolProperty(
-        name="Copy Textures",
-        description="Copy textures on export to the output path",
-        default=False,
-    )
-    use_apply_scale: BoolProperty(
-        name="Apply Scale",
-        description="Apply scene scale setting on export",
-        default=False,
-    )
-    use_data_layers: BoolProperty(
-        name="Data Layers",
-        description=(
-            "Export normals, UVs, vertex colors and materials for formats that support it "
-            "significantly increasing file size"
-        ),
-    )
-    export_path: StringProperty(
-        name="Export Directory",
-        description="Path to directory where the files are created",
-        default="//",
-        maxlen=1024,
-        subtype="DIR_PATH",
-    )
-    thickness_min: FloatProperty(
-        name="Thickness",
-        description="Minimum thickness",
-        subtype='DISTANCE',
-        default=0.001,  # 1mm
-        min=0.0,
-        max=10.0,
-    )
-    threshold_zero: FloatProperty(
-        name="Threshold",
-        description="Limit for checking zero area/length",
-        default=0.0001,
-        precision=5,
-        min=0.0,
-        max=0.2,
-    )
-    angle_distort: FloatProperty(
-        name="Angle",
-        description="Limit for checking distorted faces",
-        subtype='ANGLE',
-        default=math.radians(45.0),
-        min=0.0,
-        max=math.radians(180.0),
-    )
-    angle_sharp: FloatProperty(
-        name="Angle",
-        subtype='ANGLE',
-        default=math.radians(160.0),
-        min=0.0,
-        max=math.radians(180.0),
-    )
-    angle_overhang: FloatProperty(
-        name="Angle",
-        subtype='ANGLE',
-        default=math.radians(45.0),
-        min=0.0,
-        max=math.radians(90.0),
-    )
+def install_package(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
+# Sets the Python bindings for the official Rust implementation of BLAKE3
+# This library is required for hash calculation and for comparing files in local and cloud storage.
+install_package('blake3')
+
+import bpy
+from bpy.props import IntProperty, CollectionProperty
+from CdbsModules.CadbaseMacro import (
+    CDBS_PT_CadbaseLibrary,
+    CDBS_OT_OpenListItem,
+    CDBS_OT_UpTreeLevel,
+    CDBS_OT_PullData,
+    CDBS_OT_LinkFile,
+    CDBS_OT_PushChanges,
+    CDBS_OT_Settings,
+    CDBS_OT_Authorization,
+)
+from CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
+from CdbsModules.CdbsToken import CDBS_OT_TokenUI
+from CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
+import CdbsModules.BtnUtil as BtnUtil
+from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List
+from CdbsModules.Translate import translations_dict
 
 classes = (
-    SceneProperties,
-
-    ui.VIEWCL_tree,
-    ui.VIEWCL_export,
-
-    # operators.MESH_OT_print3d_clean_thin,
+    CDBS_PT_CadbaseLibrary,
+    CDBS_OT_OpenListItem,
+    CDBS_OT_UpTreeLevel,
+    CDBS_OT_PullData,
+    CDBS_OT_LinkFile,
+    CDBS_OT_PushChanges,
+    CDBS_OT_Settings,
+    CDBS_OT_SettingUI,
+    CDBS_OT_ResetPoint,
+    CDBS_OT_SelectDirectory,
+    CDBS_OT_Authorization,
+    CDBS_OT_TokenUI,
+    CdbsListItem,
+    CDBS_UL_List,
 )
 
-
 def register():
-    for cls in classes:
-        bpy.utils.register_class(cls)
-
-    bpy.types.Scene.cadbase_library = PointerProperty(type=SceneProperties)
-
+    bpy.app.translations.register(__name__, translations_dict)
+    for c in classes:
+        bpy.utils.register_class(c)
+    bpy.types.Scene.cdbs_list = CollectionProperty(type = CdbsListItem)
+    bpy.types.Scene.cdbs_list_idx = IntProperty(name = "Index for cdbs_list",
+                                             default = 0)
 
 def unregister():
-    for cls in classes:
-        bpy.utils.unregister_class(cls)
-
-    del bpy.types.Scene.cadbase_library
+    del bpy.types.Scene.cdbs_list
+    del bpy.types.Scene.cdbs_list_idx
+    for c in classes:
+        bpy.utils.unregister_class(c)
+    bpy.app.translations.unregister(__name__)

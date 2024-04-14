@@ -17,11 +17,10 @@ Features
 - getting a set of files for Blender data
 - creating a set of files for Blender data
 - download files from a set of files for Blender
-- detection of different files (obsolete in the cloud, by hash)
+- detecting different versions of files (files in the cloud are considered outdated)
 - upload files to a file-set for Blender
 - show library folder (components, modifications and files of fileset)
-- show preview files
-- change setting (path local library, etc)
+- change settings (path to local library and API point)
 
 Notes
 -----
