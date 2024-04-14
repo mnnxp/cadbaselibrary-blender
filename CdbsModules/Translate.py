@@ -134,7 +134,9 @@ or change the location of the local library. Path:'): 'Для корректно
 
 translations_dict = {
     'ru_RU': {
-        ('Panel', 'CADBase Library'): 'Библиотека CADBase',
+        ('*', 'CADBase Library'): 'Библиотека CADBase',
+        ('*', 'This addon for synchronizing data with CADBase cloud storage.'): 'Этот аддон предназначен для синхронизации данных с облачным хранилищем CADBase.',
+        ('*', 'Components (parts)'): 'Компоненты (детали)',
         ('Operator', 'CADBase Library Configuration'): 'Библиотека CADBase - Конфигурация',
         ('Operator', 'CADBase Library Authorization'): 'Библиотека CADBase - Авторизация',
         ('Operator', 'Open'): 'Открыть',
@@ -153,7 +155,6 @@ translations_dict = {
         ('Operator', 'Opens the tool (addon) settings in a separate window'): 'Открывает настройки инструмента (аддона) в отдельном окне',
         ('Operator', 'Opens the window of authorization and updating the access token to CADBase platform'): 'Открывает окно авторизации и обновления токена доступа к платформе CADBase',
         ('Operator', 'Sets as value the API point of the main CADBase platform server'): 'Устанавливает в качестве значения точку API основного сервера платформы CADBase',
-        ('Operator', 'The selected directory will store data about components, modifications and file sets.'): 'В выбранном каталоге будут храниться данные о компонентах, модификациях и наборах файлов.',
-        ('*', 'Components (parts)'): 'Компоненты (детали)'
+        ('Operator', 'The selected directory will store data about components, modifications and file sets.'): 'В выбранном каталоге будут храниться данные о компонентах, модификациях и наборах файлов.'
     }
 }

@@ -6,9 +6,8 @@ bl_info = {
     "version": (0, 0, 1),
     "blender": (3, 4, 1),
     "location": "3D View > Sidebar",
-    "description": "This tool (addon) for synchronizing data local library with CADBase cloud storage.",
+    "description": "This addon for synchronizing data with CADBase cloud storage.",
     "doc_url": "{BLENDER_MANUAL_URL}/addons/import_export/cadbase_library.html",
-    "warning": "Blake3 dependency for updating files in CADBase is installed with the addon.",
     "support": 'COMMUNITY',
     "category": "Import-Export",
 }
