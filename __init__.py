@@ -8,17 +8,26 @@ bl_info = {
     "location": "3D View > Sidebar",
     "description": "This tool (addon) for synchronizing data local library with CADBase cloud storage.",
     "doc_url": "{BLENDER_MANUAL_URL}/addons/import_export/cadbase_library.html",
-    "warning": "To update files in CADBase, Blake3 must be installed.",
+    "warning": "Blake3 dependency for updating files in CADBase is installed with the addon.",
     "support": 'COMMUNITY',
     "category": "Import-Export",
 }
 
 
+import subprocess
 import os, sys
 from pathlib import Path
 
+
 SCRIPT_DIR = os.path.abspath(str(Path(__file__).parent / 'CdbsModules'))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+def install_package(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Sets the Python bindings for the official Rust implementation of BLAKE3
+# This library is required for hash calculation and for comparing files in local and cloud storage.
+install_package('blake3')
 
 import bpy
 from bpy.props import IntProperty, CollectionProperty
