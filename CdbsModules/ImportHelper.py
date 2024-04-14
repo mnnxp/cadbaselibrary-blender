@@ -1,8 +1,9 @@
 import bpy
 from bpy_extras.io_utils import ImportHelper
-from bpy.props import StringProperty, BoolProperty, EnumProperty
+from bpy.props import StringProperty
 from bpy.types import Operator
 from pathlib import Path
+import CdbsModules.BtnUtil as BtnUtil
 import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.PartsList as PartsList
 from CdbsModules.Translate import translate
@@ -28,6 +29,7 @@ class CDBS_OT_SelectDirectory(Operator, ImportHelper):
             PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)
             CdbsEvn.save()
             CdbsEvn.update_settings()
+            BtnUtil.update_tree_list()
             logger('info', translate('CadbaseMacro', 'Directory updated'))
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:

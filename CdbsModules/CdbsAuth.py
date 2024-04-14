@@ -22,10 +22,8 @@ class CdbsAuth:
     """Getting a token to access the CADBase platform"""
 
     def __init__(self, username, password):
-        logger(
-            'message',
-            translate('CdbsAuth', 'Getting a new token, please wait.'),
-        )
+        logger('debug', translate('CdbsAuth', 'API Point:') + f' {CdbsEvn.g_api_login}')
+        logger('message', translate('CdbsAuth', 'Getting a new token, please wait.'))
         self.query = {'user': {'username': username, 'password': password}}
         try:
             headers = {'Content-Type': CdbsEvn.g_content_type}

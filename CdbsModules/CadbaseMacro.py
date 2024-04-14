@@ -130,15 +130,17 @@ class CDBS_PT_CadbaseLibrary(Panel):
         row.alignment = "CENTER"
         row.label(text=f"{PartsList.g_current_position}")
 
-        if scene:
-            layout.template_list("CDBS_UL_List", "Cdbs_List", scene,
-                              "cdbs_list", scene, "cdbs_list_idx")
+        if not scene:
+            return
 
-            layout.operator("cdbs.openlistitem", icon="FORWARD")
-            layout.operator("cdbs.uptreelevel", icon="BACK")
-            layout.operator("cdbs.pulldata", icon="FILE_REFRESH")
-            layout.operator("cdbs.linkfile", icon="LINKED")
-            layout.operator("cdbs.pushchanges", icon="EXPORT")
+        layout.template_list("CDBS_UL_List", "Cdbs_List", scene,
+                            "cdbs_list", scene, "cdbs_list_idx")
+
+        layout.operator("cdbs.openlistitem", icon="FORWARD")
+        layout.operator("cdbs.uptreelevel", icon="BACK")
+        layout.operator("cdbs.pulldata", icon="FILE_REFRESH")
+        layout.operator("cdbs.linkfile", icon="LINKED")
+        layout.operator("cdbs.pushchanges", icon="EXPORT")
 
         row_options = layout.row()
         row_options.label(text="Options")

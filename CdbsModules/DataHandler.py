@@ -92,6 +92,7 @@ def parsing_gpl():
     logger('debug', translate('DataHandler', 'Data processing, please wait.'))
     if not CdbsEvn.g_response_path.exists():
         logger('error', translate('DataHandler', 'Not found file with response'))
+        return
     try:
         with CdbsEvn.g_response_path.open('rb', buffering=0) as f:
             res = json.loads(f.readall(), object_hook=lambda d: SimpleNamespace(**d))

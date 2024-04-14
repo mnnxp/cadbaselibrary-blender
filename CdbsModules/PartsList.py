@@ -140,6 +140,9 @@ def update_selected_object_uuid():
 def detect_current_position():
     global g_current_position
 
+    if len(CdbsEvn.g_library_path) < 2:
+        logger('warning', f"Please specify path to the local library in the tool (addon) settings.")
+        return 'ERROR'
     if not Path(CdbsEvn.g_library_path).is_dir():
         logger('info', translate('CadbaseMacro', 'Need set correct settings:') + f' {CdbsEvn.g_library_path}')
         return 'UNKNOWN'

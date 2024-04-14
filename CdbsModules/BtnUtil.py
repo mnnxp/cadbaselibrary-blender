@@ -43,7 +43,7 @@ def link_file_objects():
         return
     filepath = Path(bpy.context.scene.cdbs_list[bpy.context.scene.cdbs_list_idx].path)
     if Path(bpy.data.filepath) == filepath:
-        logger('warning', 'This file is already linked')
+        logger('warning', "You can't create a link to a file because it's already open.")
         return
     if not filepath.exists():
         logger('warning', f"Skip not file: {filepath.name}")
@@ -68,9 +68,7 @@ def update_tree_list():
     check_folder = Path(CdbsEvn.g_library_path)
     logger('debug', f"g_last_clicked_object: {PartsList.g_last_clicked_object}")
     if PartsList.g_last_clicked_object.is_dir():
-        logger('debug', f"check_folder before: {check_folder}")
         check_folder = PartsList.g_last_clicked_object
-        logger('debug', f"check_folder after: {check_folder}")
     current_position = PartsList.detect_current_position()
     if current_position == 'TREE':
         for object_path in check_folder.iterdir():
@@ -112,10 +110,9 @@ def open_tree_item():
 def pull_objects():
     """Gets the current position and, if a target object is open, starts retrieving data for that object."""
 
-    if len(CdbsEvn.g_library_path) < 2:
-        logger('warning', f"Please specify path to the local library in the tool (addon) settings.")
-        return
     current_position = PartsList.detect_current_position()
+    if current_position == 'ERROR':
+        return
     PartsList.update_selected_object_uuid()
     if current_position == 'TREE':
         PartsList.update_components_list()

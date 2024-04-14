@@ -16,7 +16,7 @@ class CDBS_OT_ResetPoint(Operator):
 
     def execute(self, context):
         CdbsEvn.g_resetpoint_flag = True
-        print("reset point")
+        logger('debug', translate('CadbaseMacro', 'Need reset point'))
         return {'FINISHED'}
 
 class CDBS_OT_SettingUI(Operator):
@@ -48,7 +48,7 @@ class CDBS_OT_SettingUI(Operator):
         if CdbsEvn.g_resetpoint_flag:
             self.base_api = CdbsEvn.g_cadbase_api
             CdbsEvn.g_resetpoint_flag = False
-            print("reset point finish")
+            logger('debug', translate('CadbaseMacro', 'Reset point finish'))
 
         lp_box = layout.box()
         lp_box.label(text="Library path")

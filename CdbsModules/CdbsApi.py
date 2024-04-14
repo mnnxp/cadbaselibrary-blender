@@ -32,10 +32,11 @@ class CdbsApi:
     """Sending a request to the CADBase API and processing the response"""
 
     def __init__(self, query):
-        logger('debug', translate('CdbsApi', 'Getting data...'))
+        logger('debug', translate('CdbsApi', 'API Point:') + f' {CdbsEvn.g_cdbs_api}')
         if not CdbsEvn.g_auth_token:
             logger('error', translate('CdbsApi', 'Token not found. Please get a new token and try again'))
             return
+        logger('debug', translate('CdbsApi', 'Getting data...'))
         try:
             auth_header = 'Bearer ' + CdbsEvn.g_auth_token
             headers = {
