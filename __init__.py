@@ -45,7 +45,7 @@ from CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
 from CdbsModules.CdbsToken import CDBS_OT_TokenUI
 from CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
 import CdbsModules.BtnUtil as BtnUtil
-from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List, CDBS_OT_List_Reorder
+from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List
 from CdbsModules.Translate import translations_dict
 
 classes = (
@@ -63,7 +63,6 @@ classes = (
     CDBS_OT_TokenUI,
     CdbsListItem,
     CDBS_UL_List,
-    CDBS_OT_List_Reorder,
 )
 
 def register():
