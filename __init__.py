@@ -32,6 +32,9 @@ from CdbsModules.CadbaseMacro import (
     CDBS_OT_Settings,
     CDBS_OT_Authorization,
 )
+from CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
+from CdbsModules.CdbsToken import CDBS_OT_TokenUI
+from CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
 import CdbsModules.BtnUtil as BtnUtil
 from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List, CDBS_OT_List_Reorder
 from CdbsModules.Translate import translations_dict
@@ -44,7 +47,11 @@ classes = (
     CDBS_OT_LinkFile,
     CDBS_OT_PushChanges,
     CDBS_OT_Settings,
+    CDBS_OT_SettingUI,
+    CDBS_OT_ResetPoint,
+    CDBS_OT_SelectDirectory,
     CDBS_OT_Authorization,
+    CDBS_OT_TokenUI,
     CdbsListItem,
     CDBS_UL_List,
     CDBS_OT_List_Reorder,

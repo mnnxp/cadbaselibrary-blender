@@ -1,14 +1,11 @@
 import sys
 from pathlib import Path
-from PySide2 import QtWidgets
 import bpy
 from bpy.types import Panel, Operator
 import CdbsModules.CdbsEvn as CdbsEvn
 from CdbsModules.CdbsEvn import EventMessage
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
-from CdbsModules.CdbsToken import CdbsToken
-from CdbsModules.CdbsSetting import CdbsSetting
 from CdbsModules.ToolUiList import CDBS_UL_List
 
 
@@ -92,9 +89,7 @@ class CDBS_OT_Settings(Operator):
     bl_description = "Opens the tool (addon) settings in a separate window"
 
     def execute(self, context):
-        client = CdbsSetting()
-        client.show()
-        app.exec_()
+        bpy.ops.cdbs.settingui('INVOKE_DEFAULT')
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -107,9 +102,7 @@ class CDBS_OT_Authorization(Operator):
     bl_description = "Opens the window of authorization and updating the access token to CADBase platform"
 
     def execute(self, context):
-        client = CdbsToken()
-        client.show()
-        app.exec_()
+        bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -151,8 +144,3 @@ class CDBS_PT_CadbaseLibrary(Panel):
         row_options.label(text="Options")
         layout.operator("cdbs.settings", icon="OPTIONS")
         layout.operator("cdbs.authorization", icon="KEYINGSET")
-
-
-app = QtWidgets.QApplication.instance()
-if not app:
-    app = QtWidgets.QApplication(sys.argv)

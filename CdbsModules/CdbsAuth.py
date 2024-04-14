@@ -1,7 +1,7 @@
 """ This file contains one class for authorization on the CADBase platform """
 
+import requests
 import json
-from PySide2 import QtCore, QtNetwork
 import CdbsModules.DataHandler as DataHandler
 import CdbsModules.CdbsEvn as CdbsEvn
 from CdbsModules.Translate import translate
@@ -9,9 +9,8 @@ from CdbsModules.Logger import logger
 
 
 def parsing_response(reply):
-    response_bytes = DataHandler.handle_response(reply)
-    if response_bytes:
-        token = json.loads(str(response_bytes, 'utf-8'))
+    if DataHandler.handle_response(reply):
+        token = json.loads(str(reply.content, 'utf-8'))
         CdbsEvn.g_auth_token = token['bearer']
         CdbsEvn.save()
         logger('info', translate('CdbsAuth', 'Successful authorization'))
@@ -28,20 +27,10 @@ class CdbsAuth:
             translate('CdbsAuth', 'Getting a new token, please wait.'),
         )
         self.query = {'user': {'username': username, 'password': password}}
-        self.nam = QtNetwork.QNetworkAccessManager(None)
-        self.do_request()
-
-    def do_request(self):
         try:
-            request = QtNetwork.QNetworkRequest()
-            request.setUrl(QtCore.QUrl(CdbsEvn.g_api_login))
-            request.setRawHeader(b'Content-Type', CdbsEvn.g_content_type)
+            headers = {'Content-Type': CdbsEvn.g_content_type}
             body = json.dumps(self.query).encode('utf-8')
-            reply = self.nam.post(request, body)
-            loop = QtCore.QEventLoop()
-            reply.finished.connect(loop.quit)
-            loop.exec_()
-            # deleting references to an object with confidential data
+            reply = requests.post(CdbsEvn.g_api_login, headers=headers, data=body)
             del body
             del self.query
         except Exception as e:

@@ -1,7 +1,6 @@
 """Functionality for processing requests to the storage (S3) of CADBase platform"""
 
-from PySide2 import QtCore, QtNetwork
-from PySide2.QtCore import QFile
+import requests
 import CdbsModules.DataHandler as DataHandler
 from CdbsModules.Translate import translate
 from CdbsModules.Logger import logger
@@ -11,29 +10,11 @@ class CdbsStorageApi:
     """Sending a file to CADBase storage and handling response (empty response - good case)"""
 
     def __init__(self, presigned_url, file_path):
-        logger(
-            'message', translate('CdbsStorageApi', 'Preparing for upload file...')
-        )
-        self.presigned_url = presigned_url
-        self.file_path = file_path
-        self.nam = QtNetwork.QNetworkAccessManager(None)
-        self.do_request()
-
-    def do_request(self):
-        file = QFile(self.file_path.absolute().as_posix())
-        if not file.open(QtCore.QIODevice.OpenModeFlag.ReadOnly):
-            logger(
-                'message', translate('CdbsStorageApi', 'Can not read file...')
-            )
-            return
+        logger('message', translate('CdbsStorageApi', 'Preparing for upload file...'))
         try:
-            request = QtNetwork.QNetworkRequest()
-            request.setUrl(QtCore.QUrl(self.presigned_url))
-            reply = self.nam.put(request, file)
-            loop = QtCore.QEventLoop()
-            logger('debug', translate('CdbsStorageApi', 'Upload file...'))
-            reply.finished.connect(loop.quit)
-            loop.exec_()
+            with open(file_path.absolute().as_posix(), 'rb') as target_file:
+                logger('debug', translate('CdbsStorageApi', 'Upload file...'))
+                reply = requests.put(presigned_url, data=target_file)
         except Exception as e:
             logger(
                 'error',
@@ -41,9 +22,5 @@ class CdbsStorageApi:
                 + f' {e}',
             )
         else:
-            response_bytes = DataHandler.handle_response(reply)
-            logger(
-                'log',
-                translate('CdbsStorageApi', 'File uploaded. Response bytes:')
-                + f' {response_bytes}',
-            )
+            logger('log', translate('CdbsStorageApi', 'File uploaded. Response bytes:'))
+            DataHandler.handle_response(reply)

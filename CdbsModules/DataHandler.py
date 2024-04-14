@@ -1,13 +1,13 @@
 """This file contains functions for log, processing responses, working with files, and checking"""
 
 import time
+import requests
 import json
 import logging
 from pathlib import Path
 from types import SimpleNamespace
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
-from PySide2 import QtCore, QtNetwork
 import CdbsModules.CdbsEvn as CdbsEvn
 from CdbsModules.Translate import translate
 from CdbsModules.Logger import logger
@@ -21,22 +21,16 @@ def validation_uuid(target_uuid):
 
 
 def handle_response(reply):
-    er = reply.error()
-    if er == QtNetwork.QNetworkReply.NoError:
-        if reply.attribute(QtNetwork.QNetworkRequest.HttpStatusCodeAttribute) == 200:
-            logger('debug', translate('DataHandler', 'Success'))
-            return reply.readAll()
-        else:
-            logger(
-                'error',
-                translate('DataHandler', 'Failed, status code:')
-                + f' {reply.attribute(QtNetwork.QNetworkRequest.HttpStatusCodeAttribute)}',
-            )
+    if reply.status_code == requests.codes.ok:
+        logger('debug', translate('DataHandler', 'Success'))
+        return True
     else:
-        logger('error', translate('DataHandler', 'There was an error with response processing.'))
-        logger('error', f' {er}')
-        logger('error', f'{reply.errorString()}')
-
+        logger(
+            'error',
+            translate('DataHandler', 'Failed, status code:')
+            + f' {reply.status_code}',
+        )
+        return False
 
 def get_file(args):
     """Downloads and saves a file of args data to the user's local storage.
@@ -52,15 +46,9 @@ def get_file(args):
             + f' "{filepath}".',
         )
         return filepath, time.time() - t0
-    manager = QtNetwork.QNetworkAccessManager(None)
     try:
-        request = QtNetwork.QNetworkRequest()
-        request.setUrl(QtCore.QUrl(url))
-        request.setRawHeader(b'User-Agent', CdbsEvn.g_user_agent)
-        reply = manager.get(request)
-        loop = QtCore.QEventLoop()
-        reply.finished.connect(loop.quit)
-        loop.exec_()
+        headers = {'User-Agent': CdbsEvn.g_user_agent}
+        reply = requests.get(url, headers=headers)
     except Exception as e:
         logger(
             'error',
@@ -68,10 +56,10 @@ def get_file(args):
             + f' {e}',
         )
     else:
-        if reply.error() == QtNetwork.QNetworkReply.NoError:
-            response_bytes = reply.readAll()
-            with filepath.open('wb') as f:
-                f.write(response_bytes)
+        if handle_response(reply):
+            with filepath.open('wb') as fd:
+                for chunk in reply.iter_content(chunk_size=128):
+                    fd.write(chunk)
         else:
             logger('error', translate('DataHandler', 'Error:') + f' {reply.error()}')
     return filepath, time.time() - t0

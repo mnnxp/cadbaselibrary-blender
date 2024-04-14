@@ -1,8 +1,8 @@
 """ Functionality for processing requests to the CADBase platform """
 
+import requests
 import json
 from pathlib import Path
-from PySide2 import QtCore, QtNetwork
 import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.DataHandler as DataHandler
 from CdbsModules.Translate import translate
@@ -17,12 +17,12 @@ def parsing_response(reply):
             + f' {CdbsEvn.g_response_path}'
             + ' or change the location of the local library')
         return
-    response_bytes = DataHandler.handle_response(reply)
-    if response_bytes:
+    if DataHandler.handle_response(reply):
         if CdbsEvn.g_response_path.is_file():
             DataHandler.remove_object(CdbsEvn.g_response_path)  # deleting old a response if it exists
-        with CdbsEvn.g_response_path.open('wb') as file:
-            file.write(response_bytes)
+        with CdbsEvn.g_response_path.open('wb') as fd:
+            for chunk in reply.iter_content(chunk_size=128):
+                fd.write(chunk)
         logger('debug', translate('CdbsApi', 'Successful processing request'))
     else:
         logger('error', translate('CdbsApi', 'Failed processing request'))
@@ -33,27 +33,17 @@ class CdbsApi:
 
     def __init__(self, query):
         logger('debug', translate('CdbsApi', 'Getting data...'))
-        self.nam = QtNetwork.QNetworkAccessManager(None)
-        self.do_request(query)
-
-    def do_request(self, query):
         if not CdbsEvn.g_auth_token:
             logger('error', translate('CdbsApi', 'Token not found. Please get a new token and try again'))
             return
         try:
-            request = QtNetwork.QNetworkRequest()
-            request.setUrl(QtCore.QUrl(CdbsEvn.g_cdbs_api))
             auth_header = 'Bearer ' + CdbsEvn.g_auth_token
-            request.setRawHeader(b'Content-Type', CdbsEvn.g_content_type)
-            request.setRawHeader(b'Authorization', auth_header.encode())
+            headers = {
+                'Content-Type': CdbsEvn.g_content_type,
+                'Authorization': auth_header.encode()}
             body = json.dumps(query).encode('utf-8')
-            logger(
-                'log', translate('CdbsApi', 'Query include body:') + f' {body}'
-            )
-            reply = self.nam.post(request, body)
-            loop = QtCore.QEventLoop()
-            reply.finished.connect(loop.quit)
-            loop.exec_()
+            logger('log', translate('CdbsApi', 'Query include body:') + f' {body}')
+            reply = requests.post(CdbsEvn.g_cdbs_api, headers=headers, data=body)
         except Exception as e:
             logger(
                 'error',

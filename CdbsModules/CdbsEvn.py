@@ -23,6 +23,7 @@ g_resp_file = 'cadbase_file_2018'
 g_response_path = Path() / g_resp_file
 g_log_file_path = Path() / g_resp_file / '.log'
 g_stack_event = []  # contains messages to be displayed to the user
+g_resetpoint_flag = False  # flag to reset the api point to the default value
 
 class EventMessage():
     """Stores the message and the level of importance of that message"""
