@@ -94,6 +94,7 @@ def open_tree_item():
     if not bpy.context.scene.cdbs_list_idx:
         bpy.context.scene.cdbs_list_idx = 0
     if not check_list_idx():
+        update_tree_list()
         return
     path_item = Path(bpy.context.scene.cdbs_list[bpy.context.scene.cdbs_list_idx].path)
     if Path(path_item / CdbsEvn.g_program_name / 'modification').is_file():
