@@ -100,7 +100,7 @@ This check is skipped and previously uploaded files (already in the cloud) are n
 
 ## Links
 
-Workbench development happens in [this](https://gitlab.com/cadbase/cadbaselibrary-blender) repository (GitLab).
+Add-on development happens in [this](https://gitlab.com/cadbase/cadbaselibrary-blender) repository (GitLab).
 
 Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codeberg](https://codeberg.org/mnnxp/cadbaselibrary-blender).
 
