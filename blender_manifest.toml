@@ -5,7 +5,7 @@ schema_version = "1.0.0"
 id = "cadbase_library"
 version = "0.0.1"
 name = "CADBase Library"
-tagline = "This is an add-on for synchronizing data with CADBase cloud storage"
+tagline = "This is an addon for synchronizing local data with cloud storage"
 maintainer = "mnnxp <in@cadbase.rs>"
 # Supported types: "add-on", "theme"
 type = "add-on"
@@ -25,7 +25,7 @@ website = "https://gitlab.com/cadbase/cadbaselibrary-blender/"
 # https://docs.blender.org/manual/en/dev/extensions/tags.html
 tags = ["Import-Export", "User Interface"]
 
-blender_version_min = "3.4.1"
+blender_version_min = "4.2.0"
 # Optional: maximum supported Blender version
 # blender_version_max = "5.1.0"
 
