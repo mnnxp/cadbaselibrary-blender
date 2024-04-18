@@ -32,8 +32,11 @@ class CDBS_OT_TokenUI(Operator):
 
         lp_box = layout.box()
         lp_box.label(text="Authorization")
-        lp_box.label(text="CADBase platform access token will be saved locally, after successful authorization.")
-        lp_box.label(text="When the authorization token expires, you will need to request a new authorization token by re-entering your username and password.")
+        lp_box.label(text="CADBase platform access token will be saved locally,")
+        lp_box.label(text="after successful authorization. When the authorization ")
+        lp_box.label(text="token expires, you will need to request a new ")
+        lp_box.label(text="authorization token by re-entering your username ")
+        lp_box.label(text="and password.")
         lp_box.label(text="Username")
         row = lp_box.row()
         row.prop(self, "cdbs_username")
