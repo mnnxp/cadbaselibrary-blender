@@ -1,7 +1,10 @@
-# Addon Cadbase Library
+# Addon CADBase Library
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![Blender >= 3.4.1](https://img.shields.io/badge/Blender->=3.4.1-gren)](https://blender.org)
+[![Blender >= 4.1.0](https://img.shields.io/badge/Blender->=4.1.0-gren)](https://blender.org)
+
+
+![Demonstration of all windows of the CADBase Library add-on.](./Resources/panels_collage.png "All windows of the CADBase Library add-on.")
 
 This addon allows the user to interact with CADBase (upload and download parts) via the Blender interface.
 
@@ -10,6 +13,8 @@ CADBase is a platform for publishing and sharing information about 3D components
 **Important Note:**  To use the addon, you must have an account on the [CADBase Platform](https://cadbase.rs).
 
 ## Description
+
+![This GIF shows how to save a file to the "N1" modification file set of the Sphere comoponent.](./Resources/save_and_push.gif "Saving a file to the file set of modification "N1" of the Sphere comoponent.")
 
 The addon is designed to use components from CADBase in the Blender interface.
 
@@ -54,6 +59,23 @@ After entering these data to receive the token and pressing the **OK** button. P
 
 **Important Note:**  If the access token has expired, you need to repeat the steps above.
 
+
+### Control
+
+ `Open` - open the next level (deeper). If a component of a list of user's favorite comoponents is selected, it will open the list of modifications for that component; if a modification of a component modifications list is selected, it will open a set of files for Blender.
+
+ `Go back` - return to the previous level (higher). If a set of files is open, the button opens a list of modifications of a component; if a list of modifications of a component is open, the button opens a list of a user's favorite component.
+
+ `Pull data` - retrieves data from the remote server and updates the local library view.
+
+ `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
+
+ `Push changes` - button to upload files from Blender folder (set of files for Blender) of local library to CADBase storage. Before uploading, the hash of existing files in local and cloud storage is checked, if they are different, the files in cloud storage are updated. Blake3 library is used to calculate the hash, if it is unavailable, the hash is not checked and existing files in the cloud are not updated.
+
+ `Settings` - this button opens a modal window where you can specify the path to the local library, where the files received from CADBase will be stored, and the address of CADBase server.
+
+ `Authorization` - this button opens a modal window where you can specify login and password from CADBase profile to get a new authorization token. This action must be repeated if the access token is revoked or expired.
+
 ## Usage
 
 Add target components to bookmarks (favorites) on the CADBase site.
@@ -62,7 +84,7 @@ In Blender will only display components that the user has bookmarked on CADBase 
 
 ### Getting data
 
-To get the data, click on the **Get Data** button. Depending on the open position (directory), this will start the process of retrieving a list of the user's favorite components, a list of component modifications, or downloading files from the file set of the selected component modification for Blender.
+To get the data, click on the **Pull Data** button. Depending on the open position (directory), this will start the process of retrieving a list of the user's favorite components, a list of component modifications, or downloading files from the file set of the selected component modification for Blender.
 
 ### Sending data
 
@@ -104,8 +126,10 @@ Add-on development happens in [this](https://gitlab.com/cadbase/cadbaselibrary-b
 
 Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codeberg](https://codeberg.org/mnnxp/cadbaselibrary-blender).
 
-[About CADBase Platform (on YouTube)](https://www.youtube.com/@cadbaseplatform)
+About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
+
+v0.0.2 2024-04-18    * added blender manifest, description and fixed bugs
 
 v0.0.1 2024-04-14    * first release
