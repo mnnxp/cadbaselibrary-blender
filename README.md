@@ -14,7 +14,7 @@ CADBase is a platform for publishing and sharing information about 3D components
 
 ## Description
 
-![This GIF shows how to save a file to the "N1" modification file set of the Sphere comoponent.](./Resources/save_and_push.gif "Saving a file to the file set of modification "N1" of the Sphere comoponent.")
+![how to save a file to a file set of the Sphere component](./Resources/save_and_push.gif)
 
 The addon is designed to use components from CADBase in the Blender interface.
 
@@ -62,7 +62,7 @@ After entering these data to receive the token and pressing the **OK** button. P
 
 ### Control
 
- `Open` - open the next level (deeper). If a component of a list of user's favorite comoponents is selected, it will open the list of modifications for that component; if a modification of a component modifications list is selected, it will open a set of files for Blender.
+ `Open` - open the next level (deeper). If a component of a list of user's favorite components is selected, it will open the list of modifications for that component; if a modification of a component modifications list is selected, it will open a set of files for Blender.
 
  `Go back` - return to the previous level (higher). If a set of files is open, the button opens a list of modifications of a component; if a list of modifications of a component is open, the button opens a list of a user's favorite component.
 
