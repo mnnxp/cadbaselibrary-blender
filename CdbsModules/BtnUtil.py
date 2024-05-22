@@ -123,6 +123,6 @@ def pull_objects():
     elif current_position == 'MODIFICATION':
         PartsList.update_component_modificaion()
     else:
-        logger('warning', translate('cdbs', 'Failed to determine the type of the open object:)' + f' {current_position}'))
+        logger('warning', translate('cdbs', 'Failed to determine the type of the open object:' + f' {current_position}'))
         return
     update_tree_list()

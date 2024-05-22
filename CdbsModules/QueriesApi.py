@@ -8,6 +8,19 @@ import CdbsModules.CdbsEvn as CdbsEvn
 
 class QueriesApi:
     @staticmethod
+    def register_user(username: str, password: str):
+        return dict(
+          query=f'''mutation {{
+              registerUser (args: {{
+                email: ""
+                username: "{username}"
+                password: "{password}"
+              }}) {{
+                uuid
+              }}
+            }}'''
+        )
+
     def fav_components():
         return dict(
           query='''query {

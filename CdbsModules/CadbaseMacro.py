@@ -3,7 +3,7 @@ from pathlib import Path
 import bpy
 from bpy.types import Panel, Operator
 import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.CdbsEvn import EventMessage
+from CdbsModules.Logger import EventMessage
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
 from CdbsModules.ToolUiList import CDBS_UL_List
@@ -144,3 +144,12 @@ class CDBS_PT_CadbaseLibrary(Panel):
         row_options.label(text="Options")
         layout.operator("cdbs.settings", icon="OPTIONS")
         layout.operator("cdbs.authorization", icon="KEYINGSET")
+
+        # Checks if the settings are updated. Updates the settings on first load
+        # and when switching from the Add-on Manager after changing them there.
+        cdbs_prefs = CdbsEvn.get_preferences()
+        if cdbs_prefs:
+            if (cdbs_prefs.library_path != CdbsEvn.g_library_path
+                or cdbs_prefs.base_api != CdbsEvn.g_base_api):
+                CdbsEvn.update_settings()
+                PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)

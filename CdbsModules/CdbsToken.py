@@ -16,8 +16,9 @@ class CDBS_OT_TokenUI(Operator):
     cdbs_password: StringProperty(name = "", default = "", subtype='PASSWORD')
 
     def __init__(self):
-        self.cdbs_username = ""
-        self.cdbs_password = ""
+        cdbs_prefs = CdbsEvn.get_preferences()
+        self.cdbs_username = cdbs_prefs.username
+        self.cdbs_password = cdbs_prefs.password
 
     @classmethod # Will never run when poll returns false
     def poll(cls, context):
@@ -32,11 +33,7 @@ class CDBS_OT_TokenUI(Operator):
 
         lp_box = layout.box()
         lp_box.label(text="Authorization")
-        lp_box.label(text="CADBase platform access token will be saved locally,")
-        lp_box.label(text="after successful authorization. When the authorization ")
-        lp_box.label(text="token expires, you will need to request a new ")
-        lp_box.label(text="authorization token by re-entering your username ")
-        lp_box.label(text="and password.")
+        lp_box.label(text="Re-authorization allows you to get a new token.")
         lp_box.label(text="Username")
         row = lp_box.row()
         row.prop(self, "cdbs_username")
@@ -47,6 +44,7 @@ class CDBS_OT_TokenUI(Operator):
 
     def execute(self, context): # Runs by default
         if self.cdbs_username and self.cdbs_password:
+            CdbsEvn.save_credentials(self.cdbs_username, self.cdbs_password)
             CdbsAuth(self.cdbs_username, self.cdbs_password)
             logger('info', translate('cdbs', 'Configuration updated.'))
         else:

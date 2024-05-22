@@ -3,6 +3,7 @@ from bpy.types import Operator
 from bpy.props import StringProperty
 from pathlib import Path
 import CdbsModules.CdbsEvn as CdbsEvn
+import CdbsModules.BtnUtil as BtnUtil
 import CdbsModules.PartsList as PartsList
 from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.Translate import translate
@@ -16,7 +17,10 @@ class CDBS_OT_ResetPoint(Operator):
 
     def execute(self, context):
         CdbsEvn.g_resetpoint_flag = True
-        logger('debug', translate('cdbs', 'Need reset a point.'))
+        cdbs_prefs = CdbsEvn.get_preferences()
+        if cdbs_prefs:
+            cdbs_prefs.base_api = CdbsEvn.g_cadbase_api
+        CdbsEvn.update_api_points(CdbsEvn.g_cadbase_api)
         return {'FINISHED'}
 
 class CDBS_OT_SettingUI(Operator):
@@ -78,7 +82,7 @@ class CDBS_OT_SettingUI(Operator):
 
     def execute(self, context): # Runs by default
         update_settings = False
-        if self.base_api:
+        if self.base_api != CdbsEvn.g_base_api:
             CdbsEvn.g_base_api = self.base_api
             update_settings = True
         if self.library_path != CdbsEvn.g_library_path:
@@ -89,6 +93,7 @@ class CDBS_OT_SettingUI(Operator):
             logger('info', translate('cdbs', 'Updating settings.'))
             CdbsEvn.save()
             CdbsEvn.update_settings()
+            BtnUtil.update_tree_list()
             logger('info', translate('cdbs', 'Configuration updated.'))
         else:
             logger('info', translate('cdbs', 'No changes found.'))
