@@ -31,9 +31,9 @@ or change the location of the local library. Path:')
 class CdbsApi:
     """Sending a request to the CADBase API and processing the response"""
 
-    def __init__(self, query):
+    def __init__(self, query, skip_token=False):
         logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_cdbs_api}')
-        if not CdbsEvn.g_auth_token:
+        if not CdbsEvn.g_auth_token and not skip_token:
             logger('error', translate('cdbs', 'Token not found. Please get a new token and try again.'))
             return
         logger('debug', translate('cdbs', 'Getting data...'))

@@ -6,6 +6,7 @@ import CdbsModules.CdbsEvn as CdbsEvn
 from CdbsModules.Logger import EventMessage
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
+import CdbsModules.CdbsNewUser as CdbsNewUser
 from CdbsModules.ToolUiList import CDBS_UL_List
 
 
@@ -101,6 +102,19 @@ class CDBS_OT_Authorization(Operator):
 
     def execute(self, context):
         bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
+class CDBS_OT_SignUp(Operator):
+    bl_idname = "cdbs.signup"
+    bl_label = "Login"
+    bl_description = "Sends requests to register and/or authorize the user"
+
+    def execute(self, context):
+        CdbsNewUser.register_new_user()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
