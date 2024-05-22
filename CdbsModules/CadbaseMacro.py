@@ -42,9 +42,9 @@ class CDBS_OT_UpTreeLevel(Operator):
             self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class CDBS_OT_PullData(Operator):
-    bl_idname = "cdbs.pulldata"
-    bl_label = "Pull data"
+class CDBS_OT_Pull(Operator):
+    bl_idname = "cdbs.pull"
+    bl_label = "Pull"
     bl_description = "Retrieves data from cloud storage and updates the list"
 
     def execute(self, context):
@@ -68,9 +68,9 @@ class CDBS_OT_LinkFile(Operator):
             self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class CDBS_OT_PushChanges(Operator):
-    bl_idname = "cdbs.pushchanges"
-    bl_label = "Push changes"
+class CDBS_OT_Push(Operator):
+    bl_idname = "cdbs.push"
+    bl_label = "Push"
     bl_description = "Starts the process of sending changes from local storage to the cloud."
 
     def execute(self, context):
@@ -136,9 +136,9 @@ class CDBS_PT_CadbaseLibrary(Panel):
 
         layout.operator("cdbs.openlistitem", icon="FORWARD")
         layout.operator("cdbs.uptreelevel", icon="BACK")
-        layout.operator("cdbs.pulldata", icon="FILE_REFRESH")
+        layout.operator("cdbs.pull", icon="FILE_REFRESH")
         layout.operator("cdbs.linkfile", icon="LINKED")
-        layout.operator("cdbs.pushchanges", icon="EXPORT")
+        layout.operator("cdbs.push", icon="EXPORT")
 
         row_options = layout.row()
         row_options.label(text="Options")

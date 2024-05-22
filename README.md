@@ -66,11 +66,11 @@ After entering these data to receive the token and pressing the **OK** button. P
 
  `Go back` - return to the previous level (higher). If a set of files is open, the button opens a list of modifications of a component; if a list of modifications of a component is open, the button opens a list of a user's favorite component.
 
- `Pull data` - retrieves data from the remote server and updates the local library view.
+ `Pull` - retrieves data from the remote server and updates the local library view.
 
  `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
 
- `Push changes` - button to upload files from Blender folder (set of files for Blender) of local library to CADBase storage. Before uploading, the hash of existing files in local and cloud storage is checked, if they are different, the files in cloud storage are updated. Blake3 library is used to calculate the hash, if it is unavailable, the hash is not checked and existing files in the cloud are not updated.
+ `Push` - button to upload files from Blender folder (set of files for Blender) of local library to CADBase storage. Before uploading, the hash of existing files in local and cloud storage is checked, if they are different, the files in cloud storage are updated. Blake3 library is used to calculate the hash, if it is unavailable, the hash is not checked and existing files in the cloud are not updated.
 
  `Settings` - this button opens a modal window where you can specify the path to the local library, where the files received from CADBase will be stored, and the address of CADBase server.
 
@@ -84,13 +84,13 @@ In Blender will only display components that the user has bookmarked on CADBase 
 
 ### Getting data
 
-To get the data, click on the **Pull Data** button. Depending on the open position (directory), this will start the process of retrieving a list of the user's favorite components, a list of component modifications, or downloading files from the file set of the selected component modification for Blender.
+To get the data, click on the **Pull** button. Depending on the open position (directory), this will start the process of retrieving a list of the user's favorite components, a list of component modifications, or downloading files from the file set of the selected component modification for Blender.
 
 ### Sending data
 
 Open the modification from which you want to upload the files.
 
-Click the **Push changes** button to upload the local files for the set of component modification files to CADBase storage (cloud).
+Click the **Push** button to upload the local files for the set of component modification files to CADBase storage (cloud).
 
 Information about the upload process will be displayed in the Blender report.
 
