@@ -3,11 +3,11 @@
 bl_info = {
     "name": "CADBase Library",
     "author": "mnnxp",
-    "version": (0, 0, 2),
+    "version": (0, 1, 0),
     "blender": (4, 1, 0),
     "location": "3D View > Sidebar",
     "description": "This is add-on for synchronizing data with CADBase cloud storage",
-    "doc_url": "{BLENDER_MANUAL_URL}/addons/import_export/cadbase_library.html",
+    "doc_url": "https://gitlab.com/cadbase/cadbaselibrary-blender/-/blob/master/README.md",
     "support": 'COMMUNITY',
     "category": "Import-Export",
 }

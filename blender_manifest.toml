@@ -3,7 +3,7 @@ schema_version = "1.0.0"
 # Example of manifest file for a Blender extension
 # Change the values according to your extension
 id = "cadbase_library"
-version = "0.0.2"
+version = "0.1.0"
 name = "CADBase Library"
 tagline = "This is an addon for synchronizing local data with cloud storage"
 maintainer = "mnnxp <in@cadbase.rs>"
@@ -19,7 +19,7 @@ permissions = ["files", "network"]
 
 # Optional link to documentation, support, source files, etc
 # website = "http://extensions.blender.org/add-ons/my-example-package/"
-website = "https://gitlab.com/cadbase/cadbaselibrary-blender/"
+website = "https://cadbase.rs/"
 
 # Optional list defined by Blender and server, see:
 # https://docs.blender.org/manual/en/dev/extensions/tags.html
@@ -31,8 +31,6 @@ blender_version_min = "4.2.0"
 
 # License conforming to https://spdx.org/licenses/ (use "SPDX: prefix)
 # https://docs.blender.org/manual/en/dev/extensions/licenses.html
-license = [
-  "SPDX:GPL-2.0-or-later",
-]
+license = ["SPDX:GPL-2.0-or-later"]
 # Optional: required by some licenses.
 # copyright = []

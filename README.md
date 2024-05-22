@@ -1,4 +1,4 @@
-# Addon CADBase Library
+# Add-on CADBase Library
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![Blender >= 4.1.0](https://img.shields.io/badge/Blender->=4.1.0-gren)](https://blender.org)
@@ -6,27 +6,29 @@
 
 ![Demonstration of all windows of the CADBase Library add-on.](./Resources/panels_collage.png "All windows of the CADBase Library add-on.")
 
-This addon allows the user to interact with CADBase (upload and download parts) via the Blender interface.
+This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.
 
 CADBase is a platform for publishing and sharing information about 3D components (parts), drawings and manufacturers.
 
-**Important Note:**  To use the addon, you must have an account on the [CADBase Platform](https://cadbase.rs).
+**Important Note:**  To use the add-on, you must have an account on the [CADBase Platform](https://cadbase.rs).
 
 ## Description
 
 ![how to save a file to a file set of the Sphere component](./Resources/save_and_push.gif)
 
-The addon is designed to use components from CADBase in the Blender interface.
+The add-on is designed to use components from CADBase in the Blender interface.
 
-Component modifications contain sets of files for various CAD systems. This addon will work with data from the Blender set, without downloading documentation and data from other file sets.
+Component modifications contain sets of files for various CAD systems. This add-on will work with data from the Blender set, without downloading documentation and data from other file sets.
 
 Files uploaded to file sets are versioned, allowing you to restore earlier versions, get the old state they were in before the changes, review the changes, and find out who last changed something and caused the problem.
 
 ### Dependencies
 
+This add-on requires no additional steps and will work without additional libraries. However, optionally, a library can be installed to extend the functionality of the add-on.
+
 ##### Installation Blake3
 
-To use this addon to update files already in the CADBase storage, Blake3 must be installed.
+To use this add-on to update files already in the CADBase storage, Blake3 must be installed.
 
 ```sh
   # Install on Unix/macOS
@@ -35,19 +37,19 @@ To use this addon to update files already in the CADBase storage, Blake3 must be
   py -m pip install "blake3"
 ```
 
-**Please Note:** The addon will work without this _Blake3_ library, the only difference is that the files in the CADBase storage (cloud) that have already been uploaded will not be replaced.
+**Please Note:** The add-on will work without this _Blake3_ library, the only difference is that the files in the CADBase storage (cloud) that have already been uploaded will not be replaced.
 
 ### First start
 
-Once installed, the addon will be available in the 3D View > Sidebar menu.
+Once installed, the add-on will be available in the 3D View > Sidebar menu.
 
-Select the **CADBase Library** addon in the Import-Export category.
+Select the **CADBase Library** add-on in the Import-Export category.
 
 #### Configuration CADBase Library
 
-First you need to set the library location. CADBase cloud storage will be synchronized with this location. Also there will storage files with technical data for addon.
+First you need to set the library location. CADBase cloud storage will be synchronized with this location. Also there will storage files with technical data for add-on.
 
-This location can be changed in the addon settings in the field _Library path_.
+This location can be changed in the add-on settings in the field _Library path_.
 
 #### Getting an authorization token
 
@@ -100,9 +102,9 @@ After uploading the files, a message will be displayed in the Blender report wit
 
 ##### Blender modules and macros folders
 
-The addon settings in Blender, such as the local library path, server address (API Point), and access token, will be saved in the `cadbase_library.dat` file, which will be located at the `bpy.utils.resource_path('USER')` path.
+The add-on's settings, such as the local library path, server (Point API) address, and access token, are stored in the Blender user settings file (`userpref.blend`), which is located at the path `bpy.utils.resource_path('USER')/config`.
 
-##### Used (reserved) names in the addon
+##### Used (reserved) names in the add-on
 
 Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the CADBase library folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
 
@@ -112,11 +114,11 @@ In component folders, a `component` file is created with the technical data abou
 
 In fileset folders, a `modification` file is created with the technical data about the component modification and fileset.
 
-##### How the addon work with data
+##### How the add-on work with data
 
 To avoid losing local data when downloading from CADBase storage (from the cloud), files already in local storage are skipped.
 
-Before uploading files to CADBase storage (to the cloud), the addon checks for existing files in the cloud and excludes files from the upload list if their local and cloud hashes match. A hash is calculated using the Blake3 library.
+Before uploading files to CADBase storage (to the cloud), the add-on checks for existing files in the cloud and excludes files from the upload list if their local and cloud hashes match. A hash is calculated using the Blake3 library.
 
 This check is skipped and previously uploaded files (already in the cloud) are not updated unless the Blake3 library is installed.
 
@@ -129,6 +131,7 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codebe
 About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
+v0.1.0 2024-05-19    * updated links, save settings in userpref.blend, added ability to create an account via add-on
 
 v0.0.2 2024-04-18    * added blender manifest, description and fixed bugs
 
