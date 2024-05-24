@@ -19,7 +19,7 @@ class CdbsPreferences(AddonPreferences):
         description="The specified directory will be store data.",
     )
     base_api: StringProperty(
-        name="Point API",
+        name="API Point",
         default=g_cadbase_api,
         description="Specify server with CADBase platform.",
     )

@@ -36,11 +36,6 @@ def update_api_points(new_url):
     g_api_login = f'{g_base_api}/login'
     g_cdbs_api = f'{g_base_api}/graphql'
 
-def save_credentials(username, password):
-    cdbs_prefs = get_preferences()
-    cdbs_prefs.username = username
-    cdbs_prefs.password = password
-
 def save():
     cdbs_prefs = get_preferences()
     cdbs_prefs.api_key = g_auth_token
@@ -54,7 +49,7 @@ def update_settings():
     global g_log_file_path
     cdbs_prefs = get_preferences()
     if not cdbs_prefs:
-        logger("debug", "Failed to update preferences.")
+        logger('debug', 'Failed to update preferences.')
         return
     g_auth_token = cdbs_prefs.api_key
     if g_base_api != cdbs_prefs.base_api:

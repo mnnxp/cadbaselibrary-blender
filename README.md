@@ -100,9 +100,9 @@ After uploading the files, a message will be displayed in the Blender report wit
 
 ## Additional Information
 
-##### Blender modules and macros folders
+##### Add-on settings
 
-The add-on's settings, such as the local library path, server (Point API) address, and access token, are stored in the Blender user settings file (`userpref.blend`), which is located at the path `bpy.utils.resource_path('USER')/config`.
+The add-on's settings, such as the local library path, server (API Point) address, and access token, are stored in the Blender user settings file (`userpref.blend`), which is located at the path `bpy.utils.resource_path('USER')/config`.
 
 ##### Used (reserved) names in the add-on
 

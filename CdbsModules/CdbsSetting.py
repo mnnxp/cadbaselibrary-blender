@@ -63,6 +63,9 @@ class CDBS_OT_SettingUI(Operator):
             CdbsEvn.g_resetpoint_flag = False
             logger('debug', translate('cdbs', 'Resetting the end point.'))
 
+        layout.label(text="Please note that any changes made here will be lost")
+        layout.label(text="when Blender is restarted, but changes made in Add-ons")
+        layout.label(text="will not be lost when Blender is restarted.")
         lp_box = layout.box()
         lp_box.label(text="Library path")
         lp_box.label(text="The specified directory will be store data.")
@@ -73,7 +76,7 @@ class CDBS_OT_SettingUI(Operator):
         lp_box_r1_c2.operator("cdbs.selectdirectory", text="", icon="FILE_FOLDER")
 
         ba_box = layout.box()
-        ba_box.label(text="Point API")
+        ba_box.label(text="API Point")
         ba_box.label(text="Specify server with CADBase platform.")
         ba_box_r1 = ba_box.row()
         ba_box_r1_c1 = ba_box_r1.column()
@@ -94,7 +97,7 @@ class CDBS_OT_SettingUI(Operator):
             PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)
             update_settings = True
         if update_settings:
-            logger('info', translate('cdbs', 'Updating settings.'))
+            logger('debug', translate('cdbs', 'Updating settings.'))
             CdbsEvn.save()
             CdbsEvn.update_settings()
             BtnUtil.update_tree_list()

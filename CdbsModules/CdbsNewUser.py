@@ -14,7 +14,7 @@ from CdbsModules.Logger import logger
 def register_new_user():
     cdbs_prefs = CdbsEvn.get_preferences()
     if not cdbs_prefs:
-        logger("debug", translate("cdbs", "Preferences not found."))
+        logger('debug', translate('cdbs', 'Preferences not found.'))
         return
     # update the settings so that user changes are not lost
     CdbsEvn.update_settings()
@@ -22,18 +22,17 @@ def register_new_user():
     if cdbs_prefs.username and cdbs_prefs.password:
         CdbsRegUser(cdbs_prefs.username, cdbs_prefs.password)
         CdbsAuth(cdbs_prefs.username, cdbs_prefs.password)
-        logger("info", translate("cdbs", "Configuration updated."))
 
 
 class CdbsRegUser:
     """Register a new user the CADBase platform"""
 
     def __init__(self, username, password):
-        logger("debug", translate("cdbs", "API Point:") + f" {CdbsEvn.g_cdbs_api}")
-        logger("message", translate("cdbs", "New user registration, please wait."))
+        logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_cdbs_api}')
+        logger('message', translate('cdbs', 'New user registration, please wait.'))
         CdbsApi(QueriesApi.register_user(username, password), skip_token=True)
-        self.fileset_uuid = DataHandler.deep_parsing_gpl("registerUser")
+        self.fileset_uuid = DataHandler.deep_parsing_gpl('registerUser')
         logger(
-            "log",
-            translate("cdbs", "New user UUID:") + f" {self.fileset_uuid}",
+            'log',
+            translate('cdbs', 'New user UUID:') + f' {self.fileset_uuid}',
         )

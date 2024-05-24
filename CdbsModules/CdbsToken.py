@@ -31,6 +31,9 @@ class CDBS_OT_TokenUI(Operator):
     def draw(self, context): # Draw options (typically displayed in the tool-bar)
         layout = self.layout
 
+        layout.label(text="Please note that any changes made here will be lost")
+        layout.label(text="when Blender is restarted, but changes made in Add-ons")
+        layout.label(text="will not be lost when Blender is restarted.")
         lp_box = layout.box()
         lp_box.label(text="Authorization")
         lp_box.label(text="Re-authorization allows you to get a new token.")
@@ -44,9 +47,7 @@ class CDBS_OT_TokenUI(Operator):
 
     def execute(self, context): # Runs by default
         if self.cdbs_username and self.cdbs_password:
-            CdbsEvn.save_credentials(self.cdbs_username, self.cdbs_password)
             CdbsAuth(self.cdbs_username, self.cdbs_password)
-            logger('info', translate('cdbs', 'Configuration updated.'))
         else:
             logger('info', translate('cdbs', 'No changes.'))
         # Display messages for the user their in the interface, if any
