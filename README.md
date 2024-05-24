@@ -131,6 +131,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codebe
 About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
+v0.1.1 2024-05-24    * added bug information and updated translations
+
 v0.1.0 2024-05-19    * updated links, save settings in userpref.blend, added ability to create an account via add-on
 
 v0.0.2 2024-04-18    * added blender manifest, description and fixed bugs
