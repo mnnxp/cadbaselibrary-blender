@@ -56,6 +56,19 @@ class CDBS_OT_Pull(Operator):
             self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
+class CDBS_OT_RegComponent(Operator):
+    bl_idname = "cdbs.regcomponent"
+    bl_label = "Add component"
+    bl_description = "Registers a new component (part) on CADBase platform"
+
+    def execute(self, context):
+        bpy.ops.cdbs.newcomponent('INVOKE_DEFAULT')
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
 class CDBS_OT_LinkFile(Operator):
     bl_idname = "cdbs.linkfile"
     bl_label = "Link file"
@@ -151,6 +164,7 @@ class CDBS_PT_CadbaseLibrary(Panel):
         layout.operator("cdbs.openlistitem", icon="FORWARD")
         layout.operator("cdbs.uptreelevel", icon="BACK")
         layout.operator("cdbs.pull", icon="FILE_REFRESH")
+        layout.operator("cdbs.regcomponent", icon="ADD")
         layout.operator("cdbs.linkfile", icon="LINKED")
         layout.operator("cdbs.push", icon="EXPORT")
 

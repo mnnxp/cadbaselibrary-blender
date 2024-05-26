@@ -28,6 +28,7 @@ from CdbsModules.CadbaseMacro import (
     CDBS_OT_OpenListItem,
     CDBS_OT_UpTreeLevel,
     CDBS_OT_Pull,
+    CDBS_OT_RegComponent,
     CDBS_OT_LinkFile,
     CDBS_OT_Push,
     CDBS_OT_Settings,
@@ -36,6 +37,7 @@ from CdbsModules.CadbaseMacro import (
 )
 from CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
 from CdbsModules.CdbsToken import CDBS_OT_TokenUI
+from CdbsModules.CdbsNewComponent import CDBS_OT_NewComponent
 from CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
 import CdbsModules.BtnUtil as BtnUtil
 from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List
@@ -48,6 +50,8 @@ classes = (
     CDBS_OT_OpenListItem,
     CDBS_OT_UpTreeLevel,
     CDBS_OT_Pull,
+    CDBS_OT_RegComponent,
+    CDBS_OT_NewComponent,
     CDBS_OT_LinkFile,
     CDBS_OT_Push,
     CDBS_OT_Settings,

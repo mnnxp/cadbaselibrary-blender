@@ -1,7 +1,7 @@
 from pathlib import Path
 import bpy
 from bpy.types import AddonPreferences
-from bpy.props import StringProperty, IntProperty, BoolProperty
+from bpy.props import StringProperty
 
 # Address of the main server of CADBase platform.
 # The duplicates `CdbsModules.CdbsEvn.g_cadbase_api`.
