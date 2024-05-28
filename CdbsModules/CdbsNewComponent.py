@@ -52,7 +52,7 @@ class CDBS_OT_NewComponent(Operator):
                     self.component_name, component_description
                 )
             )
-            self.component_uuid = DataHandler.deep_parsing_gpl('registerComponent')
+            self.component_uuid = str(DataHandler.deep_parsing_gpl('registerComponent'))
             if len(self.component_uuid) == CdbsEvn.g_len_uuid:
                 PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)
                 BtnUtil.pull_objects()
