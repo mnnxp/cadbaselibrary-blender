@@ -18,8 +18,6 @@ or change the location of the local library. Path:')
             + f' {CdbsEvn.g_response_path}')
         return
     if DataHandler.handle_response(reply):
-        if CdbsEvn.g_response_path.is_file():
-            DataHandler.remove_object(CdbsEvn.g_response_path)  # deleting old a response if it exists
         with CdbsEvn.g_response_path.open('wb') as fd:
             for chunk in reply.iter_content(chunk_size=128):
                 fd.write(chunk)
@@ -32,6 +30,7 @@ class CdbsApi:
     """Sending a request to the CADBase API and processing the response"""
 
     def __init__(self, query, skip_token=False):
+        DataHandler.remove_object(CdbsEvn.g_response_path)  # deleting old a response if it exists
         if not CdbsEvn.check_online_access():
             return
         logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_cdbs_api}')
