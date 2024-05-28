@@ -5,6 +5,7 @@ import bpy
 from CdbsModules.Logger import logger
 
 
+g_base_package = ''
 g_cadbase_api = 'https://api.cadbase.rs'  # default CADBase platform point
 g_library_path = '' # for save the path to the local CADBase library
 g_base_api = g_cadbase_api
@@ -25,8 +26,7 @@ g_stack_event = []  # contains messages to be displayed to the user
 g_resetpoint_flag = False  # flag to reset the api point to the default value
 
 def get_preferences():
-    preferences = bpy.context.preferences
-    return preferences.addons[str(Path(__file__).parent.parent.name)].preferences
+    return bpy.context.preferences.addons[g_base_package].preferences
 
 def update_api_points(new_url):
     global g_base_api

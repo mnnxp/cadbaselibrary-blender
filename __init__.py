@@ -42,6 +42,9 @@ from CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
 import CdbsModules.BtnUtil as BtnUtil
 from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List
 from CdbsModules.Translate import translations_dict
+import CdbsModules.CdbsEvn as CdbsEvn
+
+CdbsEvn.g_base_package = str(__package__)
 from CdbsModules.CdbsPreferences import CdbsPreferences
 
 

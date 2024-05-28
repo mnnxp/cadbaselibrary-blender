@@ -2,6 +2,7 @@ from pathlib import Path
 import bpy
 from bpy.types import AddonPreferences
 from bpy.props import StringProperty
+from CdbsModules.CdbsEvn import g_base_package
 
 # Address of the main server of CADBase platform.
 # The duplicates `CdbsModules.CdbsEvn.g_cadbase_api`.
@@ -10,7 +11,7 @@ g_cadbase_api = 'https://api.cadbase.rs'
 class CdbsPreferences(AddonPreferences):
     # this must match the add-on name, use '__package__'
     # when defining this in a submodule of a python package.
-    bl_idname = str(Path(__file__).parent.parent.name)
+    bl_idname = g_base_package
 
     library_path: StringProperty(
         name="Library path",
