@@ -8,7 +8,19 @@ import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
 import CdbsModules.CdbsNewUser as CdbsNewUser
 from CdbsModules.ToolUiList import CDBS_UL_List
+from CdbsModules.Logger import logger
+from CdbsModules.Translate import translate
 
+
+def context_is_incorrect():
+    logger(
+        'error',
+        translate(
+            'cdbs',
+            'The context is not selected correctly. \
+Please try to select an object on the stage and open the modal window again.',
+        ),
+    )
 
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
@@ -63,7 +75,11 @@ class CDBS_OT_RegComponent(Operator):
     bl_description = "Registers a new component (part) on CADBase platform"
 
     def execute(self, context):
-        bpy.ops.cdbs.newcomponent('INVOKE_DEFAULT')
+        try:
+            bpy.ops.cdbs.newcomponent('INVOKE_DEFAULT')
+        except Exception as e:
+            logger('error', str(e))
+            context_is_incorrect()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -102,7 +118,11 @@ class CDBS_OT_Settings(Operator):
     bl_description = "Opens the tool (addon) settings in a separate window"
 
     def execute(self, context):
-        bpy.ops.cdbs.settingui('INVOKE_DEFAULT')
+        try:
+            bpy.ops.cdbs.settingui('INVOKE_DEFAULT')
+        except Exception as e:
+            logger('error', str(e))
+            context_is_incorrect()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -115,7 +135,11 @@ class CDBS_OT_Authorization(Operator):
     bl_description = "Opens the window of authorization and updating the access token to CADBase platform"
 
     def execute(self, context):
-        bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
+        try:
+            bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
+        except Exception as e:
+            logger('error', str(e))
+            context_is_incorrect()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
