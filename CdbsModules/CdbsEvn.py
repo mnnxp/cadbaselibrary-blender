@@ -3,6 +3,7 @@
 from pathlib import Path
 import bpy
 from CdbsModules.Logger import logger
+from CdbsModules.Translate import translate
 
 
 g_base_package = ''
@@ -24,6 +25,13 @@ g_response_path = Path() / g_resp_file
 g_log_file_path = Path() / g_resp_file / '.log'
 g_stack_event = []  # contains messages to be displayed to the user
 g_resetpoint_flag = False  # flag to reset the api point to the default value
+
+def check_online_access():
+    res = bpy.app.online_access
+    if not res:
+        logger('error', translate('cdbs', 'Network access is denied.'))
+        logger('warning', translate('cdbs', 'Please check the "Allow Online Access" option in the Blender settings.'))
+    return res
 
 def get_preferences():
     return bpy.context.preferences.addons[g_base_package].preferences
@@ -49,7 +57,7 @@ def update_settings():
     global g_log_file_path
     cdbs_prefs = get_preferences()
     if not cdbs_prefs:
-        logger('debug', 'Failed to update preferences.')
+        logger('debug', translate('cdbs', 'Failed to update preferences.'))
         return
     g_auth_token = cdbs_prefs.api_key
     if g_base_api != cdbs_prefs.base_api:

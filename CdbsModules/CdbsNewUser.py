@@ -16,6 +16,8 @@ def register_new_user():
     if not cdbs_prefs:
         logger('debug', translate('cdbs', 'Preferences not found.'))
         return
+    if not CdbsEvn.check_online_access():
+        return
     # update the settings so that user changes are not lost
     CdbsEvn.update_settings()
     PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)

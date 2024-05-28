@@ -22,6 +22,8 @@ class CdbsAuth:
     """Getting a token to access the CADBase platform"""
 
     def __init__(self, username, password):
+        if not CdbsEvn.check_online_access():
+            return
         logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_api_login}')
         logger('message', translate('cdbs', 'Getting a new token, please wait.'))
         self.query = {'user': {'username': username, 'password': password}}
