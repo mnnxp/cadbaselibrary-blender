@@ -17,6 +17,7 @@ class CDBS_OT_OpenListItem(Operator):
 
     def execute(self, context):
         BtnUtil.open_tree_item()
+        BtnUtil.update_tree_list()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
