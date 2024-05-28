@@ -1,7 +1,7 @@
 from pathlib import Path
 import bpy
-from bpy.types import Panel, Operator, UIList, PropertyGroup
-from bpy.props import IntProperty, StringProperty, CollectionProperty
+from bpy.types import UIList, PropertyGroup
+from bpy.props import StringProperty
 
 #-----------------------------------------------------------------------------
 #

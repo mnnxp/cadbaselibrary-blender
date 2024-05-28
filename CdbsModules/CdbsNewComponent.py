@@ -1,4 +1,3 @@
-import bpy
 from bpy.types import Operator
 from bpy.props import StringProperty
 from pathlib import Path
@@ -56,14 +55,12 @@ class CDBS_OT_NewComponent(Operator):
             if len(self.component_uuid) == CdbsEvn.g_len_uuid:
                 PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)
                 BtnUtil.pull_objects()
-                logger('debug', translate('cdbs', 'The component was successfully created'))
+                logger('debug', translate('cdbs', 'The component was successfully created.'))
             logger('debug', f'UUID: {self.component_uuid}')
         else:
             logger(
                 'info',
-                translate(
-                    'cdbs', 'It is not possible to create a component without a name'
-                ),
+                translate('cdbs', 'It is not possible to create a component without a name.'),
             )
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:

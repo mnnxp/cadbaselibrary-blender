@@ -1,5 +1,4 @@
 from pathlib import Path
-import bpy
 from bpy.types import AddonPreferences
 from bpy.props import StringProperty
 from CdbsModules.CdbsEvn import g_base_package
@@ -17,23 +16,23 @@ class CdbsPreferences(AddonPreferences):
         name="Library path",
         subtype='DIR_PATH',
         default="",
-        description="The specified directory will be store data.",
+        description="The specified directory will be store data",
     )
     base_api: StringProperty(
         name="API Point",
         default=g_cadbase_api,
-        description="Specify server with CADBase platform.",
+        description="Specify server with CADBase platform",
     )
     username: StringProperty(
         name="Username",
         default="",
-        description="Username on CADBase platform.",
+        description="Username on CADBase platform",
     )
     password: StringProperty(
         name="Password",
         default="",
         subtype='PASSWORD',
-        description="CADBase platform user password.",
+        description="CADBase platform user password",
     )
     api_key: StringProperty(
         name="Authorization token",

@@ -1,9 +1,8 @@
-import sys
 from pathlib import Path
 import bpy
 from bpy.types import Panel, Operator
 import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.Logger import EventMessage
+from CdbsModules.Logger import EventMessage  # is used in self.report
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
 import CdbsModules.CdbsNewUser as CdbsNewUser
@@ -102,7 +101,7 @@ class CDBS_OT_LinkFile(Operator):
 class CDBS_OT_Push(Operator):
     bl_idname = "cdbs.push"
     bl_label = "Push"
-    bl_description = "Starts the process of sending changes from local storage to the cloud."
+    bl_description = "Starts the process of sending changes from local to remote storage"
 
     def execute(self, context):
         BtnUtil.push_files_of_fileset()

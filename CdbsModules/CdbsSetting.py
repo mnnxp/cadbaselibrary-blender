@@ -1,11 +1,9 @@
-import bpy
 from bpy.types import Operator
 from bpy.props import StringProperty
 from pathlib import Path
 import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.BtnUtil as BtnUtil
 import CdbsModules.PartsList as PartsList
-from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.Translate import translate
 from CdbsModules.Logger import logger
 

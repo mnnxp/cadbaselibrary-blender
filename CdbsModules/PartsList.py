@@ -2,7 +2,6 @@ from pathlib import Path
 from types import SimpleNamespace
 import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.DataHandler as DataHandler
-from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.CdbsApi import CdbsApi
 from CdbsModules.QueriesApi import QueriesApi
 from CdbsModules.Translate import translate

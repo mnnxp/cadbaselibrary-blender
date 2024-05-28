@@ -39,7 +39,6 @@ from CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
 from CdbsModules.CdbsToken import CDBS_OT_TokenUI
 from CdbsModules.CdbsNewComponent import CDBS_OT_NewComponent
 from CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
-import CdbsModules.BtnUtil as BtnUtil
 from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List
 from CdbsModules.Translate import translations_dict
 import CdbsModules.CdbsEvn as CdbsEvn
