@@ -16,14 +16,16 @@ def parsing_response(reply):
             translate('cdbs', 'For correct operation of the addon it is necessary to free the path \
 or change the location of the local library. Path:')
             + f' {CdbsEvn.g_response_path}')
-        return
+        return False
     if DataHandler.handle_response(reply):
         with CdbsEvn.g_response_path.open('wb') as fd:
             for chunk in reply.iter_content(chunk_size=128):
                 fd.write(chunk)
         logger('debug', translate('cdbs', 'Successful processing request.'))
+        return True
     else:
         logger('error', translate('cdbs', 'Failed processing request.'))
+    return False
 
 
 class CdbsApi:
@@ -50,6 +52,6 @@ class CdbsApi:
             logger(
                 'error',
                 translate('cdbs', 'Exception when trying to sending the request:')
-                + f' {e}'),
+                + f' {e}')
         else:
             parsing_response(reply)

@@ -32,7 +32,8 @@ class CdbsRegUser:
     def __init__(self, username, password):
         logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_cdbs_api}')
         logger('message', translate('cdbs', 'New user registration, please wait.'))
-        CdbsApi(QueriesApi.register_user(username, password), skip_token=True)
+        if not CdbsApi(QueriesApi.register_user(username, password), skip_token=True):
+            return
         self.fileset_uuid = DataHandler.deep_parsing_gpl('registerUser')
         logger(
             'log',
