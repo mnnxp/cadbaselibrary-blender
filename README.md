@@ -55,7 +55,7 @@ This location can be changed in the add-on settings in the field _Library path_.
 
 In the _CADBase Library_ window, click the **Authorization** button.
 
-When the _CADBase Library Authorization_ window opens, you need to set a **username** and **password** in order to access CADBase.
+When the _Authorization on CADBase platform_ window opens, you need to set a **username** and **password** in order to access CADBase.
 
 After entering these data to receive the token and pressing the **OK** button. Please wait until you receive the token.
 

@@ -8,7 +8,7 @@ from CdbsModules.Logger import logger
 
 class CDBS_OT_TokenUI(Operator):
     bl_idname = "cdbs.tokenui"
-    bl_label = "CADBase Library Authorization"
+    bl_label = "Authorization on CADBase platform"
 
     cdbs_username: StringProperty(name = "", default = "")
     cdbs_password: StringProperty(name = "", default = "", subtype='PASSWORD')

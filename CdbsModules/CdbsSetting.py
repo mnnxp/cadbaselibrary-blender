@@ -66,7 +66,7 @@ class CDBS_OT_SettingUI(Operator):
         layout.label(text="will not be lost when Blender is restarted.")
         lp_box = layout.box()
         lp_box.label(text="Library path")
-        lp_box.label(text="The specified directory will be store data.")
+        lp_box.label(text="The specified directory will be store data")
         lp_box_r1 = lp_box.row()
         lp_box_r1_c1 = lp_box_r1.column()
         lp_box_r1_c1.prop(self, "library_path")
@@ -75,7 +75,7 @@ class CDBS_OT_SettingUI(Operator):
 
         ba_box = layout.box()
         ba_box.label(text="API Point")
-        ba_box.label(text="Specify server with CADBase platform.")
+        ba_box.label(text="Specify server with CADBase platform")
         ba_box_r1 = ba_box.row()
         ba_box_r1_c1 = ba_box_r1.column()
         ba_box_r1_c1.prop(self, "base_api")

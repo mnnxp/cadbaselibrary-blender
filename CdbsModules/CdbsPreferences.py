@@ -52,7 +52,7 @@ class CdbsPreferences(AddonPreferences):
 
         ba_box = layout.box()
         ba_box.label(text="You can specify the server on which the CADBase platform.")
-        ba_box.label(text="Specify the URL or IP if you need to connect to a non-main server.")
+        ba_box.label(text="Specify the URL or IP address of the server to connect to.")
         layout_r1 = ba_box.row()
         layout_r1_c1 = layout_r1.column()
         layout_r1_c1.prop(self, "base_api")

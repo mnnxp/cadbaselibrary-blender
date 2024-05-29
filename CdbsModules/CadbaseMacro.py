@@ -57,7 +57,7 @@ class CDBS_OT_UpTreeLevel(Operator):
 
 class CDBS_OT_Pull(Operator):
     bl_idname = "cdbs.pull"
-    bl_label = "Pull"
+    bl_label = "Pull (data)"
     bl_description = "Retrieves data from cloud storage and updates the list"
 
     def execute(self, context):
@@ -100,7 +100,7 @@ class CDBS_OT_LinkFile(Operator):
 
 class CDBS_OT_Push(Operator):
     bl_idname = "cdbs.push"
-    bl_label = "Push"
+    bl_label = "Push (data)"
     bl_description = "Starts the process of sending changes from local to remote storage"
 
     def execute(self, context):

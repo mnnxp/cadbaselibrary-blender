@@ -14,7 +14,7 @@ from CdbsModules.Logger import logger
 
 class CDBS_OT_NewComponent(Operator):
     bl_idname = "cdbs.newcomponent"
-    bl_label = "Adding a new component on CADBase"
+    bl_label = "Creating a new component on CADBase platform"
     bl_description = "Registers a new component (part) on CADBase platform"
 
     # Operator user properties, should be assigned using a single colon :
