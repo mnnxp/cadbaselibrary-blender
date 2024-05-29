@@ -80,7 +80,7 @@ Select the **CADBase Library** add-on in the Import-Export category.
 
  `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
 
- `Push (data)` - button to upload files from Blender folder (set of files for Blender) of local library to CADBase storage. Before uploading, the hash of existing files in local and remote storage is checked, if they are different, the files in remote storage are updated. Blake3 library is used to calculate the hash, if it is unavailable, the hash is not checked and existing files in the remote are not updated.
+ `Push (data)` - button to upload files from Blender folder (set of files for Blender) of local library to CADBase storage. Before uploading, the hash of existing files in local and remote storage is checked, if they are different, the files in remote storage are updated. The Blake3 library is used to calculate the hash, if it is not available, the hash is not checked and existing files in the remote storage are not updated.
 
  `Settings` - this button opens a modal window where you can specify the path to the local library, where the files received from CADBase will be stored, and the address of CADBase server.
 
