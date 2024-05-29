@@ -80,7 +80,7 @@ Select the **CADBase Library** add-on in the Import-Export category.
 
  `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
 
- `Push (data)` - button to upload files from Blender folder (set of files for Blender) of local library to CADBase storage. Before uploading, the hash of existing files in local and cloud storage is checked, if they are different, the files in cloud storage are updated. Blake3 library is used to calculate the hash, if it is unavailable, the hash is not checked and existing files in the cloud are not updated.
+ `Push (data)` - button to upload files from Blender folder (set of files for Blender) of local library to CADBase storage. Before uploading, the hash of existing files in local and remote storage is checked, if they are different, the files in remote storage are updated. Blake3 library is used to calculate the hash, if it is unavailable, the hash is not checked and existing files in the remote are not updated.
 
  `Settings` - this button opens a modal window where you can specify the path to the local library, where the files received from CADBase will be stored, and the address of CADBase server.
 
@@ -124,7 +124,7 @@ To get the data, click on the **Pull (data)** button. Depending on the open posi
 
 Open the modification from which you want to upload the files.
 
-Click the **Push (data)** button to upload the local files for the set of component modification files to CADBase storage (cloud).
+Click the **Push (data)** button to upload the local files for the set of component modification files to CADBase storage (remote storage).
 
 Information about the upload process will be displayed in the Blender report.
 
@@ -148,11 +148,11 @@ In fileset folders, a `modification` file is created with the technical data abo
 
 ##### How the add-on work with data
 
-To avoid losing local data when downloading from CADBase storage (from the cloud), files already in local storage are skipped.
+To avoid losing local data when downloading from CADBase storage (from remote storage), files already in local storage are skipped.
 
-Before uploading files to CADBase storage (to the cloud), the add-on checks for existing files in the cloud and excludes files from the upload list if their local and cloud hashes match. A hash is calculated using the Blake3 library.
+Before uploading files to CADBase storage (remote storage), the add-on checks for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match. A hash is calculated using the Blake3 library.
 
-This check is skipped and previously uploaded files (already in the cloud) are not updated unless the Blake3 library is installed.
+This check is skipped and previously uploaded files (already in remote storage) are not updated unless the Blake3 library is installed.
 
 ## Links
 
