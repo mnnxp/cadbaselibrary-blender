@@ -102,17 +102,19 @@ Files for Blender will be downloaded through this add-on, files from kits for ot
 
 ```
 
--Library path                   # Root level (set in add-on)
-├── Vertical Pump (@lookme)     # Component level
-│   ├── Blender                 # Modification level (Blender file set)
-│   │   └── modification        # file with technical information
-│   │   └── vertical Pump.blend # The file was created in Blender 3D
-│   │   └── ...                 # Other files of the fileset
-│   └── FreeCAD                 # Modification level (FreeCAD file set)
-│   └── ...                     # Other modifications of the component (Component level)
-├── ...                         # Other components from user bookmarks (Root level)
-├── component                   # file with technical information
-└── cadbase_file_2018           # file with technical information
+-Library path                       # root level (set in add-on)
+├── Vertical Pump (@lookme)         # component level (folder)
+│   ├── N1                          # modification level ( folder)
+│   │   ├── Blender                 # fileset level (Blender fileset)
+│   │   │   └── modification        # file with technical data
+│   │   │   └── vertical Pump.blend # file of the fileset
+│   │   │   └── ...                 # other files of the fileset
+│   │   └── FreeCAD                 # fileset level (FreeCAD fileset)
+│   │   └── ...                     # other fileset of the modification (Fileset level)
+│   ├── ...                         # other modifications of the component
+├── ...                             # other components from user bookmarks (Root level)
+├── component                       # file with technical data
+└── cadbase_file_2018               # file with technical data
 
 ```
 
