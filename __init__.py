@@ -3,8 +3,8 @@
 bl_info = {
     "name": "CADBase Library",
     "author": "mnnxp",
-    "version": (0, 1, 1),
-    "blender": (4, 1, 0),
+    "version": (0, 1, 2),
+    "blender": (4, 2, 0),
     "location": "3D View > Sidebar",
     "description": "This is add-on for synchronizing data with CADBase cloud storage",
     "doc_url": "https://gitlab.com/cadbase/cadbaselibrary-blender/-/blob/master/README.md",
