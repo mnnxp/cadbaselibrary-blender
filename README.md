@@ -44,7 +44,7 @@ This location can be changed in the add-on settings in the field _Library path_.
 
 #### Getting an authorization token
 
-On the CADBase library card in the **Add-ons** section of the Blender “Preferences...” there are **username** and **password** fields.
+On the CADBase Library card in the **Add-ons** section of the Blender “Preferences...” there are **username** and **password** fields.
 
 To obtain a token for an existing account or create a new account to access CADBase, you must provide a **username** and **password**. This data will be saved and available after restarting Blender.
 
@@ -107,7 +107,7 @@ Files for Blender will be downloaded through this add-on, files from kits for ot
 │   ├── Blender                 # Modification level (Blender file set)
 │   │   └── modification        # file with technical information
 │   │   └── vertical Pump.blend # The file was created in Blender 3D
-│   │   ...                     # Other files of the fileset
+│   │   └── ...                 # Other files of the fileset
 │   └── FreeCAD                 # Modification level (FreeCAD file set)
 │   └── ...                     # Other modifications of the component (Component level)
 ├── ...                         # Other components from user bookmarks (Root level)
@@ -138,7 +138,7 @@ The add-on's settings, such as the local library path, server (API Point) addres
 
 ##### Used (reserved) names in the add-on
 
-Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the CADBase library folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
+Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the library path folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
 
 If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a _cadbase_file_2018.log_ file in the local library folder.
 
