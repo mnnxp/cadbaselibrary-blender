@@ -4,7 +4,8 @@
 [![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-gren)](https://blender.org)
 
 
-![Demonstration of all windows of the CADBase Library add-on.](./Resources/panels_collage.png "All windows of the CADBase Library add-on.")
+<img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on" width="70vh">
+
 
 This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.
 
@@ -14,7 +15,7 @@ CADBase is a platform for publishing and sharing information about 3D components
 
 ## Description
 
-![how to save a file to a file set of the Sphere component](./Resources/save_and_push.gif)
+<img src="./Resources/save_and_push.gif" alt="how to save a file to a file set of the Sphere component" width="70vh">
 
 The add-on is designed to use components from CADBase in the Blender interface.
 
@@ -34,7 +35,7 @@ When installing the add-on, the Blake3 library will be extracted to the site-pac
 
 ### Settings
 
-![CADBase Library add-on and its settings in the Blender Add-ons](./Resources/preferences.png)
+<img src="./Resources/preferences.png" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="50vh">
 
 #### Configuration CADBase Library
 
@@ -100,21 +101,24 @@ Favorite components are displayed at root level. After selecting and opening a c
 When you open a modification (modification level), it actually displays files from the Blender file set that is in the Blender folder, not directly in the modification folder.
 Files for Blender will be downloaded through this add-on, files from kits for other programs will not be downloaded.
 
+The data display can be divided into three levels, the first one is the root level (*rl*), this level displays all components from the local library, the second one is the component level (*cl*), it displays the list of modifications of the open component, and the third level displays the data of a set of files (*fl*). The folder for Blender file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
+
 ```
 
--Library path                       # root level (set in add-on)
-├── Vertical Pump (@lookme)         # component level (folder)
-│   ├── N1                          # modification level ( folder)
-│   │   ├── Blender                 # fileset level (Blender fileset)
-│   │   │   └── modification        # file with technical data
-│   │   │   └── vertical Pump.blend # file of the fileset
-│   │   │   └── ...                 # other files of the fileset
-│   │   └── FreeCAD                 # fileset level (FreeCAD fileset)
-│   │   └── ...                     # other fileset of the modification (Fileset level)
-│   ├── ...                         # other modifications of the component
-├── ...                             # other components from user bookmarks (Root level)
-├── component                       # file with technical data
-└── cadbase_file_2018               # file with technical data
+-Library path                       # set in add-on (*rl*)
+├── Vertical Pump (@lookme)         # component folder (*cl*)
+│   ├── N1                          # modification folder (*ml*)
+│   │   ├── Blender                 # Blender fileset (*fl*)
+│   │   │   ├── modification        # technical data file
+│   │   │   ├── vertical Pump.blend # file of the Blender fileset
+│   │   │   └── ...                 # files of the Blender fileset
+│   │   ├── FreeCAD                 # FreeCAD fileset (fl, for example)
+│   │   └── ...                     # filesets for the modification (*fl*)
+│   ├── ...                         # modifications of the component
+│   └── component                   # technical data file
+├── ...                             # local library components (*rl*)
+├── cadbase_file_2018.log           # stores logs and responses (optional)
+└── cadbase_file_2018               # technical data file
 
 ```
 
