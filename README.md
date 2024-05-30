@@ -4,7 +4,7 @@
 [![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-gren)](https://blender.org)
 
 
-<img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on" width="80%">
+<div align="center"><img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on"></div>
 
 
 This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.
@@ -15,7 +15,7 @@ CADBase is a platform for publishing and sharing information about 3D components
 
 ## Description
 
-<img src="./Resources/save_and_push.gif" alt="how to save a file to a file set of the Sphere component" width="80%">
+<div align="center"><img src="./Resources/save_and_push.gif" alt="how to save a file to a file set of the Sphere component"></div>
 
 The add-on is designed to use components from CADBase in the Blender interface.
 
@@ -35,7 +35,7 @@ When installing the add-on, the Blake3 library will be extracted to the site-pac
 
 ### Settings
 
-<img src="./Resources/preferences.png" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="60%">
+<div align="center"><img src="./Resources/preferences.png" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="60%"></div>
 
 #### Configuration CADBase Library
 
@@ -101,26 +101,24 @@ Favorite components are displayed at root level. After selecting and opening a c
 When you open a modification (modification level), it actually displays files from the Blender file set that is in the Blender folder, not directly in the modification folder.
 Files for Blender will be downloaded through this add-on, files from kits for other programs will not be downloaded.
 
-The data display can be divided into three levels, the first one is the root level (*rl*), this level displays all components from the local library, the second one is the component level (*cl*), it displays the list of modifications of the open component, and the third level displays the data of a set of files (*fl*). The folder for Blender file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
+The data display can be divided into three levels, the first one is the root level (**rl**), this level displays all components from the local library, the second one is the component level (**cl**), it displays the list of modifications of the open component, and the third level displays the data of a set of files (**fl**). The folder for Blender file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
 
-```
-
--Library path                       # set in add-on (*rl*)
-├── Vertical Pump (@lookme)         # component folder (*cl*)
-│   ├── N1                          # modification folder (*ml*)
-│   │   ├── Blender                 # Blender fileset (*fl*)
+<pre>
+-Library path                       # set in add-on (<b>rl</b>)
+├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
+│   ├── N1                          # modification folder (<b>ml</b>)
+│   │   ├── Blender                 # Blender fileset (<b>fl</b>)
 │   │   │   ├── modification        # technical data file
 │   │   │   ├── vertical Pump.blend # file of the Blender fileset
 │   │   │   └── ...                 # files of the Blender fileset
 │   │   ├── FreeCAD                 # FreeCAD fileset (fl, for example)
-│   │   └── ...                     # filesets for the modification (*fl*)
+│   │   └── ...                     # filesets for the modification (<b>fl</b>)
 │   ├── ...                         # modifications of the component
 │   └── component                   # technical data file
-├── ...                             # local library components (*rl*)
+├── ...                             # local library components (<b>rl</b>)
 ├── cadbase_file_2018.log           # stores logs and responses (optional)
 └── cadbase_file_2018               # technical data file
-
-```
+</pre>
 
 ### Getting data
 
