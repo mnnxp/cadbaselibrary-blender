@@ -95,7 +95,7 @@ The data display can be divided into three levels, the first one is the root lev
 <pre>
 -Library path                       # set in add-on (<b>rl</b>)
 ├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
-│   ├── N1                          # modification folder (<b>ml</b>)
+│   ├── N1                          # modification folder
 │   │   ├── Blender                 # Blender fileset (<b>fl</b>)
 │   │   │   ├── modification        # technical data file
 │   │   │   ├── vertical Pump.blend # file of the Blender fileset
