@@ -7,8 +7,7 @@
 <div align="center"><img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on"></div>
 
 
-This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.
-
+This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.  
 CADBase is a platform for publishing and sharing information about 3D components (parts), drawings and manufacturers.
 
 **Important Note:**  To use the add-on, you must have an account on the [CADBase Platform](https://app.cadbase.rs). You can also create an account via add-on, if the entered username is free, a new user will be created with the specified username and password.
@@ -17,10 +16,8 @@ CADBase is a platform for publishing and sharing information about 3D components
 
 <div align="center"><img src="./Resources/save_and_push.gif" alt="how to save a file to a file set of the Sphere component"></div>
 
-The add-on is designed to use components from CADBase in the Blender interface.
-
-Component modifications contain sets of files for various CAD systems. This add-on will work with data from the Blender set, without downloading documentation and data from other file sets.
-
+The add-on is designed to use components from CADBase in the Blender interface.  
+Component modifications contain sets of files for various CAD systems. This add-on will work with data from the Blender set, without downloading documentation and data from other file sets.  
 Files uploaded to file sets are versioned, allowing you to restore earlier versions, get the old state they were in before the changes, review the changes, and find out who last changed something and caused the problem.
 
 ### Dependencies
@@ -39,35 +36,28 @@ When installing the add-on, the Blake3 library will be extracted to the site-pac
 
 #### Configuration CADBase Library
 
-First you need to set the library location. CADBase remote storage will be synchronized with this location. Also there will storage files with technical data for add-on.
-
+First you need to set the library location. CADBase remote storage will be synchronized with this location. Also there will storage files with technical data for add-on.  
 This location can be changed in the add-on settings in the field _Library path_.
 
 #### Getting an authorization token
 
-On the CADBase Library card in the **Add-ons** section of the Blender “Preferences...” there are **username** and **password** fields.
-
-To obtain a token for an existing account or create a new account to access CADBase, you must provide a **username** and **password**. This data will be saved and available after restarting Blender.
-
+On the CADBase Library card in the **Add-ons** section of the Blender “Preferences...” there are **username** and **password** fields.  
+To obtain a token for an existing account or create a new account to access CADBase, you must provide a **username** and **password**. This data will be saved and available after restarting Blender.  
 After entering these data to receive the token and pressing the **Login** button. Please wait until you receive the token.
 
 **Important Note:**  If the access token has expired, you need to repeat the steps above.
 
 ##### Alternatively
 
-The disadvantage (or advantage) of this option is that it only saves changes until Blender restarts. After a new startup, Blender restores the data if it is set in the Add-ons Manager.
-
-In the _CADBase Library_ window, click the **Authorization** button.
-
-When the _Authorization on CADBase platform_ window opens, you need to set a **username** and **password** in order to access CADBase.
-
+The disadvantage (or advantage) of this option is that it only saves changes until Blender restarts. After a new startup, Blender restores the data if it is set in the Add-ons Manager.  
+In the _CADBase Library_ window, click the **Authorization** button.  
+When the _Authorization on CADBase platform_ window opens, you need to set a **username** and **password** in order to access CADBase.  
 After entering these data to receive the token and pressing the **OK** button. Please wait until you receive the token.
 
 ### First start
 
-Once installed, the add-on will be available in the 3D View > Sidebar menu.
-
-Select the **CADBase Library** add-on in the Import-Export category.
+Once installed, the add-on will be available in the **3D View** > **Sidebar menu**.  
+Select the **CADBase Library** add-on in the **Import-Export** category.
 
 ### Control
 
@@ -91,8 +81,7 @@ _Changes made through Settings and Authorization will be reset when Blender rest
 
 ## Usage
 
-Create new components with the add-on and add target components to bookmarks (favorites) on CADBase website.
-
+Create new components with the add-on and add target components to bookmarks (favorites) on CADBase website.  
 In Blender will only display components that the user has bookmarked on CADBase platform, as well as those that have been previously downloaded.
 
 ### CADBase Library Browser
@@ -126,12 +115,9 @@ To get the data, click on the **Pull (data)** button. Depending on the open posi
 
 ### Sending data
 
-Open the modification from which you want to upload the files.
-
-Click the **Push (data)** button to upload the local files for the set of component modification files to CADBase storage (remote storage).
-
-Information about the upload process will be displayed in the Blender report.
-
+Open the modification from which you want to upload the files.  
+Click the **Push (data)** button to upload the local files for the set of component modification files to CADBase storage (remote storage).  
+Information about the upload process will be displayed in the Blender report.  
 After uploading the files, a message will be displayed in the Blender report with information about the number of successfully uploaded files.
 
 ## Additional Information
@@ -144,18 +130,14 @@ The add-on's settings, such as the local library path, server (API Point) addres
 
 Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the library path folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
 
-If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a _cadbase_file_2018.log_ file in the local library folder.
-
-In component folders, a `component` file is created with the technical data about the component.
-
+If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a _cadbase_file_2018.log_ file in the local library folder.  
+In component folders, a `component` file is created with the technical data about the component.  
 In fileset folders, a `modification` file is created with the technical data about the component modification and fileset.
 
 ##### How the add-on work with data
 
-To avoid losing local data when downloading from CADBase storage (from remote storage), files already in local storage are skipped.
-
-Before uploading files to CADBase storage (remote storage), the add-on checks for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match. A hash is calculated using the Blake3 library.
-
+To avoid losing local data when downloading from CADBase storage (from remote storage), files already in local storage are skipped.  
+Before uploading files to CADBase storage (remote storage), the add-on checks for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match. A hash is calculated using the Blake3 library.  
 This check is skipped and previously uploaded files (already in remote storage) are not updated unless the Blake3 library is installed.
 
 ## Links
@@ -167,12 +149,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codebe
 About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
-v0.1.2 2024-05-29    * added ability to create a component, error handling, support for online_access property and automatic installation of blake3 dependencies
-
-v0.1.1 2024-05-24    * added bug information and updated translations
-
-v0.1.0 2024-05-19    * updated links, save settings in userpref.blend, added ability to create an account via add-on
-
-v0.0.2 2024-04-18    * added blender manifest, description and fixed bugs
-
+v0.1.2 2024-05-29    * added ability to create a component, error handling, support for online_access property and automatic installation of blake3 dependencies  
+v0.1.1 2024-05-24    * added bug information and updated translations  
+v0.1.0 2024-05-19    * updated links, save settings in userpref.blend, added ability to create an account via add-on  
+v0.0.2 2024-04-18    * added blender manifest, description and fixed bugs  
 v0.0.1 2024-04-14    * first release
