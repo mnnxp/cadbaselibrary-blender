@@ -67,7 +67,7 @@ Select the **CADBase Library** add-on in the **Import-Export** category.
 
  `Pull (data)` - retrieves data from the remote server and updates the local library view.
 
- `Add component` - When you click on this button, a modal window opens for specifying the name of the new component (part, project, etc.).
+ `Add component` - the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
 
  `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
 
