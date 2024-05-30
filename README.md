@@ -100,7 +100,7 @@ The data display can be divided into three levels, the first one is the root lev
 │   │   │   ├── modification        # technical data file
 │   │   │   ├── vertical Pump.blend # file of the Blender fileset
 │   │   │   └── ...                 # files of the Blender fileset
-│   │   ├── FreeCAD                 # FreeCAD fileset (fl, for example)
+│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>, for example)
 │   │   └── ...                     # filesets for the modification (<b>fl</b>)
 │   ├── ...                         # modifications of the component
 │   └── component                   # technical data file
