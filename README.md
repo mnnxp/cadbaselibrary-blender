@@ -4,7 +4,7 @@
 [![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-gren)](https://blender.org)
 
 
-<img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on" width="70vh">
+<img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on" width="80%">
 
 
 This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.
@@ -15,7 +15,7 @@ CADBase is a platform for publishing and sharing information about 3D components
 
 ## Description
 
-<img src="./Resources/save_and_push.gif" alt="how to save a file to a file set of the Sphere component" width="70vh">
+<img src="./Resources/save_and_push.gif" alt="how to save a file to a file set of the Sphere component" width="80%">
 
 The add-on is designed to use components from CADBase in the Blender interface.
 
@@ -35,7 +35,7 @@ When installing the add-on, the Blake3 library will be extracted to the site-pac
 
 ### Settings
 
-<img src="./Resources/preferences.png" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="50vh">
+<img src="./Resources/preferences.png" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="60%">
 
 #### Configuration CADBase Library
 
