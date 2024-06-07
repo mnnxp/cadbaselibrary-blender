@@ -128,9 +128,9 @@ The add-on's settings, such as the local library path, server (API Point) addres
 
 ##### Used (reserved) names in the add-on
 
-Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the library path folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.
+Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the library path folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.  
+If you need to save logs to a file (for example, for debugging, study, or other purposes), you need to create a _cadbase_file_2018.log_ file in your local library folder.  
 
-If you need to save logs to a file (for example, for debugging, studying, or other purposes), you need to create a _cadbase_file_2018.log_ file in the local library folder.  
 In component folders, a `component` file is created with the technical data about the component.  
 In fileset folders, a `modification` file is created with the technical data about the component modification and fileset.
 
@@ -149,6 +149,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codebe
 About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
+
+v0.1.3 2024-06-07    * updated manifest
 
 v0.1.2 2024-05-29    * added ability to create a component, error handling, support for online_access property and automatic installation of blake3 dependencies
 

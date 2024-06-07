@@ -1,18 +1,11 @@
 schema_version = "1.0.0"
 
 id = "cadbase_library"
-version = "0.1.2"
+version = "0.1.3"
 name = "CADBase Library"
 tagline = "This is an addon for synchronizing local data with cloud storage"
 maintainer = "mnnxp <in@cadbase.rs>"
 type = "add-on"
-
-# Optional: add-ons can list which resources they will require:
-# * "files" (for access of any filesystem operations)
-# * "network" (for internet access)
-# * "camera" (to capture photos and videos)
-# * "microphone" (to capture audio)
-permissions = ["files", "network"]
 
 # Optional link to documentation, support, source files, etc
 # website = "http://extensions.blender.org/add-ons/my-example-package/"
@@ -37,3 +30,8 @@ wheels = [
     "./wheels/blake3-0.4.1-cp311-none-win32.whl",
     "./wheels/blake3-0.4.1-cp311-none-win_amd64.whl",
 ]
+
+# Optional: add-ons can list which resources they will require:
+[permissions]
+network = "Need to to sync library data with a remote server"
+files = "Import/export library data from/to disk"
