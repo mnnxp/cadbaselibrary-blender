@@ -32,6 +32,6 @@ wheels = [
 ]
 
 # Optional: add-ons can list which resources they will require:
-[permissions]
+# [permissions]
 network = "Need to to sync library data with a remote server"
 files = "Import/export library data from/to disk"
