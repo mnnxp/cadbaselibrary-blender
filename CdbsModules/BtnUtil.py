@@ -67,7 +67,7 @@ def update_tree_list():
     bpy.context.scene.cdbs_list.clear()
     g_tree_elements.clear()
     check_folder = Path(CdbsEvn.g_library_path)
-    logger('debug', translate('cdbs', 'g_last_clicked_object:' + f' {PartsList.g_last_clicked_object}'))
+    logger('debug', f'Last clicked item: {PartsList.g_last_clicked_object}')
     if PartsList.g_last_clicked_object.is_dir():
         check_folder = PartsList.g_last_clicked_object
     current_position = PartsList.detect_current_position()
@@ -123,6 +123,6 @@ def pull_objects():
     elif current_position == 'MODIFICATION':
         PartsList.update_component_modificaion()
     else:
-        logger('warning', translate('cdbs', 'Failed to determine the type of the open object:)' + f' {current_position}'))
+        logger('warning', translate('cdbs', 'Failed to determine the type of the open object:' + f' {current_position}'))
         return
     update_tree_list()

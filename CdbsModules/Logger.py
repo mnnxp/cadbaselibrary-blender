@@ -1,8 +1,14 @@
 import time
 import logging
-# from pathlib import Path
 import CdbsModules.CdbsEvn as CdbsEvn
 
+
+class EventMessage():
+    """Stores the message and the level of importance of that message"""
+
+    def __init__(self, level, msg):
+        self.level = level
+        self.msg = msg
 
 log = logging.getLogger(__name__ + '.cdbs')
 log.setLevel(logging.DEBUG)
@@ -30,7 +36,7 @@ def logger(type_msg, msg):
         level = 'WARNING'
     if type_msg in {'error', 'critical'}:
         level = 'ERROR'
-    CdbsEvn.g_stack_event.append(CdbsEvn.EventMessage(level, msg))
+    CdbsEvn.g_stack_event.append(EventMessage(level, msg))
 
     # Save the message to the log file if there is a log file in the folder
     if CdbsEvn.g_log_file_path.is_file():

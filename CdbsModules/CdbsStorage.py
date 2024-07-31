@@ -60,7 +60,8 @@ class CdbsStorage:
         """
         logger('log', translate('cdbs', 'Getting fileset UUID...'))
         # getting the uuid of a set of files for target program
-        CdbsApi(QueriesApi.target_fileset(self.modification_uuid))
+        if not CdbsApi(QueriesApi.target_fileset(self.modification_uuid)):
+            return
         self.fileset_uuid = DataHandler.get_uuid(
             DataHandler.deep_parsing_gpl('componentModificationFilesets', True)
         )
@@ -74,7 +75,8 @@ class CdbsStorage:
                 'log',
                 translate('cdbs', 'Creating a new set of files for Blender.'),
             )
-            CdbsApi(QueriesApi.register_modification_fileset(self.modification_uuid))
+            if not CdbsApi(QueriesApi.register_modification_fileset(self.modification_uuid)):
+                return
             self.fileset_uuid = DataHandler.deep_parsing_gpl('registerModificationFileset')
             self.new_fileset = True
         if not DataHandler.validation_uuid(self.fileset_uuid):
@@ -134,7 +136,8 @@ the files were not uploaded to correctly.'),
         cloud_filenames = []  # filenames of CADBase storage files
         if not self.new_fileset:
             # get file list with hash from CADBase storage
-            CdbsApi(QueriesApi.fileset_files(self.fileset_uuid))
+            if not CdbsApi(QueriesApi.fileset_files(self.fileset_uuid)):
+                return
             cloud_files = DataHandler.deep_parsing_gpl('componentModificationFilesetFiles', True)
         for cf in cloud_files:
             cloud_filenames.append(cf.get('filename'))  # selecting cloud filenames for validation with locale files
@@ -238,7 +241,8 @@ Please try to install it with: `pip install blake3` or some other way.'),
             translate('cdbs', 'Selected files to upload:')
             + f' {self.upload_filenames}',
         )
-        CdbsApi(QueriesApi.upload_files_to_fileset(self.fileset_uuid, self.upload_filenames))
+        if not CdbsApi(QueriesApi.upload_files_to_fileset(self.fileset_uuid, self.upload_filenames)):
+            return
         # data for uploading by each file
         args = DataHandler.deep_parsing_gpl('uploadFilesToFileset', True)
         if not args:
@@ -253,7 +257,8 @@ Please try to install it with: `pip install blake3` or some other way.'),
             logger('log', translate('cdbs', 'Failed to upload files.'))
             return 0
         # at least some files were uploaded successfully
-        CdbsApi(QueriesApi.upload_completed(self.completed_files))
+        if not CdbsApi(QueriesApi.upload_completed(self.completed_files)):
+            return
         res = DataHandler.deep_parsing_gpl('uploadCompleted')
         logger(
             'log',

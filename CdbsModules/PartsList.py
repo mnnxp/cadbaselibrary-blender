@@ -2,7 +2,6 @@ from pathlib import Path
 from types import SimpleNamespace
 import CdbsModules.CdbsEvn as CdbsEvn
 import CdbsModules.DataHandler as DataHandler
-from CdbsModules.CdbsAuth import CdbsAuth
 from CdbsModules.CdbsApi import CdbsApi
 from CdbsModules.QueriesApi import QueriesApi
 from CdbsModules.Translate import translate
@@ -23,7 +22,8 @@ def update_components_list():
             translate('cdbs', 'The path to the local library specified is missing (set in the settings).')
         )
         return
-    CdbsApi(QueriesApi.fav_components())
+    if not CdbsApi(QueriesApi.fav_components()):
+        return
     data = DataHandler.parsing_gpl()
     if not isinstance(data, SimpleNamespace):
         logger(
@@ -53,7 +53,8 @@ def update_component():
     if not g_selected_component_uuid:
         logger('warning', translate('cdbs', 'Not set UUID for select component.'))
         return
-    CdbsApi(QueriesApi.component_modifications(g_selected_component_uuid))
+    if not CdbsApi(QueriesApi.component_modifications(g_selected_component_uuid)):
+        return
     data = DataHandler.parsing_gpl()
     if not isinstance(data, SimpleNamespace):
         logger(
@@ -74,7 +75,8 @@ def update_component_modificaion():
     if not g_selected_modification_uuid:
         logger('warning', translate('cdbs', 'Not set UUID for select modification.'))
         return
-    CdbsApi(QueriesApi.target_fileset(g_selected_modification_uuid))
+    if not CdbsApi(QueriesApi.target_fileset(g_selected_modification_uuid)):
+        return
     data = DataHandler.parsing_gpl()
     if not isinstance(data, SimpleNamespace):
         logger('warning', translate('cdbs', 'Received data about fileset is not suitable for processing.'))
@@ -82,7 +84,8 @@ def update_component_modificaion():
     if not data.componentModificationFilesets:
         logger('warning', translate('cdbs', 'Fileset not found for Blender.'))
         return
-    CdbsApi(QueriesApi.fileset_files(data.componentModificationFilesets[0].uuid))
+    if not CdbsApi(QueriesApi.fileset_files(data.componentModificationFilesets[0].uuid)):
+        return
     data = DataHandler.parsing_gpl()
     if not isinstance(data, SimpleNamespace):
         logger(

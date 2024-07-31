@@ -1,13 +1,25 @@
-import sys
 from pathlib import Path
 import bpy
 from bpy.types import Panel, Operator
 import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.CdbsEvn import EventMessage
+from CdbsModules.Logger import EventMessage  # is used in self.report
 import CdbsModules.PartsList as PartsList
 import CdbsModules.BtnUtil as BtnUtil
+import CdbsModules.CdbsNewUser as CdbsNewUser
 from CdbsModules.ToolUiList import CDBS_UL_List
+from CdbsModules.Logger import logger
+from CdbsModules.Translate import translate
 
+
+def context_is_incorrect():
+    logger(
+        'error',
+        translate(
+            'cdbs',
+            'The context is not selected correctly. \
+Please try to select an object on the stage and open the modal window again.',
+        ),
+    )
 
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
@@ -16,6 +28,7 @@ class CDBS_OT_OpenListItem(Operator):
 
     def execute(self, context):
         BtnUtil.open_tree_item()
+        BtnUtil.update_tree_list()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -42,13 +55,30 @@ class CDBS_OT_UpTreeLevel(Operator):
             self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class CDBS_OT_PullData(Operator):
-    bl_idname = "cdbs.pulldata"
-    bl_label = "Pull data"
+class CDBS_OT_Pull(Operator):
+    bl_idname = "cdbs.pull"
+    bl_label = "Pull (data)"
     bl_description = "Retrieves data from cloud storage and updates the list"
 
     def execute(self, context):
         BtnUtil.pull_objects()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
+class CDBS_OT_RegComponent(Operator):
+    bl_idname = "cdbs.regcomponent"
+    bl_label = "Add component"
+    bl_description = "Registers a new component (part) on CADBase platform"
+
+    def execute(self, context):
+        try:
+            bpy.ops.cdbs.newcomponent('INVOKE_DEFAULT')
+        except Exception as e:
+            logger('error', str(e))
+            context_is_incorrect()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -68,10 +98,10 @@ class CDBS_OT_LinkFile(Operator):
             self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
-class CDBS_OT_PushChanges(Operator):
-    bl_idname = "cdbs.pushchanges"
-    bl_label = "Push changes"
-    bl_description = "Starts the process of sending changes from local storage to the cloud."
+class CDBS_OT_Push(Operator):
+    bl_idname = "cdbs.push"
+    bl_label = "Push (data)"
+    bl_description = "Starts the process of sending changes from local to remote storage"
 
     def execute(self, context):
         BtnUtil.push_files_of_fileset()
@@ -87,7 +117,11 @@ class CDBS_OT_Settings(Operator):
     bl_description = "Opens the tool (addon) settings in a separate window"
 
     def execute(self, context):
-        bpy.ops.cdbs.settingui('INVOKE_DEFAULT')
+        try:
+            bpy.ops.cdbs.settingui('INVOKE_DEFAULT')
+        except Exception as e:
+            logger('error', str(e))
+            context_is_incorrect()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -100,7 +134,24 @@ class CDBS_OT_Authorization(Operator):
     bl_description = "Opens the window of authorization and updating the access token to CADBase platform"
 
     def execute(self, context):
-        bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
+        try:
+            bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
+        except Exception as e:
+            logger('error', str(e))
+            context_is_incorrect()
+        # Display messages for the user their in the interface, if any
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
+class CDBS_OT_SignUp(Operator):
+    bl_idname = "cdbs.signup"
+    bl_label = "Login"
+    bl_description = "Sends requests to register and/or authorize the user"
+
+    def execute(self, context):
+        CdbsNewUser.register_new_user()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -136,11 +187,21 @@ class CDBS_PT_CadbaseLibrary(Panel):
 
         layout.operator("cdbs.openlistitem", icon="FORWARD")
         layout.operator("cdbs.uptreelevel", icon="BACK")
-        layout.operator("cdbs.pulldata", icon="FILE_REFRESH")
+        layout.operator("cdbs.pull", icon="FILE_REFRESH")
+        layout.operator("cdbs.regcomponent", icon="ADD")
         layout.operator("cdbs.linkfile", icon="LINKED")
-        layout.operator("cdbs.pushchanges", icon="EXPORT")
+        layout.operator("cdbs.push", icon="EXPORT")
 
         row_options = layout.row()
         row_options.label(text="Options")
         layout.operator("cdbs.settings", icon="OPTIONS")
         layout.operator("cdbs.authorization", icon="KEYINGSET")
+
+        # Checks if the settings are updated. Updates the settings on first load
+        # and when switching from the Add-on Manager after changing them there.
+        cdbs_prefs = CdbsEvn.get_preferences()
+        if cdbs_prefs:
+            if (cdbs_prefs.library_path != CdbsEvn.g_library_path
+                or cdbs_prefs.base_api != CdbsEvn.g_base_api):
+                CdbsEvn.update_settings()
+                PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)
