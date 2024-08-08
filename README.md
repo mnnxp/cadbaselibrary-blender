@@ -4,7 +4,7 @@
 [![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-gren)](https://blender.org)
 
 
-<div align="center"><img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on"></div>
+<div align="center"><img src="./Resources/panels_collage.webp" alt="Features and interface of CADBase Library add-on"></div>
 
 
 This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.  
