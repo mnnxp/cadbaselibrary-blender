@@ -53,7 +53,7 @@ def link_file_objects():
         logger('warning', translate('cdbs', 'Skip:') + f' {filepath.name}')
         return
     # link all objects
-    with bpy.data.libraries.load(str(filepath), link=False) as (data_from, data_to):
+    with bpy.data.libraries.load(str(filepath), link=True) as (data_from, data_to):
         for attr in dir(data_to):
             setattr(data_to, attr, getattr(data_from, attr))
     # link object to scene collection
