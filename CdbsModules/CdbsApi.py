@@ -33,7 +33,7 @@ class CdbsApi:
 
     def __init__(self, query, skip_token=False):
         DataHandler.remove_object(CdbsEvn.g_response_path)  # deleting old a response if it exists
-        if not CdbsEvn.check_online_access():
+        if not DataHandler.check_online_access():
             return
         logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_cdbs_api}')
         if not CdbsEvn.g_auth_token and not skip_token:

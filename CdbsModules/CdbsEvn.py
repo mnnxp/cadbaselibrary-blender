@@ -26,12 +26,6 @@ g_log_file_path = Path() / g_resp_file / '.log'
 g_stack_event = []  # contains messages to be displayed to the user
 g_resetpoint_flag = False  # flag to reset the api point to the default value
 
-def check_online_access():
-    res = bpy.app.online_access
-    if not res:
-        logger('error', translate('cdbs', 'Network access is denied.'))
-        logger('warning', translate('cdbs', 'Please check the "Allow Online Access" option in the Blender settings.'))
-    return res
 
 def get_preferences():
     return bpy.context.preferences.addons[g_base_package].preferences

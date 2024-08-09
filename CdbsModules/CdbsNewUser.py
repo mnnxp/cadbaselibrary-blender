@@ -16,7 +16,7 @@ def register_new_user():
     if not cdbs_prefs:
         logger('debug', translate('cdbs', 'Preferences not found.'))
         return
-    if not CdbsEvn.check_online_access():
+    if not DataHandler.check_online_access():
         return
     # update the settings so that user changes are not lost
     CdbsEvn.update_settings()

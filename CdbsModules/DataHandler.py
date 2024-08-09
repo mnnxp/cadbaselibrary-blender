@@ -12,6 +12,14 @@ from CdbsModules.Translate import translate
 from CdbsModules.Logger import logger
 
 
+def check_online_access():
+    import bpy
+    res = bpy.app.online_access
+    if not res:
+        logger('error', translate('cdbs', 'Network access is denied.'))
+        logger('warning', translate('cdbs', 'Please check the "Allow Online Access" option in the Blender settings.'))
+    return res
+
 def validation_uuid(target_uuid):
     """Checking an uuid length. Return target UUID if valid or None if the uuid failed the test"""
     if target_uuid and len(target_uuid) == CdbsEvn.g_len_uuid:
