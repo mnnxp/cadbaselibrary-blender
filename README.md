@@ -150,6 +150,8 @@ About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
 
+v0.1.4 2024-08-09    * fixed to work with updated versions of Blender and Python, updated wheels, corrected incorrect importing
+
 v0.1.3 2024-06-07    * updated manifest
 
 v0.1.2 2024-05-29    * added ability to create a component, error handling, support for online_access property and automatic installation of blake3 dependencies

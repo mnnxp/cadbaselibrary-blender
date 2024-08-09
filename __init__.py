@@ -3,7 +3,7 @@
 bl_info = {
     "name": "CADBase Library",
     "author": "mnnxp",
-    "version": (0, 1, 2),
+    "version": (0, 1, 4),
     "blender": (4, 2, 0),
     "location": "3D View > Sidebar",
     "description": "Add-on for synchronizing local data with cloud storage",
