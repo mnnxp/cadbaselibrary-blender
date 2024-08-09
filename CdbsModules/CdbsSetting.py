@@ -1,11 +1,11 @@
 from bpy.types import Operator
 from bpy.props import StringProperty
 from pathlib import Path
-import CdbsModules.CdbsEvn as CdbsEvn
-import CdbsModules.BtnUtil as BtnUtil
-import CdbsModules.PartsList as PartsList
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from . import BtnUtil as BtnUtil
+from . import PartsList as PartsList
+from .Translate import translate
+from .Logger import logger
 
 # temporary variable is overridden when selecting a directory in the dialog box
 g_temp_library_path = ''

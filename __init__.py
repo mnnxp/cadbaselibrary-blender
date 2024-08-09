@@ -3,10 +3,10 @@
 bl_info = {
     "name": "CADBase Library",
     "author": "mnnxp",
-    "version": (0, 1, 2),
+    "version": (0, 1, 4),
     "blender": (4, 2, 0),
     "location": "3D View > Sidebar",
-    "description": "This is add-on for synchronizing data with CADBase cloud storage",
+    "description": "Add-on for synchronizing local data with cloud storage",
     "doc_url": "https://gitlab.com/cadbase/cadbaselibrary-blender/-/blob/master/README.md",
     "support": 'COMMUNITY',
     "category": "Import-Export",
@@ -16,14 +16,9 @@ bl_info = {
 import os, sys
 from pathlib import Path
 
-
-SCRIPT_DIR = os.path.abspath(str(Path(__file__).parent / 'CdbsModules'))
-sys.path.append(os.path.dirname(SCRIPT_DIR))
-
-
 import bpy
 from bpy.props import IntProperty, CollectionProperty
-from CdbsModules.CadbaseMacro import (
+from .CdbsModules.CadbaseMacro import (
     CDBS_PT_CadbaseLibrary,
     CDBS_OT_OpenListItem,
     CDBS_OT_UpTreeLevel,
@@ -35,16 +30,16 @@ from CdbsModules.CadbaseMacro import (
     CDBS_OT_Authorization,
     CDBS_OT_SignUp,
 )
-from CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
-from CdbsModules.CdbsToken import CDBS_OT_TokenUI
-from CdbsModules.CdbsNewComponent import CDBS_OT_NewComponent
-from CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
-from CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List
-from CdbsModules.Translate import translations_dict
-import CdbsModules.CdbsEvn as CdbsEvn
+from .CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
+from .CdbsModules.CdbsToken import CDBS_OT_TokenUI
+from .CdbsModules.CdbsNewComponent import CDBS_OT_NewComponent
+from .CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
+from .CdbsModules.ToolUiList import CdbsListItem, CDBS_UL_List
+from .CdbsModules.Translate import translations_dict
+from .CdbsModules import CdbsEvn as CdbsEvn
 
 CdbsEvn.g_base_package = str(__package__)
-from CdbsModules.CdbsPreferences import CdbsPreferences
+from .CdbsModules.CdbsPreferences import CdbsPreferences
 
 
 classes = (

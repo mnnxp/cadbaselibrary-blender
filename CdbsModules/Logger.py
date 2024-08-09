@@ -1,6 +1,6 @@
 import time
 import logging
-import CdbsModules.CdbsEvn as CdbsEvn
+from . import CdbsEvn as CdbsEvn
 
 
 class EventMessage():

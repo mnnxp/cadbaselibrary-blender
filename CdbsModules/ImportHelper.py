@@ -1,7 +1,7 @@
 from bpy_extras.io_utils import ImportHelper
 from bpy.props import StringProperty
 from bpy.types import Operator
-import CdbsModules.CdbsSetting as CdbsSetting
+from . import CdbsSetting as CdbsSetting
 
 
 class CDBS_OT_SelectDirectory(Operator, ImportHelper):

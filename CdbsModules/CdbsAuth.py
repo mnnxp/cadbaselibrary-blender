@@ -2,10 +2,10 @@
 
 import requests
 import json
-import CdbsModules.DataHandler as DataHandler
-import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import DataHandler as DataHandler
+from . import CdbsEvn as CdbsEvn
+from .Translate import translate
+from .Logger import logger
 
 
 def parsing_response(reply):
@@ -23,7 +23,7 @@ class CdbsAuth:
 
     def __init__(self, username, password):
         DataHandler.remove_object(CdbsEvn.g_response_path)  # deleting old a response if it exists
-        if not CdbsEvn.check_online_access():
+        if not DataHandler.check_online_access():
             return
         logger('debug', translate('cdbs', 'API Point:') + f' {CdbsEvn.g_api_login}')
         logger('message', translate('cdbs', 'Getting a new token, please wait.'))

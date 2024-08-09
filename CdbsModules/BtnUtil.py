@@ -1,10 +1,10 @@
 from pathlib import Path
 import bpy
-from CdbsModules.CdbsStorage import CdbsStorage
-import CdbsModules.CdbsEvn as CdbsEvn
-import CdbsModules.PartsList as PartsList
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from .CdbsStorage import CdbsStorage
+from . import CdbsEvn as CdbsEvn
+from . import PartsList as PartsList
+from .Translate import translate
+from .Logger import logger
 
 g_tree_elements = []
 
@@ -53,7 +53,7 @@ def link_file_objects():
         logger('warning', translate('cdbs', 'Skip:') + f' {filepath.name}')
         return
     # link all objects
-    with bpy.data.libraries.load(str(filepath), link=False) as (data_from, data_to):
+    with bpy.data.libraries.load(str(filepath), link=True) as (data_from, data_to):
         for attr in dir(data_to):
             setattr(data_to, attr, getattr(data_from, attr))
     # link object to scene collection

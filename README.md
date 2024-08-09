@@ -4,7 +4,7 @@
 [![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-gren)](https://blender.org)
 
 
-<div align="center"><img src="./Resources/panels_collage.png" alt="demonstration of all windows of the CADBase Library add-on"></div>
+<div align="center"><img src="./Resources/panels_collage.webp" alt="Features and interface of CADBase Library add-on"></div>
 
 
 This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.  
@@ -149,6 +149,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codebe
 About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
+
+v0.1.4 2024-08-09    * fixed to work with updated versions of Blender and Python, updated wheels, corrected incorrect importing
 
 v0.1.3 2024-06-07    * updated manifest
 

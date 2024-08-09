@@ -1,14 +1,14 @@
 from pathlib import Path
 import bpy
 from bpy.types import Panel, Operator
-import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.Logger import EventMessage  # is used in self.report
-import CdbsModules.PartsList as PartsList
-import CdbsModules.BtnUtil as BtnUtil
-import CdbsModules.CdbsNewUser as CdbsNewUser
-from CdbsModules.ToolUiList import CDBS_UL_List
-from CdbsModules.Logger import logger
-from CdbsModules.Translate import translate
+from . import CdbsEvn as CdbsEvn
+from .Logger import EventMessage  # is used in self.report
+from . import PartsList as PartsList
+from . import BtnUtil as BtnUtil
+from . import CdbsNewUser as CdbsNewUser
+from .ToolUiList import CDBS_UL_List
+from .Logger import logger
+from .Translate import translate
 
 
 def context_is_incorrect():
@@ -203,5 +203,6 @@ class CDBS_PT_CadbaseLibrary(Panel):
         if cdbs_prefs:
             if (cdbs_prefs.library_path != CdbsEvn.g_library_path
                 or cdbs_prefs.base_api != CdbsEvn.g_base_api):
-                CdbsEvn.update_settings()
+                if not CdbsEvn.update_settings():
+                    logger('debug', translate('cdbs', 'Failed to update preferences.'))
                 PartsList.g_last_clicked_object = Path(CdbsEvn.g_library_path)

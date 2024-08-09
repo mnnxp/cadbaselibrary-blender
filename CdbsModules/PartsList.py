@@ -1,11 +1,11 @@
 from pathlib import Path
 from types import SimpleNamespace
-import CdbsModules.CdbsEvn as CdbsEvn
-import CdbsModules.DataHandler as DataHandler
-from CdbsModules.CdbsApi import CdbsApi
-from CdbsModules.QueriesApi import QueriesApi
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from . import DataHandler as DataHandler
+from .CdbsApi import CdbsApi
+from .QueriesApi import QueriesApi
+from .Translate import translate
+from .Logger import logger
 
 
 g_selected_component_uuid: str = ''

@@ -1,9 +1,9 @@
 from bpy.props import StringProperty
 from bpy.types import Operator
-import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.CdbsAuth import CdbsAuth
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from .CdbsAuth import CdbsAuth
+from .Translate import translate
+from .Logger import logger
 
 
 class CDBS_OT_TokenUI(Operator):

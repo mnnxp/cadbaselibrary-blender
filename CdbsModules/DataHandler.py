@@ -7,10 +7,18 @@ from pathlib import Path
 from types import SimpleNamespace
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
-import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from .Translate import translate
+from .Logger import logger
 
+
+def check_online_access():
+    import bpy
+    res = bpy.app.online_access
+    if not res:
+        logger('error', translate('cdbs', 'Network access is denied.'))
+        logger('warning', translate('cdbs', 'Please check the "Allow Online Access" option in the Blender settings.'))
+    return res
 
 def validation_uuid(target_uuid):
     """Checking an uuid length. Return target UUID if valid or None if the uuid failed the test"""
