@@ -3,7 +3,7 @@ schema_version = "1.0.0"
 id = "cadbase_library"
 version = "0.1.3"
 name = "CADBase Library"
-tagline = "This is an addon for synchronizing local data with cloud storage"
+tagline = "Add-on for synchronizing local data with cloud storage"
 maintainer = "mnnxp <in@cadbase.rs>"
 type = "add-on"
 
