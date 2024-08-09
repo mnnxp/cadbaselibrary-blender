@@ -3,10 +3,10 @@
 import requests
 import json
 from pathlib import Path
-import CdbsModules.CdbsEvn as CdbsEvn
-import CdbsModules.DataHandler as DataHandler
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from . import DataHandler as DataHandler
+from .Translate import translate
+from .Logger import logger
 
 
 def parsing_response(reply):

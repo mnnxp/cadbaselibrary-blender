@@ -7,9 +7,9 @@ from pathlib import Path
 from types import SimpleNamespace
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
-import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from .Translate import translate
+from .Logger import logger
 
 
 def check_online_access():

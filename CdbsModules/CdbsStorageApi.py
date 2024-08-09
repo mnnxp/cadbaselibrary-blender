@@ -1,9 +1,9 @@
 """Functionality for processing requests to the storage (S3) of CADBase platform"""
 
 import requests
-import CdbsModules.DataHandler as DataHandler
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import DataHandler as DataHandler
+from .Translate import translate
+from .Logger import logger
 
 
 class CdbsStorageApi:

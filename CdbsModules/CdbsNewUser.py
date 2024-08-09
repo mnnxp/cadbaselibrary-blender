@@ -1,14 +1,14 @@
 """ This file contains one class for authorization on the CADBase platform """
 
 from pathlib import Path
-import CdbsModules.CdbsEvn as CdbsEvn
-from CdbsModules.CdbsAuth import CdbsAuth
-from CdbsModules.CdbsApi import CdbsApi
-from CdbsModules.QueriesApi import QueriesApi
-import CdbsModules.DataHandler as DataHandler
-import CdbsModules.PartsList as PartsList
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from .CdbsAuth import CdbsAuth
+from .CdbsApi import CdbsApi
+from .QueriesApi import QueriesApi
+from . import DataHandler as DataHandler
+from . import PartsList as PartsList
+from .Translate import translate
+from .Logger import logger
 
 
 def register_new_user():

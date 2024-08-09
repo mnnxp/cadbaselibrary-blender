@@ -1,10 +1,10 @@
 from pathlib import Path
 import bpy
-from CdbsModules.CdbsStorage import CdbsStorage
-import CdbsModules.CdbsEvn as CdbsEvn
-import CdbsModules.PartsList as PartsList
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from .CdbsStorage import CdbsStorage
+from . import CdbsEvn as CdbsEvn
+from . import PartsList as PartsList
+from .Translate import translate
+from .Logger import logger
 
 g_tree_elements = []
 

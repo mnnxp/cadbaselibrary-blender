@@ -1,5 +1,5 @@
 import bpy
-from CdbsModules.Logger import logger
+from .Logger import logger
 
 
 def translate(context, text):

@@ -3,7 +3,7 @@ Contains queries for the CADBase (using GraphQL API).
 """
 
 import json
-import CdbsModules.CdbsEvn as CdbsEvn
+from . import CdbsEvn as CdbsEvn
 
 
 class QueriesApi:

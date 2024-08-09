@@ -2,8 +2,7 @@
 
 from pathlib import Path
 import bpy
-from CdbsModules.Logger import logger
-from CdbsModules.Translate import translate
+from .Translate import translate
 
 
 g_base_package = ''
@@ -51,8 +50,7 @@ def update_settings():
     global g_log_file_path
     cdbs_prefs = get_preferences()
     if not cdbs_prefs:
-        logger('debug', translate('cdbs', 'Failed to update preferences.'))
-        return
+        return False
     g_auth_token = cdbs_prefs.api_key
     if g_base_api != cdbs_prefs.base_api:
         update_api_points(cdbs_prefs.base_api)
@@ -60,3 +58,4 @@ def update_settings():
     if Path(g_library_path).is_dir():
         g_response_path = Path(g_library_path) / g_resp_file
         g_log_file_path = g_response_path.with_suffix('.log')
+    return True

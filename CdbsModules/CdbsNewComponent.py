@@ -1,15 +1,15 @@
 from bpy.types import Operator
 from bpy.props import StringProperty
 from pathlib import Path
-import CdbsModules.CdbsEvn as CdbsEvn
-import CdbsModules.BtnUtil as BtnUtil
-import CdbsModules.PartsList as PartsList
-import CdbsModules.DataHandler as DataHandler
-from CdbsModules.CdbsApi import CdbsApi
-from CdbsModules.QueriesApi import QueriesApi
-from CdbsModules.CdbsAuth import CdbsAuth
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from . import CdbsEvn as CdbsEvn
+from . import BtnUtil as BtnUtil
+from . import PartsList as PartsList
+from . import DataHandler as DataHandler
+from .CdbsApi import CdbsApi
+from .QueriesApi import QueriesApi
+from .CdbsAuth import CdbsAuth
+from .Translate import translate
+from .Logger import logger
 
 
 class CDBS_OT_NewComponent(Operator):

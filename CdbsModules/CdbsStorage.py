@@ -4,12 +4,12 @@ import time
 from pathlib import Path
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
-from CdbsModules.CdbsApi import CdbsApi
-from CdbsModules.CdbsStorageApi import CdbsStorageApi
-from CdbsModules.QueriesApi import QueriesApi
-import CdbsModules.DataHandler as DataHandler
-from CdbsModules.Translate import translate
-from CdbsModules.Logger import logger
+from .CdbsApi import CdbsApi
+from .CdbsStorageApi import CdbsStorageApi
+from .QueriesApi import QueriesApi
+from . import DataHandler as DataHandler
+from .Translate import translate
+from .Logger import logger
 
 
 class CdbsStorage:
