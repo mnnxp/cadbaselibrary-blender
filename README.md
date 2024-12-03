@@ -150,6 +150,8 @@ About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
 
+v0.1.5 2024-11-29    * added ABI Python 3.11 (Blake3 wheels), ABI 3.12 is incompatible with official releases, both Python 3.11 and 3.12 are now supported
+
 v0.1.4 2024-08-09    * fixed to work with updated versions of Blender and Python, updated wheels, corrected incorrect importing
 
 v0.1.3 2024-06-07    * updated manifest
