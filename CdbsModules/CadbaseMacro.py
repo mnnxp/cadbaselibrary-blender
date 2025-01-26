@@ -104,7 +104,15 @@ class CDBS_OT_Push(Operator):
     bl_description = "Starts the process of sending changes from local to remote storage"
 
     def execute(self, context):
-        BtnUtil.push_files_of_fileset()
+        current_position = PartsList.detect_current_position()
+        if current_position == 'MODIFICATION':
+            try:
+                bpy.ops.cdbs.uploadui('INVOKE_DEFAULT')
+            except Exception as e:
+                logger('error', str(e))
+                context_is_incorrect()
+        else:
+            logger('warning', translate('cdbs', 'Need open modification, now:') + f' {current_position}')
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)

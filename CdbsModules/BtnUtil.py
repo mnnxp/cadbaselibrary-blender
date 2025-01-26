@@ -19,19 +19,6 @@ def check_list_idx():
         return False
     return True
 
-def push_files_of_fileset():
-    """Starts processing and sending files from the local file set to the cloud if a modification file set is open."""
-
-    current_position = PartsList.detect_current_position()
-    if not current_position == 'MODIFICATION':
-        logger('warning', translate('cdbs', 'Need open modification, now:') + f' {current_position}')
-        return
-    PartsList.update_selected_object_uuid()
-    arg = (
-        PartsList.g_selected_modification_uuid,
-        PartsList.g_last_clicked_object)
-    CdbsStorage(arg)
-
 #-----------------------------------------------------------------------------
 #
 # https://docs.blender.org/api/current/bpy.types.BlendDataLibraries.html#bpy.types.BlendDataLibraries.load

@@ -1,6 +1,6 @@
 from pathlib import Path
 from bpy.types import AddonPreferences
-from bpy.props import StringProperty
+from bpy.props import StringProperty, BoolProperty
 from .CdbsEvn import g_base_package
 
 # Address of the main server of CADBase platform.
@@ -40,6 +40,16 @@ class CdbsPreferences(AddonPreferences):
         subtype='PASSWORD',
         description="CADBase platform authorization token is issued after successful authorization.",
     )
+    skip_blake3: BoolProperty(
+        name="Skip calculate hash",
+        default=True,
+        description="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.",
+    )
+    force_upload: BoolProperty(
+        name="Forcibly update files",
+        default=True,
+        description="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.",
+    )
 
     def draw(self, context):
 
@@ -68,3 +78,13 @@ class CdbsPreferences(AddonPreferences):
         r_auth.prop(self, "username")
         r_auth.prop(self, "password")
         r_auth.operator("cdbs.signup", icon="KEYINGSET")
+
+        upload_settings = layout.box()
+        upload_settings.label(text="Upload settings")
+        upload_settings.label(text="By selecting the check boxes below, to change set update process.")
+        up_set_1 = upload_settings.column()
+        up_set_1.label(text="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.")
+        up_set_1.prop(self, "skip_blake3")
+        up_set_2 = upload_settings.column()
+        up_set_2.label(text="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.")
+        up_set_2.prop(self, "force_upload")
