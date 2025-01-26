@@ -281,17 +281,11 @@ Please try to install it with: `pip install blake3` or some other way.'),
         # data for uploading files to storage received
         logger(
             'message',
-            translate(
-                'cdbs',
-                'Uploading files to cloud storage (this can take a long time)',
-            ),
+            translate('cdbs', 'Uploading files to cloud storage (this can take a long time).'),
         )
         self.upload_parallel(args)
         if not self.completed_files:
-            logger(
-                'log',
-                translate('cdbs', 'Failed to upload files'),
-            )
+            logger('log', translate('cdbs', 'Failed to upload files.'))
             return 0
         # at least some files were uploaded successfully
         CdbsApi(QueriesApi.upload_completed(self.completed_files))

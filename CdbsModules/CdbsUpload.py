@@ -30,9 +30,9 @@ class CDBS_OT_UploadUI(Operator):
         self.files = CdbsStorage(arg)
         self.cdbs_upload_list = self.files.processing_manager() or []
         if self.cdbs_upload_list:
-            self.status_message = 'Change information:'
+            self.status_message = translate('cdbs', 'Change information:')
         else:
-            self.status_message = 'Change information: no changes were found.'
+            self.status_message = translate('cdbs', 'Change information: no changes were found.')
 
     @classmethod # Will never run when poll returns false
     def poll(cls, context):
@@ -45,7 +45,7 @@ class CDBS_OT_UploadUI(Operator):
     def draw(self, context): # Draw options (typically displayed in the tool-bar)
         layout = self.layout
         if self.uploading:
-            layout.label(text="Uploading files to cloud storage (this can take a long time)")
+            layout.label(text="Uploading files to cloud storage (this can take a long time).")
             return
 
         ba_box = layout.box()
@@ -86,7 +86,6 @@ class CDBS_OT_UploadUI(Operator):
     def execute(self, context): # Runs by default
         self.uploading = True
         self.files.processing_update(self.commit_msg)
-        logger('info', translate('cdbs', 'Files upload.'))
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
