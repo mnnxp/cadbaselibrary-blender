@@ -57,8 +57,7 @@ class CDBS_OT_UploadUI(Operator):
         if not self.cdbs_upload_list:
             return
         fl_box = layout.box()
-        fl_gf_box = fl_box.grid_flow(row_major=True)
-        fl_box_r1 = fl_gf_box.row()
+        fl_box_r1 = fl_box.row()
         fl_box_r1_c1 = fl_box_r1.column()
         fl_box_r1_c1.alignment = "LEFT"
         fl_box_r1_c1.label(text="№")
@@ -68,9 +67,8 @@ class CDBS_OT_UploadUI(Operator):
         fl_box_r1_c3 = fl_box_r1.column()
         fl_box_r1_c3.alignment = "RIGHT"
         fl_box_r1_c3.label(text="Status")
-        fl_gf_box_items = fl_box.grid_flow(row_major=True)
         for idx, (item, status) in enumerate(self.cdbs_upload_list):
-            fl_box_ri = fl_gf_box_items.row()
+            fl_box_ri = fl_box.row()
             fl_box_ri_c1 = fl_box_ri.column()
             fl_box_ri_c1.alignment = "LEFT"
             fl_box_ri_c1.label(text=str(idx+1))
