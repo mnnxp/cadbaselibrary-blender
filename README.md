@@ -35,6 +35,10 @@ This location can be changed in the add-on settings in the field _Library path_.
 
 The local library location is specified in the **Library path** section field. When the location is changed, the data from the previous location will not be moved (it can be moved manually).
 
+#### Server URL
+
+In the **Server URL** section you can set URL/IP for communication with the platform.
+
 #### Getting an authorization token
 
 On the CADBase Library card in the **Add-ons** section of the Blender “Preferences...” there are **username** and **password** fields.  
@@ -49,10 +53,6 @@ The disadvantage (or advantage) of this option is that it only saves changes unt
 In the _CADBase Library_ window, click the **Authorization** button.  
 When the _Authorization on CADBase platform_ window opens, you need to set a **username** and **password** in order to access CADBase.  
 After entering these data to receive the token and pressing the **OK** button. Please wait until you receive the token.
-
-#### Server URL
-
-In the **Server URL** section you can set URL/IP for communication with the platform.
 
 #### Upload settings
 
