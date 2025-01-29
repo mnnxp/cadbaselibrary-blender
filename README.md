@@ -161,8 +161,10 @@ In fileset folders, a `modification` file is created with the technical data abo
 ##### How the add-on work with data
 
 To avoid losing local data when downloading from CADBase storage (from remote storage), files already in local storage are skipped.  
-Before uploading files to CADBase storage (remote storage), the add-on checks for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match. A hash is calculated using the Blake3 library.  
-This check is skipped and previously uploaded files (already in remote storage) are not updated unless the Blake3 library is installed.
+
+In general check is skipped and previously uploaded files (already in remote storage) are updated unless off force upload in settings.
+
+As an option (Blake3 is needed), before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
 
 ## Links
 
