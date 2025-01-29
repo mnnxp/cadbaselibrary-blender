@@ -20,6 +20,31 @@ Files uploaded to file sets are versioned, allowing you to restore earlier versi
 
 <div align="center"><img src="./Resources/add-on_cadbase.webp" alt="CADBase Library add-on in the Blender Add-ons Manager" width="60%"></div>
 
+### CADBase Library Browser
+
+Favorite components are displayed at root level. After selecting and opening a component, a list of its modifications is displayed this Component level. These levels correspond to the location of folders in the directory that is specified in the `Library path` property.
+When you open a modification (modification level), it actually displays files from the Blender file set that is in the Blender folder, not directly in the modification folder.
+Files for Blender will be downloaded through this add-on, files from kits for other programs will not be downloaded.
+
+The data display can be divided into three levels, the first one is the root level (**rl**), this level displays all components from the local library, the second one is the component level (**cl**), it displays the list of modifications of the open component, and the third level displays the data of a set of files (**fl**). The folder for Blender file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
+
+<pre>
+-Library path                       # set in add-on (<b>rl</b>)
+├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
+│   ├── N1                          # modification folder
+│   │   ├── Blender                 # Blender fileset (<b>fl</b>)
+│   │   │   ├── modification        # technical data file
+│   │   │   ├── vertical Pump.blend # file of the Blender fileset
+│   │   │   └── ...                 # files of the Blender fileset
+│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>, for example)
+│   │   └── ...                     # filesets for the modification (<b>fl</b>)
+│   ├── ...                         # modifications of the component
+│   └── component                   # technical data file
+├── ...                             # local library components (<b>rl</b>)
+├── cadbase_file_2018.log           # stores logs and responses (optional)
+└── cadbase_file_2018               # technical data file
+</pre>
+
 ### Dependencies
 
 This add-on requires no additional steps and will work without additional libraries. But Blake3 can be used if it is already installed and is version-compatible with Blender 3D running.
@@ -94,34 +119,15 @@ _Changes made through Settings and Authorization will be reset when Blender rest
 Create new components with the add-on and add target components to bookmarks (favorites) on CADBase website.  
 In Blender will only display components that the user has bookmarked on CADBase platform, as well as those that have been previously downloaded.
 
-### CADBase Library Browser
-
-Favorite components are displayed at root level. After selecting and opening a component, a list of its modifications is displayed this Component level. These levels correspond to the location of folders in the directory that is specified in the `Library path` property.
-When you open a modification (modification level), it actually displays files from the Blender file set that is in the Blender folder, not directly in the modification folder.
-Files for Blender will be downloaded through this add-on, files from kits for other programs will not be downloaded.
-
-The data display can be divided into three levels, the first one is the root level (**rl**), this level displays all components from the local library, the second one is the component level (**cl**), it displays the list of modifications of the open component, and the third level displays the data of a set of files (**fl**). The folder for Blender file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
-
-<pre>
--Library path                       # set in add-on (<b>rl</b>)
-├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
-│   ├── N1                          # modification folder
-│   │   ├── Blender                 # Blender fileset (<b>fl</b>)
-│   │   │   ├── modification        # technical data file
-│   │   │   ├── vertical Pump.blend # file of the Blender fileset
-│   │   │   └── ...                 # files of the Blender fileset
-│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>, for example)
-│   │   └── ...                     # filesets for the modification (<b>fl</b>)
-│   ├── ...                         # modifications of the component
-│   └── component                   # technical data file
-├── ...                             # local library components (<b>rl</b>)
-├── cadbase_file_2018.log           # stores logs and responses (optional)
-└── cadbase_file_2018               # technical data file
-</pre>
-
 ### Getting data
 
 To get the data, click on the **Pull (data)** button. Depending on the open position (directory), this will start the process of retrieving a list of the user's favorite components, a list of component modifications, or downloading files from the file set of the selected component modification for Blender.
+
+### Create a new component
+
+The **Add component** button is used to create a new component on the CADBase platform. Сlicking on the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
+
+<div align="center"><img src="./Resources/create_component.webp" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="60%"></div>
 
 ### Sending data
 
@@ -131,7 +137,7 @@ Information about the upload process will be displayed in the Blender report.
 
 Only files from Blender file set will be loaded to CADBase storage.
 
-Click the **Upload files** button to process data and display information about detected changes between local and remote storage. The local storage (library) is considered to be the reference storage.
+Click the **Push (data)** button to process data and display information about detected changes between local and remote storage. The local storage (library) is considered to be the reference storage.
 
 The **Commit message** section can optionally contain a message that allows users to better understand what has changed in this update. The message will be associated with all files that were added or changed in this update and can be viewed on the platform's website.
 
