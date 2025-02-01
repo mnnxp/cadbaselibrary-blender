@@ -93,6 +93,7 @@ the files were not uploaded to correctly.'): 'Возникла ошибка пр
         ('cdbs', 'The local file has a cloud version:'): 'Локальный файл имеет облачную версию:',
         ('cdbs', 'Local file does not have a cloud version:'): 'Локальный файл не имеет облачной версии:',
         ('cdbs', 'New files to upload:'): 'Новые файлы для загрузки:',
+        ('cdbs', 'Files for deletion:'): 'Файлы для удаления:',
         ('cdbs', 'Blake3 import error:'): 'Ошибка импорта Blake3:',
         ('cdbs', 'For compare hashes need install `blake3`. \
 Please try to install it with: `pip install blake3` or some other way.'): 'Для сравнения хэшей необходимо установить `blake3`. \
@@ -135,7 +136,10 @@ or change the location of the local library. Path:'): 'Для корректно
         ('cdbs', 'The context is not selected correctly. Please try to select an object on the stage and open the modal window again.'): 'Контекст выбран неправильно. Пожалуйста, попробуйте выбрать объект на сцене и снова открыть модальное окно.',
         ('cdbs', 'The component was successfully created.'): 'Компонент был успешно создан.',
         ('cdbs', 'It is not possible to create a component without a name.'): 'Невозможно создать компонент без наименования.',
-        ('cdbs', 'Failed to determine the type of the open object:'): 'Не удалось определить тип открытого объекта:'
+        ('cdbs', 'Failed to determine the type of the open object:'): 'Не удалось определить тип открытого объекта:',
+        ('cdbs', 'new'): 'новый',
+        ('cdbs', 'modified'): 'изменён',
+        ('cdbs', 'deleted'): 'удалён'
     }
 }
 
@@ -190,6 +194,21 @@ translations_dict = {
         ('*', 'Sends requests to register and/or authorize the user'): 'Отправляет запросы на регистрацию и/или авторизацию пользователя',
         ('Operator', 'Creating a new component on CADBase platform'): 'Создание нового компонента на платформе CADBase',
         ('*', 'Registers a new component (part) on CADBase platform'): 'Регистрация нового компонента (детали) на платформе CADBase',
-        ('*', 'The selected directory will store data about components, modifications and file sets'): 'В выбранном каталоге будут храниться данные о компонентах, модификациях и наборах файлов'
+        ('*', 'The selected directory will store data about components, modifications and file sets'): 'В выбранном каталоге будут храниться данные о компонентах, модификациях и наборах файлов',
+        ('*', 'Upload settings'): 'Настройки выгрузки',
+        ('*', 'Skip calculate hash'): 'Пропускать вычисление хэша',
+        ('*', 'Forcibly update files'): 'Принудительное обновление файлов',
+        ('*', 'By selecting the check boxes below, to change set update process.'): 'Установив значения ниже, можно изменить настройки процесса обновления.',
+        ('*', 'If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.'): 'Если установлено значение `Пропускать вычисление хэша`, сравнение файлов в локальном и удаленном хранилищах производиться не будет.',
+        ('*', '`Forcibly update files` means that files should be uploaded to remote storage without additional checks.'): '`Принудительное обновление файлов` означает, что файлы должны быть загружены в удаленное хранилище без дополнительных проверок.',
+        ('Operator', 'CADBase Library Upload files'): 'Библиотека CADBase Отправка файлов',
+        ('*', 'Change information:'): 'Информация об изменениях:',
+        ('*', 'Change information: no changes were found.'): 'Информация об изменениях: изменений не обнаружено.',
+        ('*', 'Please note: the changes indicated in the table'): 'Обратите внимание: изменения, указанные в таблице,',
+        ('*', 'will be applied only after clicking the OK button.'): 'будут применены только после нажатия кнопки ОК.',
+        ('*', 'Commit message'): 'Cообщение о фиксации',
+        ('*', 'Is usually a brief description of the changes.'): 'это ёмкое описание вносимых изменений.',
+        ('*', 'Filename'): 'Имя файла',
+        ('*', 'Status'): 'Состояние'
     }
 }

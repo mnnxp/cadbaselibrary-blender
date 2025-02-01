@@ -24,8 +24,10 @@ class CdbsStorage:
             translate('cdbs', 'Preparing for uploading files...'),
         )
         self.modification_uuid = arg[0]
-        # set directory from which files will be pushed
-        self.last_clicked_dir = arg[1]
+        self.last_clicked_dir = arg[1]  # set directory from which files will be pushed
+        self.skip_blake3 = arg[2]  # skip computing Blake3 hash
+        self.force_upload = arg[3]  # forced updating of files in remote storage
+        self.commit_msg = ''  # change comment has length limit of 225
         if not Path.is_dir(self.last_clicked_dir):
             logger(
                 'warning',
@@ -44,19 +46,15 @@ class CdbsStorage:
             )
             return
         self.upload_filenames = []  # filenames for upload to the CADBase storage
-        self.delete_files = []  # uuids of old files on the CADBase storage
+        self.delete_file_uuids = []  # uuids of old files on the CADBase storage
+        self.affected_files = [] #  preparing data to be displayed in table for user
         self.completed_files = []  # uuid of successfully uploaded files
         self.fileset_uuid = None
         self.new_fileset = False
-        self.processing_manager()
-        logger(
-            'message',
-            translate('cdbs', 'Files in the CADBase storage have been updated successfully.')
-        )
 
     def processing_manager(self):
-        """Manager sending files to the storage: defines the uuid for fileset,
-        calls the functions for processing, loading and confirm successful uploading files
+        """Defines a uuid for a set of files and calls functions
+        to determine the type of changes before sending the update to CADBase platform
         """
         logger('log', translate('cdbs', 'Getting fileset UUID...'))
         # getting the uuid of a set of files for target program
@@ -87,6 +85,14 @@ class CdbsStorage:
             return
         if self.fileset_uuid:
             self.define_files()
+        return self.affected_files
+
+    def processing_update(self, commit_msg):
+        """Sending files to remote storage, confirming successful file upload.
+        And deleting from remote storage files that have already been deleted locally.
+        """
+        self.delete_old_files()  # deleting files from storage that do not exist locally
+        self.commit_msg = commit_msg  # change comment has length limit of 225
         if self.upload_filenames:
             # trying to upload files and save a count of successful uploads
             count_up_files = self.upload()
@@ -108,13 +114,21 @@ the files were not uploaded to correctly.'),
             )
         # clear data that will no longer be used
         self.upload_filenames.clear()
+        self.delete_file_uuids.clear()
         self.completed_files.clear()
+        logger(
+            'message',
+            translate(
+                'cdbs',
+                'Files in the CADBase storage have been updated successfully',
+            ),
+        )
 
     def define_files(self):
         """Determine files to upload to CADBase storage: getting files from local and remote storage,
         identify duplicates and compare hashes
         """
-        local_files = []  # files from local storage
+        local_filenames = []  # files from local storage
         # files from the local storage that are not in the CADBase storage
         logger(
             'log',
@@ -124,20 +138,19 @@ the files were not uploaded to correctly.'),
         for path in Path.iterdir(self.last_clicked_dir):
             # check if current path is a file and skip if the file with technical information
             if path.is_file() and path.name != 'modification':
-                local_files.append(path.name)
+                local_filenames.append(path.name)
         logger(
             'log',
             translate('cdbs', 'Local files:')
-            + f' {local_files}',
+            + f' {local_filenames}',
         )
-        if not local_files:
+        if not local_filenames:
             return  # no potential files for uploads found
         cloud_files = []  # files from CADBase storage
         cloud_filenames = []  # filenames of CADBase storage files
         if not self.new_fileset:
             # get file list with hash from CADBase storage
-            if not CdbsApi(QueriesApi.fileset_files(self.fileset_uuid)):
-                return
+            CdbsApi(QueriesApi.fileset_files(self.fileset_uuid))
             cloud_files = DataHandler.deep_parsing_gpl('componentModificationFilesetFiles', True)
         for cf in cloud_files:
             cloud_filenames.append(cf.get('filename'))  # selecting cloud filenames for validation with locale files
@@ -147,13 +160,18 @@ the files were not uploaded to correctly.'),
             + f' {cloud_filenames}',
         )
         dup_files = []  # files which are in the local and CADBase storage
-        for l_filename in local_files:
+        for l_filename in local_filenames:
             if not self.new_fileset and l_filename in cloud_filenames:
                 logger(
                     'log',
                     translate('cdbs', 'The local file has a cloud version:')
                     + f' "{l_filename}"',
                 )
+                if self.force_upload:
+                    # add all conflicts to update in the remote repository
+                    self.upload_filenames.append(l_filename)
+                    self.affected_files.append([l_filename, translate('cdbs', 'modified')])
+                    continue
                 # save the name of the (old) file for hash check
                 dup_files.append(l_filename)
             else:
@@ -163,13 +181,26 @@ the files were not uploaded to correctly.'),
                     + f' "{l_filename}"',
                 )
                 # save the name of the new file to upload
-                self.upload_filenames.append(l_filename)  # add new files to upload
+                self.upload_filenames.append(l_filename)
+                self.affected_files.append([l_filename, translate('cdbs', 'new')])
         logger(
             'message',
             translate('cdbs', 'New files to upload:')
             + f' {self.upload_filenames}',
         )
-        self.parsing_duplicate(dup_files, cloud_files)
+        # check hash if flags are false
+        if not self.skip_blake3 and not self.force_upload:
+            self.parsing_duplicate(dup_files, cloud_files)
+        # comparing file names of local and remote storage to detect deleted files
+        for cf in cloud_files:
+            if cf.get('filename') not in local_filenames:
+                self.delete_file_uuids.append(cf.get('uuid'))
+                self.affected_files.append([cf.get('filename'), translate('cdbs', 'deleted')])
+        logger(
+            'log',
+            translate('cdbs', 'Files for deletion:')
+            + f' {self.delete_file_uuids}',
+        )
 
     def parsing_duplicate(self, dup_files, cloud_files):
         """Compare hash for local and CADBase storage files, add files for update if hash don't equally"""
@@ -217,7 +248,7 @@ Please try to install it with: `pip install blake3` or some other way.'),
                 break
             logger(
                 'log',
-                translate('cdbs', 'File hash')
+                translate('cdbs', 'Hash file')
                 + f' {df}:\n{local_file_hash} ('
                 + translate('cdbs', 'local')
                 + f')\n{cloud_file["hash"]} ('
@@ -231,6 +262,7 @@ Please try to install it with: `pip install blake3` or some other way.'),
                 and local_file_hash != cloud_file['hash']
             ):
                 self.upload_filenames.append(df)
+                self.affected_files.append([df, translate('cdbs', 'modified')])
 
     def upload(self):
         """Getting information (file IDs, pre-signed URLs) to upload files to CADBase storage
@@ -241,8 +273,7 @@ Please try to install it with: `pip install blake3` or some other way.'),
             translate('cdbs', 'Selected files to upload:')
             + f' {self.upload_filenames}',
         )
-        if not CdbsApi(QueriesApi.upload_files_to_fileset(self.fileset_uuid, self.upload_filenames)):
-            return
+        CdbsApi(QueriesApi.upload_files_to_fileset(self.fileset_uuid, self.upload_filenames, self.commit_msg))
         # data for uploading by each file
         args = DataHandler.deep_parsing_gpl('uploadFilesToFileset', True)
         if not args:
@@ -257,8 +288,7 @@ Please try to install it with: `pip install blake3` or some other way.'),
             logger('log', translate('cdbs', 'Failed to upload files.'))
             return 0
         # at least some files were uploaded successfully
-        if not CdbsApi(QueriesApi.upload_completed(self.completed_files)):
-            return
+        CdbsApi(QueriesApi.upload_completed(self.completed_files))
         res = DataHandler.deep_parsing_gpl('uploadCompleted')
         logger(
             'log',
@@ -302,3 +332,12 @@ Please try to install it with: `pip install blake3` or some other way.'),
             + f'{time.time() - t0}'
             + translate('cdbs', 'sec'),
         )
+
+    def delete_old_files(self):
+        """Deleting obsolete files from CADBase storage"""
+        if self.delete_file_uuids:
+            CdbsApi(QueriesApi.delete_files_from_fileset(self.fileset_uuid, self.delete_file_uuids))
+            res = DataHandler.deep_parsing_gpl('deleteFilesFromFileset')
+            logger('log', f'Delete files from fileset: {res}')
+            return res
+        return False
