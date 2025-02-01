@@ -31,6 +31,7 @@ from .CdbsModules.CadbaseMacro import (
     CDBS_OT_SignUp,
 )
 from .CdbsModules.CdbsSetting import CDBS_OT_SettingUI, CDBS_OT_ResetPoint
+from .CdbsModules.CdbsUpload import CDBS_OT_UploadUI
 from .CdbsModules.CdbsToken import CDBS_OT_TokenUI
 from .CdbsModules.CdbsNewComponent import CDBS_OT_NewComponent
 from .CdbsModules.ImportHelper import CDBS_OT_SelectDirectory
@@ -51,6 +52,7 @@ classes = (
     CDBS_OT_NewComponent,
     CDBS_OT_LinkFile,
     CDBS_OT_Push,
+    CDBS_OT_UploadUI,
     CDBS_OT_Settings,
     CDBS_OT_SettingUI,
     CDBS_OT_ResetPoint,
