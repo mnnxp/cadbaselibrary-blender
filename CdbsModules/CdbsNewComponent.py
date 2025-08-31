@@ -21,7 +21,8 @@ class CDBS_OT_NewComponent(Operator):
     # instead of using an equal sign = in Blender 2.8
     component_name: StringProperty(name = "", default = "")
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.component_name = ""
         self.component_uuid = ""
 

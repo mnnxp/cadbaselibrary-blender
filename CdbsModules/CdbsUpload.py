@@ -17,7 +17,8 @@ class CDBS_OT_UploadUI(Operator):
     # instead of using an equal sign = in Blender 2.8
     commit_msg: StringProperty(name = "", default = "")
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.uploading = False
         self.commit_msg = ''
         PartsList.update_selected_object_uuid()

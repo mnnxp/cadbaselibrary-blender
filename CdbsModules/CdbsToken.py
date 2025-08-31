@@ -13,7 +13,8 @@ class CDBS_OT_TokenUI(Operator):
     cdbs_username: StringProperty(name = "", default = "")
     cdbs_password: StringProperty(name = "", default = "", subtype='PASSWORD')
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         cdbs_prefs = CdbsEvn.get_preferences()
         self.cdbs_username = cdbs_prefs.username
         self.cdbs_password = cdbs_prefs.password

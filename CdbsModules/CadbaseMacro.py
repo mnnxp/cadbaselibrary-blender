@@ -11,15 +11,25 @@ from .Logger import logger
 from .Translate import translate
 
 
-def context_is_incorrect():
-    logger(
-        'error',
-        translate(
-            'cdbs',
-            'The context is not selected correctly. \
+def invoke_operator_with_context(cdbs_operator):
+    """Invokes a Blender operator, handling context differences based on Blender version."""
+    try:
+        if bpy.app.version < (4, 0, 0):
+            cdbs_operator('INVOKE_DEFAULT')
+        else:
+            context_override = bpy.context.copy()
+            with bpy.context.temp_override(**context_override):
+                cdbs_operator('INVOKE_DEFAULT')
+    except Exception as e:
+        logger('error', str(e))
+        logger(
+            'error',
+            translate(
+                'cdbs',
+                'The context is not selected correctly. \
 Please try to select an object on the stage and open the modal window again.',
-        ),
-    )
+            ),
+        )
 
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
@@ -74,11 +84,7 @@ class CDBS_OT_RegComponent(Operator):
     bl_description = "Registers a new component (part) on CADBase platform"
 
     def execute(self, context):
-        try:
-            bpy.ops.cdbs.newcomponent('INVOKE_DEFAULT')
-        except Exception as e:
-            logger('error', str(e))
-            context_is_incorrect()
+        invoke_operator_with_context(bpy.ops.cdbs.newcomponent)
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -106,11 +112,7 @@ class CDBS_OT_Push(Operator):
     def execute(self, context):
         current_position = PartsList.detect_current_position()
         if current_position == 'MODIFICATION':
-            try:
-                bpy.ops.cdbs.uploadui('INVOKE_DEFAULT')
-            except Exception as e:
-                logger('error', str(e))
-                context_is_incorrect()
+            invoke_operator_with_context(bpy.ops.cdbs.uploadui)
         else:
             logger('warning', translate('cdbs', 'Need open modification, now:') + f' {current_position}')
         # Display messages for the user their in the interface, if any
@@ -125,11 +127,7 @@ class CDBS_OT_Settings(Operator):
     bl_description = "Opens the tool (addon) settings in a separate window"
 
     def execute(self, context):
-        try:
-            bpy.ops.cdbs.settingui('INVOKE_DEFAULT')
-        except Exception as e:
-            logger('error', str(e))
-            context_is_incorrect()
+        invoke_operator_with_context(bpy.ops.cdbs.settingui)
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -142,11 +140,7 @@ class CDBS_OT_Authorization(Operator):
     bl_description = "Opens the window of authorization and updating the access token to CADBase platform"
 
     def execute(self, context):
-        try:
-            bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
-        except Exception as e:
-            logger('error', str(e))
-            context_is_incorrect()
+        invoke_operator_with_context(bpy.ops.cdbs.tokenui)
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)

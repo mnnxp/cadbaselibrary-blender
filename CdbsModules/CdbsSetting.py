@@ -32,7 +32,8 @@ class CDBS_OT_SettingUI(Operator):
     library_path: StringProperty(name = "", default = "")
     base_api: StringProperty(name = "", default = "")
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         if CdbsEvn.g_library_path:
             self.library_path = CdbsEvn.g_library_path
         if CdbsEvn.g_base_api:
