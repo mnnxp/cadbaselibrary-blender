@@ -109,6 +109,8 @@ def parsing_gpl():
             logger('error', translate('cdbs', 'There was an error with response processing.'))
             for error in res.errors:
                 logger('error', error.message)
+                if (error.message == 'Unauthorized'):
+                    CdbsEvn.g_relogin_flag = True
     except Exception as e:
         logger(
             'error',

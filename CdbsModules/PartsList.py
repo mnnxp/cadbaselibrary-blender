@@ -3,6 +3,7 @@ from types import SimpleNamespace
 from . import CdbsEvn as CdbsEvn
 from . import DataHandler as DataHandler
 from .CdbsApi import CdbsApi
+from .CdbsAuth import CdbsAuth
 from .QueriesApi import QueriesApi
 from .Translate import translate
 from .Logger import logger
@@ -12,6 +13,17 @@ g_selected_component_uuid: str = ''
 g_selected_modification_uuid: str = ''
 g_last_clicked_object: Path = Path(CdbsEvn.g_library_path)
 g_current_position = 'Components (parts)'
+
+def try_relogin():
+        """Obtains a new token using the credentials stored in the workbench configuration.
+        This method is typically invoked when the current authentication token is no longer valid.
+        """
+        CdbsEvn.g_relogin_flag = False  # not to send this request again
+        cdbs_prefs = CdbsEvn.get_preferences()
+        cdbs_username = cdbs_prefs.username
+        cdbs_password = cdbs_prefs.password
+        if cdbs_username and cdbs_password:
+            CdbsAuth(cdbs_username, cdbs_password)
 
 def update_components_list():
     """Create folders for all bookmark components of the current user"""
@@ -25,6 +37,8 @@ def update_components_list():
     if not CdbsApi(QueriesApi.fav_components()):
         return
     data = DataHandler.parsing_gpl()
+    if CdbsEvn.g_relogin_flag == True:
+        try_relogin()
     if not isinstance(data, SimpleNamespace):
         logger(
             'warning',
