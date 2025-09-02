@@ -94,10 +94,10 @@ the files were not uploaded to correctly.'): 'Возникла ошибка пр
         ('cdbs', 'Local file does not have a cloud version:'): 'Локальный файл не имеет облачной версии:',
         ('cdbs', 'New files to upload:'): 'Новые файлы для загрузки:',
         ('cdbs', 'Files for deletion:'): 'Файлы для удаления:',
-        ('cdbs', 'Blake3 import error:'): 'Ошибка импорта Blake3:',
-        ('cdbs', 'For compare hashes need install `blake3`. \
-Please try to install it with: `pip install blake3` or some other way.'): 'Для сравнения хэшей необходимо установить `blake3`. \
-Пожалуйста, попробуйте установить его с помощью: `pip install blake3` или другим способом.',
+        ('cdbs', 'Hashlib import error:'): 'Ошибка импорта Hashlib:',
+        ('cdbs', 'For compare hashes need install `hashlib`. \
+Please try to install it with: `pip install hashlib` or some other way.'): 'Для сравнения хэшей необходимо установить `hashlib`. \
+Пожалуйста, попробуйте установить его с помощью: `pip install hashlib` или другим способом.',
         ('cdbs', 'File hash from CADBase not found, this file is skipped:'): 'Хеш файла из CADBase не найден, этот файл пропущен:',
         ('cdbs', 'Found not file and it skipped'): 'Не найден файл, пропущен',
         ('cdbs', 'Error calculating hash for local file'): 'Ошибка при вычислении хэша для локального файла.',
@@ -201,11 +201,14 @@ translations_dict = {
         ('Operator', 'CADBase Library Upload files'): 'Библиотека CADBase Отправка файлов',
         ('*', 'Change information:'): 'Информация об изменениях:',
         ('*', 'Change information: no changes were found.'): 'Информация об изменениях: изменений не обнаружено.',
-        ('*', 'Please note: the changes indicated in the table'): 'Обратите внимание: изменения, указанные в таблице,',
-        ('*', 'will be applied only after clicking the OK button.'): 'будут применены только после нажатия кнопки ОК.',
+        ('*', 'Please note: changes to the table will only take effect after you click the "OK" button.'): 'Обратите внимание: изменения в таблице вступят в силу только после нажатия кнопки «ОК».',
         ('*', 'Commit message'): 'Cообщение о фиксации',
-        ('*', 'Is usually a brief description of the changes.'): 'это ёмкое описание вносимых изменений.',
+        ('*', 'Recommendation: Describe in a short sentence (~50 characters) why the change was made, or what changed.'): 'Рекомендация: добавьте краткое примечание (~50 символов), почему было внесено изменение, или что именно изменилось.',
         ('*', 'Filename'): 'Имя файла',
+        ('*', 'Size (local)'): 'Размер (локальный)',
+        ('*', 'Date modified'): 'Дата изменения',
+        ('*', 'Size (remote)'): 'Размер (удалённый)',
+        ('*', 'Upload date'): 'Дата загрузки',
         ('*', 'Status'): 'Состояние'
     }
 }
