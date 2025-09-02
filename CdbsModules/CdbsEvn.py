@@ -47,6 +47,8 @@ def save():
     cdbs_prefs.library_path = g_library_path
     cdbs_prefs.skip_hash = g_skip_hash
     cdbs_prefs.force_upload = g_force_upload
+    # Save preferences to disk
+    bpy.ops.wm.save_userpref()
 
 def update_settings():
     global g_library_path

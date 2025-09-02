@@ -62,9 +62,6 @@ class CDBS_OT_SettingUI(Operator):
             CdbsEvn.g_resetpoint_flag = False
             logger('debug', translate('cdbs', 'Resetting the end point.'))
 
-        layout.label(text="Please note that any changes made here will be lost")
-        layout.label(text="when Blender is restarted, but changes made in Add-ons")
-        layout.label(text="will not be lost when Blender is restarted.")
         lp_box = layout.box()
         lp_box.label(text="Library path")
         lp_box.label(text="The specified directory will be store data")
