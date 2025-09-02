@@ -40,7 +40,7 @@ class CdbsPreferences(AddonPreferences):
         subtype='PASSWORD',
         description="CADBase platform authorization token is issued after successful authorization.",
     )
-    skip_blake3: BoolProperty(
+    skip_hash: BoolProperty(
         name="Skip calculate hash",
         default=True,
         description="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.",
@@ -84,7 +84,7 @@ class CdbsPreferences(AddonPreferences):
         upload_settings.label(text="By selecting the check boxes below, to change set update process.")
         up_set_1 = upload_settings.column()
         up_set_1.label(text="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.")
-        up_set_1.prop(self, "skip_blake3")
+        up_set_1.prop(self, "skip_hash")
         up_set_2 = upload_settings.column()
         up_set_2.label(text="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.")
         up_set_2.prop(self, "force_upload")

@@ -25,7 +25,7 @@ class CDBS_OT_UploadUI(Operator):
         arg = (
             PartsList.g_selected_modification_uuid,
             PartsList.g_last_clicked_object,
-            CdbsEvn.g_skip_blake3,
+            CdbsEvn.g_skip_hash,
             CdbsEvn.g_force_upload
             )
         self.files = CdbsStorage(arg)
