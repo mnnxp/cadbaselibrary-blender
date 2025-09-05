@@ -31,6 +31,26 @@ Please try to select an object on the stage and open the modal window again.',
             ),
         )
 
+class CDBS_OT_Click(Operator):
+    bl_idname = "cdbs.click"
+    bl_label = "Click Operator"
+    bl_description = "Handling click on directory/file"
+
+    index: bpy.props.IntProperty()
+
+    def execute(self, context):
+        bpy.context.scene.cdbs_list_idx = self.index
+        if Path(bpy.context.scene.cdbs_list[self.index].path).is_file():
+            BtnUtil.link_file_objects()
+        else:
+            BtnUtil.open_tree_item()
+            BtnUtil.update_tree_list()
+        # Display messages for the user their in the interface
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
     bl_label = "Open"
