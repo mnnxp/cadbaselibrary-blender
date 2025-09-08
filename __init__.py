@@ -21,6 +21,7 @@ from bpy.props import IntProperty, CollectionProperty
 from .CdbsModules.CadbaseMacro import (
     CDBS_PT_CadbaseLibrary,
     CDBS_OT_Click,
+    CDBS_OT_OpenDirectory,
     CDBS_OT_OpenListItem,
     CDBS_OT_UpTreeLevel,
     CDBS_OT_Pull,
@@ -47,6 +48,7 @@ from .CdbsModules.CdbsPreferences import CdbsPreferences
 classes = (
     CDBS_PT_CadbaseLibrary,
     CDBS_OT_Click,
+    CDBS_OT_OpenDirectory,
     CDBS_OT_OpenListItem,
     CDBS_OT_UpTreeLevel,
     CDBS_OT_Pull,

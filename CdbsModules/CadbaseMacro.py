@@ -51,6 +51,21 @@ class CDBS_OT_Click(Operator):
             self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
+class CDBS_OT_OpenDirectory(Operator):
+    bl_idname = "cdbs.opendirectory"
+    bl_label = "Open Directory"
+    bl_description = "Opens the directory at the selected path"
+
+    index: bpy.props.IntProperty()
+
+    def execute(self, context):
+        BtnUtil.open_directory()
+        # Display messages for the user their in the interface
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
     bl_label = "Open"
@@ -207,12 +222,16 @@ class CDBS_PT_CadbaseLibrary(Panel):
         layout.template_list("CDBS_UL_List", "Cdbs_List", scene,
                             "cdbs_list", scene, "cdbs_list_idx")
 
-        layout.operator("cdbs.openlistitem", icon="FORWARD")
-        layout.operator("cdbs.uptreelevel", icon="BACK")
-        layout.operator("cdbs.pull", icon="FILE_REFRESH")
+        row_a = layout.row()
+        row_a.operator("cdbs.uptreelevel", icon="BACK")
+        row_a.operator("cdbs.openlistitem", icon="FORWARD")
+        row_b = layout.row()
+        row_b.operator("cdbs.pull", icon="FILE_REFRESH")
+        row_b.operator("cdbs.push", icon="EXPORT")
         layout.operator("cdbs.regcomponent", icon="ADD")
+        row_c = layout.row()
+        row_c.operator("cdbs.opendirectory", icon="DISK_DRIVE")
         layout.operator("cdbs.linkfile", icon="LINKED")
-        layout.operator("cdbs.push", icon="EXPORT")
 
         row_options = layout.row()
         row_options.label(text="Options")

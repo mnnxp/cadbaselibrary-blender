@@ -1,3 +1,5 @@
+import subprocess
+import platform
 from pathlib import Path
 import bpy
 from .CdbsStorage import CdbsStorage
@@ -6,7 +8,35 @@ from . import PartsList as PartsList
 from .Translate import translate
 from .Logger import logger
 
+
 g_tree_elements = []
+
+def open_directory():
+    """Opens the directory at the selected path."""
+    if not check_list_idx():
+        return
+    current_path = Path(bpy.context.scene.cdbs_list[bpy.context.scene.cdbs_list_idx].path)
+    if current_path.is_file():
+        current_path = current_path.parent
+    folder_path = str(current_path)
+    if platform.system() == 'Windows':
+        command = ['explorer', folder_path]
+    elif platform.system() == 'Darwin':  # macOS
+        command = ['open', folder_path]
+    elif platform.system() == 'Linux':
+        command = ['xdg-open', folder_path]  # Common for many Linux distributions
+    else:
+        logger('warning', translate('cdbs', 'Unsupported operating system'))
+        command = None
+    if command:
+        try:
+            subprocess.Popen(command)
+        except Exception as e:
+            logger(
+                'error',
+                translate('cdbs', 'Exception occurred while trying to open path:')
+                + f' {str(e)}',
+            )
 
 def check_list_idx():
     """Checks whether the leaf exists and whether the index is outside the array boundary."""

@@ -139,7 +139,9 @@ or change the location of the local library. Path:'): 'Для корректно
         ('cdbs', 'Failed to determine the type of the open object:'): 'Не удалось определить тип открытого объекта:',
         ('cdbs', 'new'): 'новый',
         ('cdbs', 'modified'): 'изменён',
-        ('cdbs', 'deleted'): 'удалён'
+        ('cdbs', 'deleted'): 'удалён',
+        ('cdbs', 'Unsupported operating system'): 'Неподдерживаемая операционная система',
+        ('cdbs', 'Exception occurred while trying to open path:'): 'Произошло исключение при попытке открыть путь'
     }
 }
 
