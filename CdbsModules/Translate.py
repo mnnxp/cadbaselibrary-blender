@@ -140,8 +140,10 @@ or change the location of the local library. Path:'): 'Для корректно
         ('cdbs', 'new'): 'новый',
         ('cdbs', 'modified'): 'изменён',
         ('cdbs', 'deleted'): 'удалён',
-        ('cdbs', 'Unsupported operating system'): 'Неподдерживаемая операционная система',
-        ('cdbs', 'Exception occurred while trying to open path:'): 'Произошло исключение при попытке открыть путь'
+        ('cdbs', 'Unsupported operating system.'): 'Неподдерживаемая операционная система.',
+        ('cdbs', 'Exception occurred while trying to open path:'): 'Произошло исключение при попытке открыть путь:',
+        ('cdbs', 'Component UUID is not set. Please select a component from the list of favorite components to copy the URL link to the selected component.'): 'UUID компонента не установлен. Пожалуйста, выберите компонент из списка избранных компонентов, чтобы скопировать URL-ссылку на выбранный компонент.',
+        ('cdbs', 'The link to the selected component has been copied to the clipboard.'): 'Ссылка на выбранный компонент скопирована в буфер обмена.'
     }
 }
 

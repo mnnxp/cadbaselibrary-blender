@@ -15,3 +15,4 @@ license = ["SPDX:GPL-3.0-or-later"]
 [permissions]
 network = "Need to to sync library data with a remote server"
 files = "Import/export library data from/to disk"
+clipboard = "Copy component link to clipboard"

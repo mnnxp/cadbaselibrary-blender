@@ -26,7 +26,7 @@ def open_directory():
     elif platform.system() == 'Linux':
         command = ['xdg-open', folder_path]  # Common for many Linux distributions
     else:
-        logger('warning', translate('cdbs', 'Unsupported operating system'))
+        logger('warning', translate('cdbs', 'Unsupported operating system.'))
         command = None
     if command:
         try:
@@ -37,6 +37,31 @@ def open_directory():
                 translate('cdbs', 'Exception occurred while trying to open path:')
                 + f' {str(e)}',
             )
+
+def copy_component_url():
+    """Forming a link and copying it to the clipboard."""
+    if not check_list_idx():
+        return
+    filepath = Path(bpy.context.scene.cdbs_list[bpy.context.scene.cdbs_list_idx].path)
+    component_uuid = PartsList.get_selected_component_uuid(filepath)
+    if len(component_uuid) != CdbsEvn.g_len_uuid:
+        logger('warning', translate('cdbs', 'Component UUID is not set. Please select a component from the list of favorite components to copy the URL link to the selected component.'))
+        return
+    rooturl = CdbsEvn.get_preferences().base_api
+    if rooturl[0].isdigit():
+        # change port if api point is specified as ip:port
+        rooturl = rooturl.replace(':3000',':8080',1)
+    else:
+        # change subdomain if api point is specified as domain name
+        rooturl = rooturl.replace('api.','app.',1)
+    component_url = f'{rooturl}/#/component/{component_uuid}'
+    # copy component url to clipboard
+    bpy.context.window_manager.clipboard = component_url
+    logger(
+        'info',
+        translate('cdbs', 'The link to the selected component has been copied to the clipboard.')
+        + f'\n{component_url}',
+    )
 
 def check_list_idx():
     """Checks whether the leaf exists and whether the index is outside the array boundary."""

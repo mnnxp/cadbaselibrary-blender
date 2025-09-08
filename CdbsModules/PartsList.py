@@ -164,3 +164,24 @@ def detect_current_position():
         g_current_position = translate('cdbs', 'Modification:') + f' {g_last_clicked_object.parent.name}'
         return 'MODIFICATION'  # show fileset for Blender of modification
     return 'UNKNOWN'
+
+def get_selected_component_uuid(filepath):
+    component_file = ''
+    current_position = detect_current_position()
+    if current_position == 'ERROR':
+        return
+    if current_position == 'TREE':
+        component_file = filepath / 'component'
+    elif current_position == 'COMPONENT':
+        component_file = filepath.parent / 'component'
+    elif current_position == 'MODIFICATION':
+        component_file = filepath.parent.parent.parent / 'component'
+    else:
+        logger('warning', translate('cdbs', 'Failed to determine the type of the open object:' + f' {current_position}'))
+        return
+    component_uuid = ''
+    # check file with component info
+    if component_file.is_file():
+        component_data = DataHandler.read_object_info(component_file, 'component')
+        component_uuid = component_data.uuid
+    return component_uuid

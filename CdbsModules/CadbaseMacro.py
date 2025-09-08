@@ -66,6 +66,19 @@ class CDBS_OT_OpenDirectory(Operator):
             self.report({event.level}, str(event.msg))
         return {'FINISHED'}
 
+class CDBS_OT_CopyUrl(Operator):
+    bl_idname = "cdbs.copyurl"
+    bl_label = "Copy link"
+    bl_description = "Copy link to select component in clipboard"
+
+    def execute(self, context):
+        BtnUtil.copy_component_url()
+        # Display messages for the user their in the interface
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
     bl_label = "Open"
@@ -231,6 +244,7 @@ class CDBS_PT_CadbaseLibrary(Panel):
         layout.operator("cdbs.regcomponent", icon="ADD")
         row_c = layout.row()
         row_c.operator("cdbs.opendirectory", icon="DISK_DRIVE")
+        row_c.operator("cdbs.copyurl", icon="COPYDOWN")
         layout.operator("cdbs.linkfile", icon="LINKED")
 
         row_options = layout.row()
