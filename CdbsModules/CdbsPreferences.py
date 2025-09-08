@@ -85,8 +85,8 @@ class CdbsPreferences(AddonPreferences):
         r_auth.operator("cdbs.signup", icon="KEYINGSET")
 
         upload_settings = layout.box()
-        upload_settings.label(text="Upload settings")
-        upload_settings.label(text="By selecting the check boxes below, to change set update process.")
+        upload_settings.label(text="Data synchronization")
+        upload_settings.label(text="You can change the synchronization process by checking the boxes below.")
         up_set_1 = upload_settings.column()
         up_set_1.label(text="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.")
         up_set_1.prop(self, "skip_hash")

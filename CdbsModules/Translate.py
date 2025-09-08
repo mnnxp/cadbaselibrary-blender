@@ -196,7 +196,7 @@ translations_dict = {
         ('Operator', 'Creating a new component on CADBase platform'): 'Создание нового компонента на платформе CADBase',
         ('*', 'Registers a new component (part) on CADBase platform'): 'Регистрация нового компонента (детали) на платформе CADBase',
         ('*', 'The selected directory will store data about components, modifications and file sets'): 'В выбранном каталоге будут храниться данные о компонентах, модификациях и наборах файлов',
-        ('*', 'Upload settings'): 'Настройки выгрузки',
+        ('*', 'Data synchronization'): 'Синхронизация данных',
         ('*', 'Skip calculate hash'): 'Пропускать вычисление хэша',
         ('*', 'Forcibly update files'): 'Принудительное обновление файлов',
         ('*', 'By selecting the check boxes below, to change set update process.'): 'Установив значения ниже, можно изменить настройки процесса обновления.',
