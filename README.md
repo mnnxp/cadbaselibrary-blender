@@ -182,20 +182,20 @@ About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
 
-v0.2.0 2025-01-26    * implemented preview of changes before sending update, added deletion of old files from remote storage, updated API, removed wheels ([#8](https://gitlab.com/cadbase/cadbaselibrary-blender/-/issues/8))
+v0.2.0 2025-01-26    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated API, removed wheels ([#8](https://gitlab.com/cadbase/cadbaselibrary-blender/-/issues/8)).
 
-v0.1.5 2024-11-29    * added ABI Python 3.11 (Blake3 wheels), ABI 3.12 is incompatible with official releases, both Python 3.11 and 3.12 are now supported
+v0.1.5 2024-11-29    * Added ABI Python 3.11 (Blake3 wheels), ABI 3.12 is incompatible with official releases, both Python 3.11 and 3.12 are now supported.
 
-v0.1.4 2024-08-09    * fixed to work with updated versions of Blender and Python, updated wheels, corrected incorrect importing
+v0.1.4 2024-08-09    * Fixed to work with updated versions of Blender and Python, updated wheels, corrected incorrect importing.
 
-v0.1.3 2024-06-07    * updated manifest
+v0.1.3 2024-06-07    * Updated manifest.
 
-v0.1.2 2024-05-29    * added ability to create a component, error handling, support for online_access property and automatic installation of blake3 dependencies
+v0.1.2 2024-05-29    * Added ability to create a component, error handling, support for online_access property and automatic installation of blake3 dependencies.
 
-v0.1.1 2024-05-24    * added bug information and updated translations
+v0.1.1 2024-05-24    * Added bug information and updated translations.
 
-v0.1.0 2024-05-19    * updated links, save settings in userpref.blend, added ability to create an account via add-on
+v0.1.0 2024-05-19    * Updated links, save settings in userpref.blend, added ability to create an account via add-on.
 
-v0.0.2 2024-04-18    * added blender manifest, description and fixed bugs
+v0.0.2 2024-04-18    * Added blender manifest, description and fixed bugs.
 
-v0.0.1 2024-04-14    * first release
+v0.0.1 2024-04-14    * First release.
