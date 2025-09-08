@@ -53,8 +53,8 @@ class CDBS_OT_Click(Operator):
 
 class CDBS_OT_OpenDirectory(Operator):
     bl_idname = "cdbs.opendirectory"
-    bl_label = "Open Directory"
-    bl_description = "Opens the directory at the selected path"
+    bl_label = "Open directory"
+    bl_description = "Open the folder containing the selected file or directory in system's file explorer"
 
     index: bpy.props.IntProperty()
 
@@ -69,7 +69,7 @@ class CDBS_OT_OpenDirectory(Operator):
 class CDBS_OT_CopyUrl(Operator):
     bl_idname = "cdbs.copyurl"
     bl_label = "Copy link"
-    bl_description = "Copy link to select component in clipboard"
+    bl_description = "Copy the URL of the selected component to clipboard"
 
     def execute(self, context):
         BtnUtil.copy_component_url()
