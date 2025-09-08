@@ -42,13 +42,18 @@ class CdbsPreferences(AddonPreferences):
     )
     skip_hash: BoolProperty(
         name="Skip calculate hash",
-        default=True,
+        default=False,
         description="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.",
     )
     force_upload: BoolProperty(
         name="Forcibly update files",
-        default=True,
+        default=False,
         description="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.",
+    )
+    autopull: BoolProperty(
+        name="Auto pull data",
+        default=False,
+        description="Automatically retrieve (download) data from a remote source if the opened folder is empty.",
     )
 
     def draw(self, context):
@@ -88,3 +93,6 @@ class CdbsPreferences(AddonPreferences):
         up_set_2 = upload_settings.column()
         up_set_2.label(text="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.")
         up_set_2.prop(self, "force_upload")
+        up_set_3 = upload_settings.column()
+        up_set_3.label(text="Automatically retrieve (download) data from a remote source if the opened folder is empty.")
+        up_set_3.prop(self, "autopull")

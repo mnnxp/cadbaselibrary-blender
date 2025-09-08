@@ -87,6 +87,9 @@ class CDBS_OT_OpenListItem(Operator):
     def execute(self, context):
         BtnUtil.open_tree_item()
         BtnUtil.update_tree_list()
+        # Request data if autpull is enabled and the opened folder is empty
+        if CdbsEvn.g_autopull and not bpy.context.scene.cdbs_list:
+            BtnUtil.pull_objects()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)

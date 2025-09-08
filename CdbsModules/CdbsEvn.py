@@ -27,6 +27,7 @@ g_resetpoint_flag = False  # flag to reset the api point to the default value
 g_resetcommitmsg_flag = False  # flag to reset the commit message for uploaded files
 g_skip_hash = False  # file hash matching is disabled by default
 g_force_upload = False  # forced update of existing files is disabled by default
+g_autopull = False  # automatically fetch and extract data from the remote source
 g_relogin_flag = False  # flag for re-authorization in case of token expiration
 
 
@@ -48,6 +49,7 @@ def save():
     cdbs_prefs.library_path = g_library_path
     cdbs_prefs.skip_hash = g_skip_hash
     cdbs_prefs.force_upload = g_force_upload
+    cdbs_prefs.autopull = g_autopull
     # Save preferences to disk
     bpy.ops.wm.save_userpref()
 
@@ -58,6 +60,7 @@ def update_settings():
     global g_log_file_path
     global g_skip_hash
     global g_force_upload
+    global g_autopull
     cdbs_prefs = get_preferences()
     if not cdbs_prefs:
         return False
@@ -70,4 +73,5 @@ def update_settings():
         g_log_file_path = g_response_path.with_suffix('.log')
     g_skip_hash = cdbs_prefs.skip_hash
     g_force_upload = cdbs_prefs.force_upload
+    g_autopull = cdbs_prefs.autopull
     return True
