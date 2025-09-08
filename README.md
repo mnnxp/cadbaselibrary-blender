@@ -47,9 +47,7 @@ The data display can be divided into three levels, the first one is the root lev
 
 ### Dependencies
 
-This add-on requires no additional steps and will work without additional libraries. But Blake3 can be used if it is already installed and is version-compatible with Blender 3D running.
-
-**Please Note:** The add-on will work without this _Blake3_ library.
+The workbench does not require any external dependencies.
 
 ### Settings
 
@@ -79,13 +77,15 @@ In the _CADBase Library_ window, click the **Authorization** button.
 When the _Authorization on CADBase platform_ window opens, you need to set a **username** and **password** in order to access CADBase.  
 After entering these data to receive the token and pressing the **OK** button. Please wait until you receive the token.
 
-#### Upload settings
+#### Data synchronization
 
-The **Upload settings** section allows you to set parameters to improve workbench operation in the absence of Blake3 and in case of necessity of forced updating of files on CADBase storage.
+The **Data synchronization** section allows you to set parameters to improve the workbench’s performance, enable or disable file verification by hash, and forced file updates to the CADBase storage.
 
 If you set **Forcibly update files** to True, the **Skip calculate hash** value will be ignored. The hash will not be calculated, as it is unnecessary.
 
-The parameters affect only the uploading of data to the server. When downloading data, existing files will not be overwritten regardless of the settings.
+The parameters affect only the uploading of data to the server. When uploading data, existing files will not be overwritten regardless of the settings.
+
+When **Auto pull data** is enabled, data will be automatically retrieve (download) from a remote source if the opened folder is empty. If the folder already contains files, this option will not trigger.
 
 <div align="center"><img src="./Resources/preferences.webp" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="60%"></div>
 
@@ -96,23 +96,25 @@ Select the **CADBase Library** add-on in the **Import-Export** category.
 
 ### Control
 
- `Open` - open the next level (deeper). If a component of a list of user's favorite components is selected, it will open the list of modifications for that component; if a modification of a component modifications list is selected, it will open a set of files for Blender.
-
  `Go back` - return to the previous level (higher). If a set of files is open, the button opens a list of modifications of a component; if a list of modifications of a component is open, the button opens a list of a user's favorite component.
+
+ `Open` - open the next level (deeper). If a component of a list of user's favorite components is selected, it will open the list of modifications for that component; if a modification of a component modifications list is selected, it will open a set of files for Blender.
 
  `Pull (data)` - retrieves data from the remote server and updates the local library view.
 
+ `Push (data)` - the button opens a window for uploading a set of files from the local Blender library to the CADBase repository.
+
  `Add component` - the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
 
- `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
+`Open directory` - the button open the folder containing the selected file or directory within system's file explorer.
 
- `Push (data)` - the button opens the window for downloading files from the Blender folder (set of files for Blender) of the local library to the CADBase repository.
+`Copy link` - the button copies the URL associated with a selected component to clipboard.
+
+ `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
 
  `Settings` - this button opens a modal window where you can specify the path to the local library, where the files received from CADBase will be stored, and the address of CADBase server.
 
  `Authorization` - this button opens a modal window where you can specify login and password from CADBase profile to get a new authorization token. This action must be repeated if the access token is revoked or expired.
-
-_Changes made through Settings and Authorization will be reset when Blender restarts. For changes to be saved after restarting Blender, they must be made via Add-ons in Preferences..._
 
 ## Usage
 
@@ -170,7 +172,7 @@ To avoid losing local data when downloading from CADBase storage (from remote st
 
 In general check is skipped and previously uploaded files (already in remote storage) are updated unless off force upload in settings.
 
-As an option (Blake3 is needed), before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
+Before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
 
 ## Links
 
@@ -181,6 +183,8 @@ Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codebe
 About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
 
 ## Version
+
+v0.3.0 2025-09-09    * The hashing algorithm now used is SHA‑256 with the Hashlib library. Added buttons for opening a local folder and copying a link to a component to the clipboard. Duplicating open and link buttons in the tree. Added overwriting of settings after any change. Added the ability to automatically pull data when opening an empty folder.
 
 v0.2.0 2025-01-26    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated API, removed wheels ([#8](https://gitlab.com/cadbase/cadbaselibrary-blender/-/issues/8)).
 
