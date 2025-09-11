@@ -152,8 +152,8 @@ class CDBS_UL_List(UIList):
                 else:
                     set_icon = 'FILE_BLANK'
                 btn_icon = 'LINKED'
-            layout.label(text=item.name, icon=set_icon)
-            layout.operator('cdbs.click', text="", icon=btn_icon).index = index
+            layout.operator('cdbs.click', text=item.name, icon=set_icon, emboss=False).index = index
+            layout.operator('cdbs.click', text="", icon=btn_icon, emboss=False).index = index
 
         elif self.layout_type in {'GRID'}:
             layout.alignment = 'CENTER'

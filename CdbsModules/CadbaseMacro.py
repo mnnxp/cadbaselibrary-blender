@@ -238,22 +238,27 @@ class CDBS_PT_CadbaseLibrary(Panel):
         layout.template_list("CDBS_UL_List", "Cdbs_List", scene,
                             "cdbs_list", scene, "cdbs_list_idx")
 
-        row_a = layout.row()
-        row_a.operator("cdbs.uptreelevel", icon="BACK")
-        row_a.operator("cdbs.openlistitem", icon="FORWARD")
-        row_b = layout.row()
-        row_b.operator("cdbs.pull", icon="FILE_REFRESH")
-        row_b.operator("cdbs.push", icon="EXPORT")
-        layout.operator("cdbs.regcomponent", icon="ADD")
-        row_c = layout.row()
-        row_c.operator("cdbs.opendirectory", icon="DISK_DRIVE")
-        row_c.operator("cdbs.copyurl", icon="COPYDOWN")
-        layout.operator("cdbs.linkfile", icon="LINKED")
-
+        # Navigation buttons (back and forward)
+        row_nav = layout.row()
+        row_nav.operator("cdbs.uptreelevel", icon="BACK")
+        row_nav.operator("cdbs.openlistitem", icon="FORWARD")
+        # File operations (pull and push)
+        row_file = layout.row()
+        row_file.operator("cdbs.pull", icon="FILE_REFRESH")
+        row_file.operator("cdbs.push", icon="EXPORT")
+        # Directory and URL actions
+        row_dir = layout.row()
+        row_dir.operator("cdbs.opendirectory", icon="DISK_DRIVE")
+        row_dir.operator("cdbs.copyurl", icon="COPYDOWN")
+        # File linkage and component registration
+        row_actions = layout.row()
+        row_actions.operator("cdbs.linkfile", icon="LINKED")
+        row_actions.operator("cdbs.regcomponent", icon="ADD")
+        # Options section
+        layout.label(text="Options")
         row_options = layout.row()
-        row_options.label(text="Options")
-        layout.operator("cdbs.settings", icon="OPTIONS")
-        layout.operator("cdbs.authorization", icon="KEYINGSET")
+        row_options.operator("cdbs.settings", icon="OPTIONS")
+        row_options.operator("cdbs.authorization", icon="KEYINGSET")
 
         # Checks if the settings are updated. Updates the settings on first load
         # and when switching from the Add-on Manager after changing them there.

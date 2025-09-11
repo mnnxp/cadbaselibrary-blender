@@ -38,10 +38,8 @@ class CDBS_OT_NewComponent(Operator):
         layout = self.layout
 
         lp_box = layout.box()
-        lp_box.label(text="A new component with the specified name will be")
-        lp_box.label(text="created and added to the list of bookmarks for")
-        lp_box.label(text="the authorized user. After successful creation")
-        lp_box.label(text="the list of favorite components will be updated.")
+        lp_box.label(text="Creates a component with the given name.")
+        lp_box.label(text="Once created, the favorites list will be updated.")
         lp_box.prop(self, "component_name")
 
     def execute(self, context):
