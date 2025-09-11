@@ -33,8 +33,9 @@ Please try to select an object on the stage and open the modal window again.',
 
 class CDBS_OT_Click(Operator):
     bl_idname = "cdbs.click"
-    bl_label = "Click Operator"
-    bl_description = "Handling click on directory/file"
+    bl_label = "Click Handler"
+    bl_description = "Clicking on a folder will open it, \
+while clicking on a file will attempt to load it and link it to the current collection in the scene"
 
     index: bpy.props.IntProperty()
 

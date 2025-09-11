@@ -38,7 +38,7 @@ class CDBS_OT_NewComponent(Operator):
         layout = self.layout
 
         lp_box = layout.box()
-        lp_box.label(text="Creates a component with the given name.")
+        lp_box.label(text="Specify a name for the new component.")
         lp_box.label(text="Once created, the favorites list will be updated.")
         lp_box.prop(self, "component_name")
 

@@ -43,17 +43,17 @@ class CdbsPreferences(AddonPreferences):
     skip_hash: BoolProperty(
         name="Skip calculate hash",
         default=False,
-        description="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.",
+        description="Skip comparison allows you to bypass uploading files that already exist in remote storage.",
     )
     force_upload: BoolProperty(
         name="Forcibly update files",
         default=False,
-        description="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.",
+        description="Forced update uploads files to remote storage without performing any checks.",
     )
     autopull: BoolProperty(
         name="Auto pull data",
         default=False,
-        description="Automatically retrieve (download) data from a remote source if the opened folder is empty.",
+        description="Automatically fetch (download) data from a remote source if the folder is empty.",
     )
 
     def draw(self, context):
@@ -88,11 +88,12 @@ class CdbsPreferences(AddonPreferences):
         upload_settings.label(text="Data synchronization")
         upload_settings.label(text="You can change the synchronization process by checking the boxes below.")
         up_set_1 = upload_settings.column()
-        up_set_1.label(text="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.")
+        up_set_1.label(text="Skip comparison allows you to bypass uploading files that already exist in remote storage.")
         up_set_1.prop(self, "skip_hash")
         up_set_2 = upload_settings.column()
-        up_set_2.label(text="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.")
+        up_set_2.label(text="Forced update uploads files to remote storage without performing any checks.")
         up_set_2.prop(self, "force_upload")
         up_set_3 = upload_settings.column()
-        up_set_3.label(text="Automatically retrieve (download) data from a remote source if the opened folder is empty.")
+        up_set_3.label(text="Automatically fetch (download) data from a remote source if the folder is empty.")
+        up_set_3.label(text="Note: Don't enable if the connection to the remote storage (cloud) is slow.")
         up_set_3.prop(self, "autopull")
