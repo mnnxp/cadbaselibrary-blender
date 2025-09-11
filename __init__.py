@@ -1,17 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-
-bl_info = {
-    "name": "CADBase Library",
-    "author": "mnnxp",
-    "version": (0, 1, 5),
-    "blender": (4, 2, 0),
-    "location": "3D View > Sidebar",
-    "description": "Add-on for synchronizing local data with cloud storage",
-    "doc_url": "https://gitlab.com/cadbase/cadbaselibrary-blender/-/blob/master/README.md",
-    "support": 'COMMUNITY',
-    "category": "Import-Export",
-}
-
+# SPDX:GPL-3.0-or-later
 
 import os, sys
 from pathlib import Path
