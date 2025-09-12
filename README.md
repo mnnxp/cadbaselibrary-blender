@@ -3,7 +3,7 @@
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-green)](https://blender.org)
 
-<div align="center"><img src="./Resources/panels_collage.webp" alt="Features and interface of CADBase Library add-on"></div>
+<div align="center"><img src="./Resources/add-on_panel.webp" alt="Features and interface of CADBase Library add-on"></div>
 
 This add-on allows users to interact with CADBase via the Blender interface.  
 CADBase is a platform for publishing and sharing information about components (parts), 3D models, drawings, and manufacturers.
@@ -13,7 +13,10 @@ You can also create an account directly through the add-on. If the entered usern
 
 ## Description
 
-Component modifications include sets of files for various CAD systems. This add-on works with data from Blender’s file sets without downloading documentation or data from other file sets.  
+Component modifications include sets of files for various CAD systems. This add-on works with data from Blender’s file sets without downloading documentation or data from other file sets.
+
+<div align="center"><img src="./Resources/blender_fileset.webp" alt="Blender fileset on CADBase Platform" width="60%"></div>
+
 Files uploaded to file sets are versioned, allowing you to restore earlier versions, compare changes, review modifications, and track who last edited them.
 
 <div align="center"><img src="./Resources/add-on_cadbase.webp" alt="CADBase Library add-on in the Blender Add-ons Manager" width="60%"></div>
@@ -89,7 +92,8 @@ The **Data synchronization** section allows you to optimize performance and cont
 
 ## First Start
 
-After installation, the add-on appears in Blender's **3D View** > **Sidebar** under the **Import-Export** category.  
+Once installed, the add-on will be available in Blender's **3D View** > **Sidebar** under the **Import-Export** category.  
+You can also press **N** to quickly open the 3D View sidebar in Blender.  
 Select **CADBase Library** to begin.
 
 ## Control Buttons
