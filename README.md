@@ -75,7 +75,7 @@ If the token expires, repeat this process.
 **Alternatively:**
 
 You can click the **Authorization** button within the _CADBase Library_ window.  
-A window will prompt you to enter your **username** and **password** to generate a new token.  
+In the window, you'll be prompted to enter your username and password (if you haven't done so before) to obtain a new token.
 
 *Note:* The token is stored temporarily until Blender closes. Restarting Blender restores the saved token.
 

@@ -191,7 +191,7 @@ translations_dict = {
         ('*', 'Sets the selected folder as the current position and updates the list'): 'Устанавливает выбранную папку в качестве текущей позиции и обновляет список',
         ('*', 'Sets the parent folder to active and updates the list'): 'Устанавливает родительскую папку активной и обновляет список',
         ('*', 'Retrieves data from cloud storage and updates the list'): 'Получает данные из облачного хранилища и обновляет список',
-        ('*', 'Creates a reference to objects in the target file'): 'Создает ссылку на объекты в целевом файле',
+        ('*', 'Incorporates objects from the file into the current scene'): 'Включает объекты из файла в текущую сцену',
         ('*', 'Starts the process of sending changes from local to remote storage'): 'Запускает процесс отправки изменений из локального в удалённое хранилище',
         ('*', 'Opens the tool (addon) settings in a separate window'): 'Открывает настройки инструмента (аддона) в отдельном окне',
         ('*', 'Opens the window of authorization and updating the access token to CADBase platform'): 'Открывает окно авторизации и обновления токена доступа к платформе CADBase',

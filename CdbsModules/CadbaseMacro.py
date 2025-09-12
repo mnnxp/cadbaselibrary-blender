@@ -146,7 +146,7 @@ class CDBS_OT_RegComponent(Operator):
 class CDBS_OT_LinkFile(Operator):
     bl_idname = "cdbs.linkfile"
     bl_label = "Link file"
-    bl_description = "Creates a reference to objects in the target file"
+    bl_description = "Incorporates objects from the file into the current scene"
 
     def execute(self, context):
         BtnUtil.link_file_objects()
