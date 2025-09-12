@@ -77,8 +77,6 @@ If the token expires, repeat this process.
 You can click the **Authorization** button within the _CADBase Library_ window.  
 In the window, you'll be prompted to enter your username and password (if you haven't done so before) to obtain a new token.
 
-*Note:* The token is stored temporarily until Blender closes. Restarting Blender restores the saved token.
-
 ### Data Synchronization Settings
 
 The **Data synchronization** section allows you to optimize performance and control file verification:
