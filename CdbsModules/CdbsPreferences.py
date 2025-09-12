@@ -40,15 +40,20 @@ class CdbsPreferences(AddonPreferences):
         subtype='PASSWORD',
         description="CADBase platform authorization token is issued after successful authorization.",
     )
-    skip_blake3: BoolProperty(
+    skip_hash: BoolProperty(
         name="Skip calculate hash",
-        default=True,
-        description="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.",
+        default=False,
+        description="Skip comparison allows you to bypass uploading files that already exist in remote storage.",
     )
     force_upload: BoolProperty(
         name="Forcibly update files",
-        default=True,
-        description="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.",
+        default=False,
+        description="Forced update uploads files to remote storage without performing any checks.",
+    )
+    autopull: BoolProperty(
+        name="Auto pull data",
+        default=False,
+        description="Automatically fetch (download) data from a remote source if the folder is empty.",
     )
 
     def draw(self, context):
@@ -80,11 +85,15 @@ class CdbsPreferences(AddonPreferences):
         r_auth.operator("cdbs.signup", icon="KEYINGSET")
 
         upload_settings = layout.box()
-        upload_settings.label(text="Upload settings")
-        upload_settings.label(text="By selecting the check boxes below, to change set update process.")
+        upload_settings.label(text="Data synchronization")
+        upload_settings.label(text="You can change the synchronization process by checking the boxes below.")
         up_set_1 = upload_settings.column()
-        up_set_1.label(text="If set to `Skip calculate hash`, there will be no comparison between files in local and remote storage.")
-        up_set_1.prop(self, "skip_blake3")
+        up_set_1.label(text="Skip comparison allows you to bypass uploading files that already exist in remote storage.")
+        up_set_1.prop(self, "skip_hash")
         up_set_2 = upload_settings.column()
-        up_set_2.label(text="`Forcibly update files` means that files should be uploaded to remote storage without additional checks.")
+        up_set_2.label(text="Forced update uploads files to remote storage without performing any checks.")
         up_set_2.prop(self, "force_upload")
+        up_set_3 = upload_settings.column()
+        up_set_3.label(text="Automatically fetch (download) data from a remote source if the folder is empty.")
+        up_set_3.label(text="Note: Don't enable if the connection to the remote storage (cloud) is slow.")
+        up_set_3.prop(self, "autopull")

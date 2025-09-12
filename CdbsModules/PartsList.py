@@ -3,6 +3,7 @@ from types import SimpleNamespace
 from . import CdbsEvn as CdbsEvn
 from . import DataHandler as DataHandler
 from .CdbsApi import CdbsApi
+from .CdbsAuth import CdbsAuth
 from .QueriesApi import QueriesApi
 from .Translate import translate
 from .Logger import logger
@@ -12,6 +13,17 @@ g_selected_component_uuid: str = ''
 g_selected_modification_uuid: str = ''
 g_last_clicked_object: Path = Path(CdbsEvn.g_library_path)
 g_current_position = 'Components (parts)'
+
+def try_relogin():
+        """Obtains a new token using the credentials stored in the workbench configuration.
+        This method is typically invoked when the current authentication token is no longer valid.
+        """
+        CdbsEvn.g_relogin_flag = False  # not to send this request again
+        cdbs_prefs = CdbsEvn.get_preferences()
+        cdbs_username = cdbs_prefs.username
+        cdbs_password = cdbs_prefs.password
+        if cdbs_username and cdbs_password:
+            CdbsAuth(cdbs_username, cdbs_password)
 
 def update_components_list():
     """Create folders for all bookmark components of the current user"""
@@ -25,6 +37,8 @@ def update_components_list():
     if not CdbsApi(QueriesApi.fav_components()):
         return
     data = DataHandler.parsing_gpl()
+    if CdbsEvn.g_relogin_flag == True:
+        try_relogin()
     if not isinstance(data, SimpleNamespace):
         logger(
             'warning',
@@ -93,13 +107,13 @@ def update_component_modificaion():
             translate('cdbs', 'Received data about files of fileset is not suitable for processing.')
         )
         return
-    if not data.componentModificationFilesetFiles:
+    if not data.componentModificationFilesOfFileset:
         logger('warning', translate('cdbs', 'No files in fileset.'))
         return
     # necessary data to start downloading files
     urls = []  # for store pre-signed URLs for downloading files
     fns = []  # for store full patches with filenames
-    for file_of_fileset in data.componentModificationFilesetFiles:
+    for file_of_fileset in data.componentModificationFilesOfFileset:
         urls.append(file_of_fileset.downloadUrl)
         fns.append(g_last_clicked_object / file_of_fileset.filename)
     inputs = zip(urls, fns)
@@ -150,3 +164,24 @@ def detect_current_position():
         g_current_position = translate('cdbs', 'Modification:') + f' {g_last_clicked_object.parent.name}'
         return 'MODIFICATION'  # show fileset for Blender of modification
     return 'UNKNOWN'
+
+def get_selected_component_uuid(filepath):
+    component_file = ''
+    current_position = detect_current_position()
+    if current_position == 'ERROR':
+        return
+    if current_position == 'TREE':
+        component_file = filepath / 'component'
+    elif current_position == 'COMPONENT':
+        component_file = filepath.parent / 'component'
+    elif current_position == 'MODIFICATION':
+        component_file = filepath.parent.parent.parent / 'component'
+    else:
+        logger('warning', translate('cdbs', 'Failed to determine the type of the open object:' + f' {current_position}'))
+        return
+    component_uuid = ''
+    # check file with component info
+    if component_file.is_file():
+        component_data = DataHandler.read_object_info(component_file, 'component')
+        component_uuid = component_data.uuid
+    return component_uuid

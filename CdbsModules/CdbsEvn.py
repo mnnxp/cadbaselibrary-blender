@@ -25,8 +25,10 @@ g_log_file_path = Path() / g_resp_file / '.log'
 g_stack_event = []  # contains messages to be displayed to the user
 g_resetpoint_flag = False  # flag to reset the api point to the default value
 g_resetcommitmsg_flag = False  # flag to reset the commit message for uploaded files
-g_skip_blake3 = True  # hash reconciliation of files is enabled by default
-g_force_upload = True  # forced updating of existing files is enabled by default
+g_skip_hash = False  # file hash matching is disabled by default
+g_force_upload = False  # forced update of existing files is disabled by default
+g_autopull = False  # automatically fetch and extract data from the remote source
+g_relogin_flag = False  # flag for re-authorization in case of token expiration
 
 
 def get_preferences():
@@ -45,16 +47,20 @@ def save():
     cdbs_prefs.api_key = g_auth_token
     cdbs_prefs.base_api = g_base_api
     cdbs_prefs.library_path = g_library_path
-    cdbs_prefs.skip_blake3 = g_skip_blake3
+    cdbs_prefs.skip_hash = g_skip_hash
     cdbs_prefs.force_upload = g_force_upload
+    cdbs_prefs.autopull = g_autopull
+    # Save preferences to disk
+    bpy.ops.wm.save_userpref()
 
 def update_settings():
     global g_library_path
     global g_auth_token
     global g_response_path
     global g_log_file_path
-    global g_skip_blake3
+    global g_skip_hash
     global g_force_upload
+    global g_autopull
     cdbs_prefs = get_preferences()
     if not cdbs_prefs:
         return False
@@ -65,6 +71,7 @@ def update_settings():
     if Path(g_library_path).is_dir():
         g_response_path = Path(g_library_path) / g_resp_file
         g_log_file_path = g_response_path.with_suffix('.log')
-    g_skip_blake3 = cdbs_prefs.skip_blake3
+    g_skip_hash = cdbs_prefs.skip_hash
     g_force_upload = cdbs_prefs.force_upload
+    g_autopull = cdbs_prefs.autopull
     return True

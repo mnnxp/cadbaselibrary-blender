@@ -21,7 +21,8 @@ class CDBS_OT_NewComponent(Operator):
     # instead of using an equal sign = in Blender 2.8
     component_name: StringProperty(name = "", default = "")
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.component_name = ""
         self.component_uuid = ""
 
@@ -37,10 +38,8 @@ class CDBS_OT_NewComponent(Operator):
         layout = self.layout
 
         lp_box = layout.box()
-        lp_box.label(text="A new component with the specified name will be")
-        lp_box.label(text="created and added to the list of bookmarks for")
-        lp_box.label(text="the authorized user. After successful creation")
-        lp_box.label(text="the list of favorite components will be updated.")
+        lp_box.label(text="Specify a name for the new component.")
+        lp_box.label(text="Once created, the favorites list will be updated.")
         lp_box.prop(self, "component_name")
 
     def execute(self, context):

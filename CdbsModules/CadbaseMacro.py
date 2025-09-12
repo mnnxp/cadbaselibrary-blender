@@ -11,15 +11,74 @@ from .Logger import logger
 from .Translate import translate
 
 
-def context_is_incorrect():
-    logger(
-        'error',
-        translate(
-            'cdbs',
-            'The context is not selected correctly. \
+def invoke_operator_with_context(cdbs_operator):
+    """Invokes a Blender operator, handling context differences based on Blender version."""
+    try:
+        if bpy.app.version < (4, 0, 0):
+            cdbs_operator('INVOKE_DEFAULT')
+        else:
+            context_override = bpy.context.copy()
+            with bpy.context.temp_override(**context_override):
+                cdbs_operator('INVOKE_DEFAULT')
+    except Exception as e:
+        logger('error', str(e))
+        logger(
+            'error',
+            translate(
+                'cdbs',
+                'The context is not selected correctly. \
 Please try to select an object on the stage and open the modal window again.',
-        ),
-    )
+            ),
+        )
+
+class CDBS_OT_Click(Operator):
+    bl_idname = "cdbs.click"
+    bl_label = "Click Handler"
+    bl_description = "Clicking on a folder will open it, \
+while clicking on a file will attempt to load it and link it to the current collection in the scene"
+
+    index: bpy.props.IntProperty()
+
+    def execute(self, context):
+        bpy.context.scene.cdbs_list_idx = self.index
+        if Path(bpy.context.scene.cdbs_list[self.index].path).is_file():
+            BtnUtil.link_file_objects()
+        else:
+            BtnUtil.open_tree_item()
+            BtnUtil.update_tree_list()
+        # Display messages for the user their in the interface
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
+class CDBS_OT_OpenDirectory(Operator):
+    bl_idname = "cdbs.opendirectory"
+    bl_label = "Open directory"
+    bl_description = "Open the folder containing the selected file or directory in system's file explorer"
+
+    index: bpy.props.IntProperty()
+
+    def execute(self, context):
+        BtnUtil.open_directory()
+        # Display messages for the user their in the interface
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
+
+class CDBS_OT_CopyUrl(Operator):
+    bl_idname = "cdbs.copyurl"
+    bl_label = "Copy link"
+    bl_description = "Copy the URL of the selected component to clipboard"
+
+    def execute(self, context):
+        BtnUtil.copy_component_url()
+        # Display messages for the user their in the interface
+        while CdbsEvn.g_stack_event:
+            event = CdbsEvn.g_stack_event.pop(0)
+            self.report({event.level}, str(event.msg))
+        return {'FINISHED'}
 
 class CDBS_OT_OpenListItem(Operator):
     bl_idname = "cdbs.openlistitem"
@@ -29,6 +88,9 @@ class CDBS_OT_OpenListItem(Operator):
     def execute(self, context):
         BtnUtil.open_tree_item()
         BtnUtil.update_tree_list()
+        # Request data if autpull is enabled and the opened folder is empty
+        if CdbsEvn.g_autopull and not bpy.context.scene.cdbs_list:
+            BtnUtil.pull_objects()
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -74,11 +136,7 @@ class CDBS_OT_RegComponent(Operator):
     bl_description = "Registers a new component (part) on CADBase platform"
 
     def execute(self, context):
-        try:
-            bpy.ops.cdbs.newcomponent('INVOKE_DEFAULT')
-        except Exception as e:
-            logger('error', str(e))
-            context_is_incorrect()
+        invoke_operator_with_context(bpy.ops.cdbs.newcomponent)
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -88,7 +146,7 @@ class CDBS_OT_RegComponent(Operator):
 class CDBS_OT_LinkFile(Operator):
     bl_idname = "cdbs.linkfile"
     bl_label = "Link file"
-    bl_description = "Creates a reference to objects in the target file"
+    bl_description = "Incorporates objects from the file into the current scene"
 
     def execute(self, context):
         BtnUtil.link_file_objects()
@@ -106,11 +164,7 @@ class CDBS_OT_Push(Operator):
     def execute(self, context):
         current_position = PartsList.detect_current_position()
         if current_position == 'MODIFICATION':
-            try:
-                bpy.ops.cdbs.uploadui('INVOKE_DEFAULT')
-            except Exception as e:
-                logger('error', str(e))
-                context_is_incorrect()
+            invoke_operator_with_context(bpy.ops.cdbs.uploadui)
         else:
             logger('warning', translate('cdbs', 'Need open modification, now:') + f' {current_position}')
         # Display messages for the user their in the interface, if any
@@ -125,11 +179,7 @@ class CDBS_OT_Settings(Operator):
     bl_description = "Opens the tool (addon) settings in a separate window"
 
     def execute(self, context):
-        try:
-            bpy.ops.cdbs.settingui('INVOKE_DEFAULT')
-        except Exception as e:
-            logger('error', str(e))
-            context_is_incorrect()
+        invoke_operator_with_context(bpy.ops.cdbs.settingui)
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -142,11 +192,7 @@ class CDBS_OT_Authorization(Operator):
     bl_description = "Opens the window of authorization and updating the access token to CADBase platform"
 
     def execute(self, context):
-        try:
-            bpy.ops.cdbs.tokenui('INVOKE_DEFAULT')
-        except Exception as e:
-            logger('error', str(e))
-            context_is_incorrect()
+        invoke_operator_with_context(bpy.ops.cdbs.tokenui)
         # Display messages for the user their in the interface, if any
         while CdbsEvn.g_stack_event:
             event = CdbsEvn.g_stack_event.pop(0)
@@ -193,17 +239,27 @@ class CDBS_PT_CadbaseLibrary(Panel):
         layout.template_list("CDBS_UL_List", "Cdbs_List", scene,
                             "cdbs_list", scene, "cdbs_list_idx")
 
-        layout.operator("cdbs.openlistitem", icon="FORWARD")
-        layout.operator("cdbs.uptreelevel", icon="BACK")
-        layout.operator("cdbs.pull", icon="FILE_REFRESH")
-        layout.operator("cdbs.regcomponent", icon="ADD")
-        layout.operator("cdbs.linkfile", icon="LINKED")
-        layout.operator("cdbs.push", icon="EXPORT")
-
+        # Navigation buttons (back and forward)
+        row_nav = layout.row()
+        row_nav.operator("cdbs.uptreelevel", icon="BACK")
+        row_nav.operator("cdbs.openlistitem", icon="FORWARD")
+        # File operations (pull and push)
+        row_file = layout.row()
+        row_file.operator("cdbs.pull", icon="FILE_REFRESH")
+        row_file.operator("cdbs.push", icon="EXPORT")
+        # Directory and URL actions
+        row_dir = layout.row()
+        row_dir.operator("cdbs.opendirectory", icon="DISK_DRIVE")
+        row_dir.operator("cdbs.copyurl", icon="COPYDOWN")
+        # File linkage and component registration
+        row_actions = layout.row()
+        row_actions.operator("cdbs.linkfile", icon="LINKED")
+        row_actions.operator("cdbs.regcomponent", icon="ADD")
+        # Options section
+        layout.label(text="Options")
         row_options = layout.row()
-        row_options.label(text="Options")
-        layout.operator("cdbs.settings", icon="OPTIONS")
-        layout.operator("cdbs.authorization", icon="KEYINGSET")
+        row_options.operator("cdbs.settings", icon="OPTIONS")
+        row_options.operator("cdbs.authorization", icon="KEYINGSET")
 
         # Checks if the settings are updated. Updates the settings on first load
         # and when switching from the Add-on Manager after changing them there.

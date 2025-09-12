@@ -139,9 +139,11 @@ class CDBS_UL_List(UIList):
         # Make sure your code supports all 3 layout types
         if self.layout_type in {'DEFAULT', 'COMPACT'}:
             set_icon = 'QUESTION'
+            btn_icon = 'QUESTION'
             path = Path(item.path)
             if path.is_dir():
                 set_icon = 'FILE_FOLDER'
+                btn_icon = 'FORWARD'
             if path.is_file():
                 if path.suffix == '.blend':
                     set_icon = 'FILE_BLEND'
@@ -149,8 +151,9 @@ class CDBS_UL_List(UIList):
                     set_icon = 'FILE_BACKUP'
                 else:
                     set_icon = 'FILE_BLANK'
-            layout.label(text=item.name, icon=set_icon)
-            # layout.label(text=item.name)
+                btn_icon = 'LINKED'
+            layout.operator('cdbs.click', text=item.name, icon=set_icon, emboss=False).index = index
+            layout.operator('cdbs.click', text="", icon=btn_icon, emboss=False).index = index
 
         elif self.layout_type in {'GRID'}:
             layout.alignment = 'CENTER'

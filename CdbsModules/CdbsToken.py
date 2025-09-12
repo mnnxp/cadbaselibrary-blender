@@ -13,7 +13,8 @@ class CDBS_OT_TokenUI(Operator):
     cdbs_username: StringProperty(name = "", default = "")
     cdbs_password: StringProperty(name = "", default = "", subtype='PASSWORD')
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         cdbs_prefs = CdbsEvn.get_preferences()
         self.cdbs_username = cdbs_prefs.username
         self.cdbs_password = cdbs_prefs.password
@@ -29,9 +30,6 @@ class CDBS_OT_TokenUI(Operator):
     def draw(self, context): # Draw options (typically displayed in the tool-bar)
         layout = self.layout
 
-        layout.label(text="Please note that any changes made here will be lost")
-        layout.label(text="when Blender is restarted, but changes made in Add-ons")
-        layout.label(text="will not be lost when Blender is restarted.")
         lp_box = layout.box()
         lp_box.label(text="Authorization")
         lp_box.label(text="Re-authorization allows you to get a new token.")

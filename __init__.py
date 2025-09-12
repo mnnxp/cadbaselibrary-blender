@@ -1,17 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-
-bl_info = {
-    "name": "CADBase Library",
-    "author": "mnnxp",
-    "version": (0, 1, 5),
-    "blender": (4, 2, 0),
-    "location": "3D View > Sidebar",
-    "description": "Add-on for synchronizing local data with cloud storage",
-    "doc_url": "https://gitlab.com/cadbase/cadbaselibrary-blender/-/blob/master/README.md",
-    "support": 'COMMUNITY',
-    "category": "Import-Export",
-}
-
+# SPDX:GPL-3.0-or-later
 
 import os, sys
 from pathlib import Path
@@ -20,6 +7,9 @@ import bpy
 from bpy.props import IntProperty, CollectionProperty
 from .CdbsModules.CadbaseMacro import (
     CDBS_PT_CadbaseLibrary,
+    CDBS_OT_Click,
+    CDBS_OT_OpenDirectory,
+    CDBS_OT_CopyUrl,
     CDBS_OT_OpenListItem,
     CDBS_OT_UpTreeLevel,
     CDBS_OT_Pull,
@@ -45,6 +35,9 @@ from .CdbsModules.CdbsPreferences import CdbsPreferences
 
 classes = (
     CDBS_PT_CadbaseLibrary,
+    CDBS_OT_Click,
+    CDBS_OT_OpenDirectory,
+    CDBS_OT_CopyUrl,
     CDBS_OT_OpenListItem,
     CDBS_OT_UpTreeLevel,
     CDBS_OT_Pull,

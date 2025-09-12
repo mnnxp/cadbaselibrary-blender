@@ -1,3 +1,5 @@
+import subprocess
+import platform
 from pathlib import Path
 import bpy
 from .CdbsStorage import CdbsStorage
@@ -6,7 +8,60 @@ from . import PartsList as PartsList
 from .Translate import translate
 from .Logger import logger
 
+
 g_tree_elements = []
+
+def open_directory():
+    """Opens the directory at the selected path."""
+    if not check_list_idx():
+        return
+    current_path = Path(bpy.context.scene.cdbs_list[bpy.context.scene.cdbs_list_idx].path)
+    if current_path.is_file():
+        current_path = current_path.parent
+    folder_path = str(current_path)
+    if platform.system() == 'Windows':
+        command = ['explorer', folder_path]
+    elif platform.system() == 'Darwin':  # macOS
+        command = ['open', folder_path]
+    elif platform.system() == 'Linux':
+        command = ['xdg-open', folder_path]  # Common for many Linux distributions
+    else:
+        logger('warning', translate('cdbs', 'Unsupported operating system.'))
+        command = None
+    if command:
+        try:
+            subprocess.Popen(command)
+        except Exception as e:
+            logger(
+                'error',
+                translate('cdbs', 'Exception occurred while trying to open path:')
+                + f' {str(e)}',
+            )
+
+def copy_component_url():
+    """Forming a link and copying it to the clipboard."""
+    if not check_list_idx():
+        return
+    filepath = Path(bpy.context.scene.cdbs_list[bpy.context.scene.cdbs_list_idx].path)
+    component_uuid = PartsList.get_selected_component_uuid(filepath)
+    if len(component_uuid) != CdbsEvn.g_len_uuid:
+        logger('warning', translate('cdbs', 'Component UUID is not set. Please select a component from the list of favorite components to copy the URL link to the selected component.'))
+        return
+    rooturl = CdbsEvn.get_preferences().base_api
+    if rooturl[0].isdigit():
+        # change port if api point is specified as ip:port
+        rooturl = rooturl.replace(':3000',':8080',1)
+    else:
+        # change subdomain if api point is specified as domain name
+        rooturl = rooturl.replace('api.','app.',1)
+    component_url = f'{rooturl}/#/component/{component_uuid}'
+    # copy component url to clipboard
+    bpy.context.window_manager.clipboard = component_url
+    logger(
+        'info',
+        translate('cdbs', 'The link to the selected component has been copied to the clipboard.')
+        + f'\n{component_url}',
+    )
 
 def check_list_idx():
     """Checks whether the leaf exists and whether the index is outside the array boundary."""
