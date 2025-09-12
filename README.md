@@ -1,205 +1,201 @@
 # Add-on CADBase Library
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-gren)](https://blender.org)
-
+[![Blender >= 4.2.0](https://img.shields.io/badge/Blender->=4.2.0-green)](https://blender.org)
 
 <div align="center"><img src="./Resources/panels_collage.webp" alt="Features and interface of CADBase Library add-on"></div>
 
+This add-on allows users to interact with CADBase via the Blender interface.  
+CADBase is a platform for publishing and sharing information about components (parts), 3D models, drawings, and manufacturers.
 
-This add-on allows the user to interact with CADBase (upload and download parts) via the Blender interface.  
-CADBase is a platform for publishing and sharing information about 3D components (parts), drawings and manufacturers.
-
-**Important Note:**  To use the add-on, you must have an account on the [CADBase Platform](https://app.cadbase.rs). You can also create an account via add-on, if the entered username is free, a new user will be created with the specified username and password.
+**Important Note:** To use the add-on, you must have an account on the [CADBase Platform](https://app.cadbase.rs).  
+You can also create an account directly through the add-on. If the entered username is available, a new user will be created with the specified username and password.
 
 ## Description
 
-The add-on is designed to use components from CADBase in the Blender interface.  
-Component modifications contain sets of files for various CAD systems. This add-on will work with data from the Blender set, without downloading documentation and data from other file sets.  
-Files uploaded to file sets are versioned, allowing you to restore earlier versions, get the old state they were in before the changes, review the changes, and find out who last changed something and caused the problem.
+Component modifications include sets of files for various CAD systems. This add-on works with data from Blender’s file sets without downloading documentation or data from other file sets.  
+Files uploaded to file sets are versioned, allowing you to restore earlier versions, compare changes, review modifications, and track who last edited them.
 
 <div align="center"><img src="./Resources/add-on_cadbase.webp" alt="CADBase Library add-on in the Blender Add-ons Manager" width="60%"></div>
 
 ### CADBase Library Browser
 
-Favorite components are displayed at root level. After selecting and opening a component, a list of its modifications is displayed this Component level. These levels correspond to the location of folders in the directory that is specified in the `Library path` property.
-When you open a modification (modification level), it actually displays files from the Blender file set that is in the Blender folder, not directly in the modification folder.
-Files for Blender will be downloaded through this add-on, files from kits for other programs will not be downloaded.
+Favorite components are displayed at the root level. Selecting and opening a component shows its list of modifications at this component level. These levels correspond to folder locations in the directory specified in the **Library path** property.  
+When you open a modification, it displays files from the Blender file set within the Blender folder—not directly from the modification folder on CADBase.  
+Files for Blender are downloaded through this add-on; files for other CAD programs are not.
 
-The data display can be divided into three levels, the first one is the root level (**rl**), this level displays all components from the local library, the second one is the component level (**cl**), it displays the list of modifications of the open component, and the third level displays the data of a set of files (**fl**). The folder for Blender file set in local storage is created regardless of the presence of file set in the modification on CADBase platform, the file set will be created automatically when sending files.
+The data display is organized into three levels:
 
-<pre>
--Library path                       # set in add-on (<b>rl</b>)
-├── Vertical Pump (@lookme)         # component folder (<b>cl</b>)
+- **Root level (`rl`)**: Displays all local library components.
+- **Component level (`cl`)**: Shows the list of modifications for the selected component.
+- **File set level (`fl`)**: Displays files within a selected modification’s Blender file set.
+
+The folder for Blender files in local storage is created automatically when files are uploaded, regardless of whether the modification exists on CADBase.
+
+**Folder structure example:**
+
+```plaintext
+-Library path                       # set in add-on (rl)
+├── Vertical Pump (@lookme)         # component folder (cl)
 │   ├── N1                          # modification folder
-│   │   ├── Blender                 # Blender fileset (<b>fl</b>)
+│   │   ├── Blender                 # Blender fileset (fl)
 │   │   │   ├── modification        # technical data file
-│   │   │   ├── vertical Pump.blend # file of the Blender fileset
-│   │   │   └── ...                 # files of the Blender fileset
-│   │   ├── FreeCAD                 # FreeCAD fileset (<b>fl</b>, for example)
-│   │   └── ...                     # filesets for the modification (<b>fl</b>)
-│   ├── ...                         # modifications of the component
-│   └── component                   # technical data file
-├── ...                             # local library components (<b>rl</b>)
-├── cadbase_file_2018.log           # stores logs and responses (optional)
-└── cadbase_file_2018               # technical data file
-</pre>
+│   │   │   ├── vertical Pump.blend # Blender file
+│   │   │   └── ...                   # other files
+│   │   ├── FreeCAD                   # FreeCAD fileset (fl)
+│   │   └── ...                       # other filesets
+│   ├── ...                           # other modifications
+│   └── component                     # technical data file
+├── ...                               # other components
+├── cadbase_file_2018.log             # logs and responses (optional)
+└── cadbase_file_2018                 # technical data file
+```
 
-### Dependencies
+## Dependencies
 
-The workbench does not require any external dependencies.
+The workbench does not require external dependencies.
 
-### Settings
+## Settings
 
-#### Configuration CADBase Library
+### CADBase Library Configuration
 
-First you need to set the library location. CADBase remote storage will be synchronized with this location. Also there will storage files with technical data for add-on.  
-This location can be changed in the add-on settings in the field _Library path_.
+First, set the library location. This path will be synchronized with CADBase remote storage, and files with technical data will be stored here.  
+You can change this in the add-on settings under **Library path**.
 
-The local library location is specified in the **Library path** section field. When the location is changed, the data from the previous location will not be moved (it can be moved manually).
+### Server URL
 
-#### Server URL
+Set the URL or IP address of the CADBase server in the **Server URL** section.
 
-In the **Server URL** section you can set URL/IP for communication with the platform.
+### Authorization Token
 
-#### Getting an authorization token
+In Blender's Preferences under the **Add-ons** section, you'll find **username** and **password** fields on the CADBase Library card.  
+Enter your credentials to obtain an authorization token. If successful, the token will be saved and available after restarting Blender.  
+If the token expires, repeat this process.
 
-On the CADBase Library card in the **Add-ons** section of the Blender “Preferences...” there are **username** and **password** fields.  
-To obtain a token for an existing account or create a new account to access CADBase, you must provide a **username** and **password**. This data will be saved and available after restarting Blender.  
-After entering these data to receive the token and pressing the **Login** button. Please wait until you receive the token.
+**Alternatively:**
 
-**Important Note:**  If the access token has expired, you need to repeat the steps above.
+You can click the **Authorization** button within the _CADBase Library_ window.  
+A window will prompt you to enter your **username** and **password** to generate a new token.  
 
-##### Alternatively
+*Note:* The token is stored temporarily until Blender closes. Restarting Blender restores the saved token.
 
-The disadvantage (or advantage) of this option is that it only saves changes until Blender restarts. After a new startup, Blender restores the data if it is set in the Add-ons Manager.  
-In the _CADBase Library_ window, click the **Authorization** button.  
-When the _Authorization on CADBase platform_ window opens, you need to set a **username** and **password** in order to access CADBase.  
-After entering these data to receive the token and pressing the **OK** button. Please wait until you receive the token.
+### Data Synchronization Settings
 
-#### Data synchronization
+The **Data synchronization** section allows you to optimize performance and control file verification:
 
-The **Data synchronization** section allows you to set parameters to improve the workbench’s performance, enable or disable file verification by hash, and forced file updates to the CADBase storage.
+- **Skip calculate hash:** If this option is enabled, files will not be compared using hashes; this is useful for skipping updates of existing files in remote storage.
+- **Forcibly update files:** When enabled, hash verification is skipped, and files are uploaded in all cases.
+- **Auto pull data:** If enabled, data will be automatically downloaded when opening an empty folder.
 
-If you set **Forcibly update files** to True, the **Skip calculate hash** value will be ignored. The hash will not be calculated, as it is unnecessary.
+<div align="center"><img src="./Resources/preferences.webp" alt="CADBase Library add-on settings" width="60%"></div>
 
-The parameters affect only the uploading of data to the server. When uploading data, existing files will not be overwritten regardless of the settings.
+## First Start
 
-When **Auto pull data** is enabled, data will be automatically retrieve (download) from a remote source if the opened folder is empty. If the folder already contains files, this option will not trigger.
+After installation, the add-on appears in Blender's **3D View** > **Sidebar** under the **Import-Export** category.  
+Select **CADBase Library** to begin.
 
-<div align="center"><img src="./Resources/preferences.webp" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="60%"></div>
+## Control Buttons
 
-### First start
-
-Once installed, the add-on will be available in the **3D View** > **Sidebar menu**.  
-Select the **CADBase Library** add-on in the **Import-Export** category.
-
-### Control
-
- `Go back` - return to the previous level (higher). If a set of files is open, the button opens a list of modifications of a component; if a list of modifications of a component is open, the button opens a list of a user's favorite component.
-
- `Open` - open the next level (deeper). If a component of a list of user's favorite components is selected, it will open the list of modifications for that component; if a modification of a component modifications list is selected, it will open a set of files for Blender.
-
- `Pull (data)` - retrieves data from the remote server and updates the local library view.
-
- `Push (data)` - the button opens a window for uploading a set of files from the local Blender library to the CADBase repository.
-
- `Add component` - the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
-
-`Open directory` - the button open the folder containing the selected file or directory within system's file explorer.
-
-`Copy link` - the button copies the URL associated with a selected component to clipboard.
-
- `Link file` - link creates a reference to the data in the source file such that changes made there will be reflected in the referencing file the next time it is reloaded.
-
- `Settings` - this button opens a modal window where you can specify the path to the local library, where the files received from CADBase will be stored, and the address of CADBase server.
-
- `Authorization` - this button opens a modal window where you can specify login and password from CADBase profile to get a new authorization token. This action must be repeated if the access token is revoked or expired.
+- **Go back:** Return to the previous level (higher). If a set of files is open, it shows the list of modifications; if a modification is open, it returns to the component list.
+- **Open:** Navigate to a deeper level—open modifications, file sets, or files.
+- **Pull (data):** Retrieve data from the remote platform, updating the local and navigation view.
+- **Push (data):** Open a window to upload local files to CADBase.
+- **Open directory:** Open the folder containing the selected file/directory in your system’s file explorer.
+- **Copy link:** Copy the URL of a selected component to the clipboard.
+- **Link file:** Incorporates objects from the file into the current scene, allowing them to be displayed and edited within Blender.
+- **Add component:** Create a new component via a modal dialog.
+- **Settings:** Configure the local library path and CADBase server address.
+- **Authorization:** Enter login credentials to generate or refresh the access token.
 
 ## Usage
 
-Create new components with the add-on and add target components to bookmarks (favorites) on CADBase website.  
-In Blender will only display components that the user has bookmarked on CADBase platform, as well as those that have been previously downloaded.
+Create new components or add existing ones to bookmarks on the CADBase website.  
+The Blender interface will only display components bookmarked on CADBase or previously downloaded.
 
-### Getting data
+### Data Retrieval and Download
 
-To get the data, click on the **Pull (data)** button. Depending on the open position (directory), this will start the process of retrieving a list of the user's favorite components, a list of component modifications, or downloading files from the file set of the selected component modification for Blender.
+Click **Pull (data)** to retrieve favorite components, modifications, or download files from a selected modification.
 
-### Create a new component
+### Create Components
 
-The **Add component** button is used to create a new component on the CADBase platform. Сlicking on the button opens a modal window in which ability create a new component (part, project, etc.) with a given name.
+Use **Add component** to create a new component on CADBase.  
+This opens a modal window for entering the component name.
 
-<div align="center"><img src="./Resources/create_component.webp" alt="CADBase Library add-on and its settings in the Blender Add-ons" width="60%"></div>
+<div align="center"><img src="./Resources/create_component.webp" alt="Create component" width="60%"></div>
 
-### Sending data
+### Upload Data
 
-Open the modification from which you want to upload the files.  
-Click the **Push (data)** button to upload the local files for the set of component modification files to CADBase storage (remote storage).  
-Information about the upload process will be displayed in the Blender report.
+Open the desired modification and click **Push (data)** to upload local files to CADBase.  
+The process and progress will be shown in Blender's report.
 
-Only files from Blender file set will be loaded to CADBase storage.
+Only Blender file set files are uploaded.
 
-Click the **Push (data)** button to process data and display information about detected changes between local and remote storage. The local storage (library) is considered to be the reference storage.
+You can also compare local and remote files before uploading.  
+A **Commit message** can be added to describe the changes.  
+Affected files are listed with change types:
+- `new`: Not on remote, will be uploaded
+- `modified`: Will be updated
+- `deleted`: Will be removed from remote
 
-The **Commit message** section can optionally contain a message that allows users to better understand what has changed in this update. The message will be associated with all files that were added or changed in this update and can be viewed on the platform's website.
+Click **Ok** to confirm upload.
 
-Files affected by the update will be displayed in the table under the **Commit message** section. In addition to the file names, the type of changes is indicated:
- * `new` - the file is not detected in the remote storage and will be uploaded as a new one
- * `modified` - the file exists in remote storage and will be updated to the new revision
- * `deleted` - the file no longer exists locally and will be deleted from remote storage in this update
-
-Click the **Ok** button for upload local files of select modification folder to CADBase storage (cloud).
-
-<div align="center"><img src="./Resources/upload_files.webp" alt="Managing sending files to cloud storage CADBase Library add-on" width="60%"></div>
+<div align="center"><img src="./Resources/upload_files.webp" alt="Upload files to CADBase" width="60%"></div>
 
 ## Additional Information
 
-##### Add-on settings
+### Add-on Settings
 
-The add-on's settings, such as the local library path, server (API Point) address, and access token, are stored in the Blender user settings file (`userpref.blend`), which is located at the path `bpy.utils.resource_path('USER')/config`.
+Settings are stored in Blender's user preferences file (`userpref.blend`), located at:  
+`bpy.utils.resource_path('USER')/config`
 
-##### Used (reserved) names in the add-on
+### Reserved Names
 
-Please don't use `cadbase_file_2018` and `cadbase_file_2018.log` as file or folder names in the library path folder. These files store server responses and logs, if you use these filenames for your data, you may lose them.  
-If you need to save logs to a file (for example, for debugging, study, or other purposes), you need to create a _cadbase_file_2018.log_ file in your local library folder.  
+In component folders, a `component` file is created containing the technical data about the component.
+In fileset folders, a `modification` file is created containing the technical data about the component modification and fileset.
 
-In component folders, a `component` file is created with the technical data about the component.  
-In fileset folders, a `modification` file is created with the technical data about the component modification and fileset.
+Avoid using `cadbase_file_2018` and `cadbase_file_2018.log` as filenames or folder names in your library, as these are reserved for logs and server responses.  
+Create your own log files manually if needed.
 
-##### How the add-on work with data
+### How the Add-on Works with Data
 
-To avoid losing local data when downloading from CADBase storage (from remote storage), files already in local storage are skipped.  
-
-In general check is skipped and previously uploaded files (already in remote storage) are updated unless off force upload in settings.
-
-Before uploading files to CADBase storage (remote storage) the add-on can check for existing files in the remote storage and excludes files from the upload list if their local and remote storage hashes match.
+To prevent data loss, existing local files are skipped during downloads.  
+When uploading, files are typically checked with hashes (SHA-256) to avoid unnecessary uploads if files haven't changed, unless the **Force update** setting is enabled.
 
 ## Links
 
-Add-on development happens in [this](https://gitlab.com/cadbase/cadbaselibrary-blender) repository (GitLab).
+- CADBase Library Add-on: [Blender Extensions](https://extensions.blender.org/add-ons/cadbase-library/)
+- Development repository: [GitLab](https://gitlab.com/cadbase/cadbaselibrary-blender)
+- Mirrors: [GitHub](https://github.com/mnnxp/cadbaselibrary-blender), [Codeberg](https://codeberg.org/mnnxp/cadbaselibrary-blender)
+- About CADBase Platform: [Website](https://cadbase.rs/), [YouTube](https://www.youtube.com/@cadbaseplatform)
 
-Mirrors on [GitHub](https://github.com/mnnxp/cadbaselibrary-blender) and [Codeberg](https://codeberg.org/mnnxp/cadbaselibrary-blender).
+## Version History
 
-About CADBase Platform on [YouTube](https://www.youtube.com/@cadbaseplatform)
+- **v0.3.0 (2025-09-09):**  
+  Implemented comparison of data by SHA-256 hash using `hashlib`, added buttons for opening local folders and copying component links, duplicated navigation buttons, introduced an auto-pull feature that activates when opening a folder.
 
-## Version
+- **v0.2.0 (2025-01-26):**  
+  Added preview of changes before updates, support for deleting old remote files, updated API, removed wheels dependency ([#8](https://gitlab.com/cadbase/cadbaselibrary-blender/-/issues/8)).
 
-v0.3.0 2025-09-09    * The hashing algorithm now used is SHA‑256 with the Hashlib library. Added buttons for opening a local folder and copying a link to a component to the clipboard. Duplicating open and link buttons in the tree. Added overwriting of settings after any change. Added the ability to automatically pull data when opening an empty folder.
+- **v0.1.5 (2024-11-29):**  
+  Supported Python 3.11 (Blake3 wheels), noted incompatibility with Python 3.12, both are now supported.
 
-v0.2.0 2025-01-26    * Implemented preview of changes before sending update, added deletion of old files from remote storage, updated API, removed wheels ([#8](https://gitlab.com/cadbase/cadbaselibrary-blender/-/issues/8)).
+- **v0.1.4 (2024-08-09):**  
+  Fixed compatibility with newer Blender and Python versions, updated wheels, corrected import issues.
 
-v0.1.5 2024-11-29    * Added ABI Python 3.11 (Blake3 wheels), ABI 3.12 is incompatible with official releases, both Python 3.11 and 3.12 are now supported.
+- **v0.1.3 (2024-06-07):**  
+  Updated manifest.
 
-v0.1.4 2024-08-09    * Fixed to work with updated versions of Blender and Python, updated wheels, corrected incorrect importing.
+- **v0.1.2 (2024-05-29):**  
+  Added component creation, error handling, support for `online_access` property, and automatic Blake3 dependency installation.
 
-v0.1.3 2024-06-07    * Updated manifest.
+- **v0.1.1 (2024-05-24):**  
+  Added bug reporting info, updated translations.
 
-v0.1.2 2024-05-29    * Added ability to create a component, error handling, support for online_access property and automatic installation of blake3 dependencies.
+- **v0.1.0 (2024-05-19):**  
+  Updated links, saved settings in preferences (userpref.blend), added account creation via add-on.
 
-v0.1.1 2024-05-24    * Added bug information and updated translations.
+- **v0.0.2 (2024-04-18):**  
+  Added Blender manifest, description, and bug fixes.
 
-v0.1.0 2024-05-19    * Updated links, save settings in userpref.blend, added ability to create an account via add-on.
-
-v0.0.2 2024-04-18    * Added blender manifest, description and fixed bugs.
-
-v0.0.1 2024-04-14    * First release.
+- **v0.0.1 (2024-04-14):**  
+  First release.
