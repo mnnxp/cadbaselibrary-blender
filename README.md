@@ -141,7 +141,7 @@ Affected files are listed with change types:
 
 Click **Ok** to confirm upload.
 
-<div align="center"><img src="./Resources/upload_files.webp" alt="Upload files to CADBase" width="60%"></div>
+<div align="center"><img src="./Resources/upload_files.webp" alt="Upload files to CADBase" width="90%"></div>
 
 ## Additional Information
 
